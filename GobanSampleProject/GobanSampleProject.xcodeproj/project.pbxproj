@@ -13,7 +13,18 @@
 		C31B55351C9DD10500B060D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C31B55341C9DD10500B060D8 /* Assets.xcassets */; };
 		C31B55381C9DD10500B060D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C31B55361C9DD10500B060D8 /* LaunchScreen.storyboard */; };
 		C31B55411C9DD1B000B060D8 /* GobanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31B55401C9DD1B000B060D8 /* GobanView.swift */; };
+		C3A1A08C1C9F93E400620CEA /* GobanViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A1A07C1C9F936B00620CEA /* GobanViewTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C3A1A0871C9F93DB00620CEA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C31B55221C9DD10500B060D8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C31B55291C9DD10500B060D8;
+			remoteInfo = GobanSampleProject;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C31B552A1C9DD10500B060D8 /* GobanSampleProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GobanSampleProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -24,10 +35,20 @@
 		C31B55371C9DD10500B060D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C31B55391C9DD10500B060D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C31B55401C9DD1B000B060D8 /* GobanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanView.swift; sourceTree = "<group>"; };
+		C3A1A07C1C9F936B00620CEA /* GobanViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GobanViewTests.swift; path = ../GobanSampleProject/Tests/GobanViewTests.swift; sourceTree = "<group>"; };
+		C3A1A0821C9F93DB00620CEA /* GobanSampleProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GobanSampleProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3A1A0861C9F93DB00620CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		C31B55271C9DD10500B060D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3A1A07F1C9F93DB00620CEA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +63,7 @@
 			children = (
 				C31B553F1C9DD12100B060D8 /* Goban */,
 				C31B552C1C9DD10500B060D8 /* GobanSampleProject */,
+				C3A1A0831C9F93DB00620CEA /* GobanSampleProjectTests */,
 				C31B552B1C9DD10500B060D8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				C31B552A1C9DD10500B060D8 /* GobanSampleProject.app */,
+				C3A1A0821C9F93DB00620CEA /* GobanSampleProjectTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -76,6 +99,15 @@
 			path = ../Goban;
 			sourceTree = "<group>";
 		};
+		C3A1A0831C9F93DB00620CEA /* GobanSampleProjectTests */ = {
+			isa = PBXGroup;
+			children = (
+				C3A1A07C1C9F936B00620CEA /* GobanViewTests.swift */,
+				C3A1A0861C9F93DB00620CEA /* Info.plist */,
+			);
+			path = GobanSampleProjectTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -96,6 +128,24 @@
 			productReference = C31B552A1C9DD10500B060D8 /* GobanSampleProject.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C3A1A0811C9F93DB00620CEA /* GobanSampleProjectTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3A1A0891C9F93DB00620CEA /* Build configuration list for PBXNativeTarget "GobanSampleProjectTests" */;
+			buildPhases = (
+				C3A1A07E1C9F93DB00620CEA /* Sources */,
+				C3A1A07F1C9F93DB00620CEA /* Frameworks */,
+				C3A1A0801C9F93DB00620CEA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C3A1A0881C9F93DB00620CEA /* PBXTargetDependency */,
+			);
+			name = GobanSampleProjectTests;
+			productName = GobanSampleProjectTests;
+			productReference = C3A1A0821C9F93DB00620CEA /* GobanSampleProjectTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -108,6 +158,11 @@
 				TargetAttributes = {
 					C31B55291C9DD10500B060D8 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 67V847367C;
+					};
+					C3A1A0811C9F93DB00620CEA = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = C31B55291C9DD10500B060D8;
 					};
 				};
 			};
@@ -125,6 +180,7 @@
 			projectRoot = "";
 			targets = (
 				C31B55291C9DD10500B060D8 /* GobanSampleProject */,
+				C3A1A0811C9F93DB00620CEA /* GobanSampleProjectTests */,
 			);
 		};
 /* End PBXProject section */
@@ -137,6 +193,13 @@
 				C31B55381C9DD10500B060D8 /* LaunchScreen.storyboard in Resources */,
 				C31B55351C9DD10500B060D8 /* Assets.xcassets in Resources */,
 				C31B55331C9DD10500B060D8 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3A1A0801C9F93DB00620CEA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,7 +216,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C3A1A07E1C9F93DB00620CEA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3A1A08C1C9F93E400620CEA /* GobanViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C3A1A0881C9F93DB00620CEA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C31B55291C9DD10500B060D8 /* GobanSampleProject */;
+			targetProxy = C3A1A0871C9F93DB00620CEA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C31B55311C9DD10500B060D8 /* Main.storyboard */ = {
@@ -260,10 +339,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = GobanSampleProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BEM.GobanSampleProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -271,10 +353,37 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = GobanSampleProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BEM.GobanSampleProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		C3A1A08A1C9F93DB00620CEA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = GobanSampleProjectTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = BEM.GobanSampleProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GobanSampleProject.app/GobanSampleProject";
+			};
+			name = Debug;
+		};
+		C3A1A08B1C9F93DB00620CEA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = GobanSampleProjectTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = BEM.GobanSampleProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GobanSampleProject.app/GobanSampleProject";
 			};
 			name = Release;
 		};
@@ -295,6 +404,15 @@
 			buildConfigurations = (
 				C31B553D1C9DD10500B060D8 /* Debug */,
 				C31B553E1C9DD10500B060D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3A1A0891C9F93DB00620CEA /* Build configuration list for PBXNativeTarget "GobanSampleProjectTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3A1A08A1C9F93DB00620CEA /* Debug */,
+				C3A1A08B1C9F93DB00620CEA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
