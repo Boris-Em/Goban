@@ -8,3 +8,4 @@
 - Touch outside goban should cancel
 - Add padding to goban
 - Add legend to goban
+- Animations
