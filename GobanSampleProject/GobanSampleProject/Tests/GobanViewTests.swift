@@ -28,7 +28,7 @@ class GobanViewTests: XCTestCase {
         XCTAssertEqual(gobanPoint.y, expectedGobanPoint.y)
         
         gobanPoint = goban.closestGobanPointFromPoint(CGPointMake(50.0, 50.0))
-        expectedGobanPoint = GobanPoint(x: 6, y: 6)
+        expectedGobanPoint = GobanPoint(x: 5, y: 5)
         XCTAssertEqual(gobanPoint.x, expectedGobanPoint.x)
         XCTAssertEqual(gobanPoint.y, expectedGobanPoint.y)
         
@@ -43,7 +43,7 @@ class GobanViewTests: XCTestCase {
         XCTAssertEqual(gobanPoint.y, expectedGobanPoint.y)
         
         gobanPoint = goban.closestGobanPointFromPoint(CGPointMake(120.0, 40.0))
-        expectedGobanPoint = GobanPoint(x: 12, y: 5)
+        expectedGobanPoint = GobanPoint(x: 12, y: 4)
         XCTAssertEqual(gobanPoint.x, expectedGobanPoint.x)
         XCTAssertEqual(gobanPoint.y, expectedGobanPoint.y)
         
@@ -75,7 +75,7 @@ class GobanViewTests: XCTestCase {
         XCTAssertEqual(gobanPoint.y, expectedGobanPoint.y)
         
         gobanPoint = goban.closestGobanPointFromPoint(CGPointMake(50.0, 50.0))
-        expectedGobanPoint = GobanPoint(x: 26, y: 6)
+        expectedGobanPoint = GobanPoint(x: 26, y: 5)
         XCTAssertEqual(gobanPoint.x, expectedGobanPoint.x)
         XCTAssertEqual(gobanPoint.y, expectedGobanPoint.y)
         
@@ -90,7 +90,7 @@ class GobanViewTests: XCTestCase {
         XCTAssertEqual(gobanPoint.y, expectedGobanPoint.y)
         
         gobanPoint = goban.closestGobanPointFromPoint(CGPointMake(120.0, 40.0))
-        expectedGobanPoint = GobanPoint(x: 50, y: 5)
+        expectedGobanPoint = GobanPoint(x: 50, y: 4)
         XCTAssertEqual(gobanPoint.x, expectedGobanPoint.x)
         XCTAssertEqual(gobanPoint.y, expectedGobanPoint.y)
         
