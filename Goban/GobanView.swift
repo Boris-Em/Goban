@@ -57,8 +57,26 @@ class GobanView: UIView {
     let gobanBackgroundColor = UIColor(red: 240.0 / 255.0, green: 211.0 / 255.0, blue: 159.0 / 255.0, alpha: 1.0)
     let whiteStoneColor = UIColor.whiteColor()
     let blackStoneColor = UIColor.blackColor()
+    var padding: CGFloat = 0.07 {
+        didSet {
+            if padding > 1.0 {
+                padding = 1.0
+            } else if padding < 0.0 {
+                padding = 0.0
+            }
+            
+            drawGoban()
+        }
+    }
     
     private(set) internal var lastSetStonePlayer: GobanStoneColor?
+    
+    private var gridFrame: CGRect {
+        get {
+            return CGRectMake(frame.size.width * padding, frame.size.height * padding, frame.size.width - 2 * padding * frame.size.width, frame.size.height - 2 * padding * frame.size.height)
+        }
+        set { }
+    }
     
     weak var gobanTouchDelegate: GobanTouchProtocol?
     weak var delegate: GobanProtocol?
@@ -102,7 +120,7 @@ class GobanView: UIView {
     }
     
     private func drawGrid() {
-        gridLayer = layerForGridWithFrame(self.bounds, withGobanSize: gobanSize)
+        gridLayer = layerForGridWithFrame(self.bounds, withGobanSize: gobanSize, padding: padding)
         layer.addSublayer(gridLayer)
     }
     
@@ -112,8 +130,8 @@ class GobanView: UIView {
     }
     
     private func drawStoneAtGobanPoint(gobanPoint: GobanPoint, gobanStoneColor: GobanStoneColor) {
-        let stoneSize = sizeForStoneWithGobanSize(gobanSize, inFrame: self.bounds)
-        let stoneCenter = centerForStoneAtGobanPoint(gobanPoint, gobanSize: gobanSize, inFrame: self.bounds)
+        let stoneSize = sizeForStoneWithGobanSize(gobanSize, inFrame: gridFrame)
+        let stoneCenter = centerForStoneAtGobanPoint(gobanPoint, gobanSize: gobanSize, inFrame: gridFrame)
         let stoneFrame = CGRectMake(stoneCenter.x - stoneSize / 2.0, stoneCenter.y - stoneSize / 2.0, stoneSize, stoneSize)
         
         let stoneLayer = layerForStoneWithFrame(stoneFrame, color: gobanStoneColor == .White ? whiteStoneColor : blackStoneColor)
@@ -124,10 +142,10 @@ class GobanView: UIView {
     
     // MARK: Layers
     
-    private func layerForGridWithFrame(frame: CGRect, withGobanSize size: GobanSize) -> CAShapeLayer {
+    private func layerForGridWithFrame(frame: CGRect, withGobanSize size: GobanSize, padding: CGFloat) -> CAShapeLayer {
         let gridLayer = CAShapeLayer()
         gridLayer.frame = frame
-        gridLayer.path = pathForGridInRect(gridLayer.bounds, withGobanSize: size).CGPath
+        gridLayer.path = pathForGridInRect(gridFrame, withGobanSize: size).CGPath
         gridLayer.fillColor = UIColor.clearColor().CGColor
         gridLayer.strokeColor = lineColor.CGColor
         gridLayer.lineWidth = lineWidth
@@ -154,13 +172,13 @@ class GobanView: UIView {
         let widthLineInterval = rect.size.width / CGFloat(gobanSize.width - 1)
 
         for i in 0 ..< Int(gobanSize.height) {
-            gridPath.moveToPoint(CGPointMake(0.0, CGFloat(i) * heightLineInterval))
-            gridPath.addLineToPoint(CGPointMake(rect.size.width, CGFloat(i) * heightLineInterval))
+            gridPath.moveToPoint(CGPointMake(rect.origin.x, CGFloat(i) * heightLineInterval + rect.origin.y))
+            gridPath.addLineToPoint(CGPointMake(rect.size.width + rect.origin.x, CGFloat(i) * heightLineInterval + rect.origin.y))
         }
 
         for i in 0 ..< Int(gobanSize.width) {
-            gridPath.moveToPoint(CGPointMake(CGFloat(i) * widthLineInterval, 0.0))
-            gridPath.addLineToPoint(CGPointMake(CGFloat(i) * widthLineInterval, rect.size.height))
+            gridPath.moveToPoint(CGPointMake(CGFloat(i) * widthLineInterval + rect.origin.x, rect.origin.y))
+            gridPath.addLineToPoint(CGPointMake(CGFloat(i) * widthLineInterval + rect.origin.x, rect.size.height + rect.origin.y))
         }
         
         return gridPath
@@ -237,10 +255,10 @@ class GobanView: UIView {
     }
     
     func closestGobanPointFromPoint(point: CGPoint) -> GobanPoint {
-        var closestGobanX =  CGFloat(gobanSize.width - 1) / (frame.size.width / point.x) + 1
+        var closestGobanX =  CGFloat(gobanSize.width - 1) / (gridFrame.size.width / (point.x - gridFrame.origin.x)) + 1
         closestGobanX = min(max(closestGobanX, 1), CGFloat(gobanSize.width))
         
-        var closestGobanY = CGFloat(gobanSize.height - 1) / (frame.size.height / point.y) + 1
+        var closestGobanY = CGFloat(gobanSize.height - 1) / (gridFrame.size.height / (point.y - gridFrame.origin.y)) + 1
         closestGobanY = min(max(closestGobanY, 1), CGFloat(gobanSize.height))
         
         return GobanPoint(x: Int(round(closestGobanX)), y: Int(round(closestGobanY)))
@@ -261,8 +279,8 @@ class GobanView: UIView {
         let heightLineInterval = frame.size.height / CGFloat(gobanSize.height - 1)
         let widthLineInterval = frame.size.width / CGFloat(gobanSize.width - 1)
 
-        let y = heightLineInterval * CGFloat((gobanPoint.y - 1))
-        let x = widthLineInterval * CGFloat((gobanPoint.x - 1))
+        let y = heightLineInterval * CGFloat((gobanPoint.y - 1)) + frame.origin.x
+        let x = widthLineInterval * CGFloat((gobanPoint.x - 1)) + frame.origin.y
         
         return CGPointMake(x, y)
     }
