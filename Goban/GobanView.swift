@@ -44,7 +44,22 @@ class GobanView: UIView {
     
     var gobanSize: GobanSize = GobanSize(width: 19, height: 19) {
         didSet {
+            if self.starPoints.isEmpty {
+                if gobanSize.width == 9 && gobanSize.height == 9 {
+                    self.starPoints = [GobanPoint(x: 3, y: 3), GobanPoint(x: 7, y: 3), GobanPoint(x: 5, y: 5), GobanPoint(x: 3, y: 7), GobanPoint(x: 7, y: 7)]
+                } else if gobanSize.width == 13 && gobanSize.height == 13 {
+                    self.starPoints = [GobanPoint(x: 4, y: 4), GobanPoint(x: 10, y: 4), GobanPoint(x: 7, y: 7), GobanPoint(x: 4, y: 10), GobanPoint(x: 10, y: 10)]
+                } else if gobanSize.width == 19 && gobanSize.height == 19 {
+                    self.starPoints = [GobanPoint(x: 4, y: 4), GobanPoint(x: 10, y: 4), GobanPoint(x: 16, y: 4), GobanPoint(x: 4, y: 10), GobanPoint(x: 10, y: 10), GobanPoint(x: 16, y: 10), GobanPoint(x: 4, y: 16), GobanPoint(x: 10, y: 16), GobanPoint(x: 16, y: 16)]
+                }
+            }
             drawGoban()
+        }
+    }
+    
+    var starPoints = [GobanPoint]() {
+        didSet {
+            drawStarPoints()
         }
     }
     
@@ -110,19 +125,28 @@ class GobanView: UIView {
     // MARK: Drawings
     
     private var gridLayer = CAShapeLayer()
+    private var starPointsLayer = CAShapeLayer()
     
     private func drawGoban() {
         removeSubLayers()
 
         drawGrid()
+        drawStarPoints()
         if padding > 0.0 {
             drawBorder()
         }
     }
     
     private func drawGrid() {
+        gridLayer.removeFromSuperlayer()
         gridLayer = layerForGridWithFrame(self.bounds, withGobanSize: gobanSize, padding: padding)
         layer.addSublayer(gridLayer)
+    }
+    
+    private func drawStarPoints() {
+        starPointsLayer.removeFromSuperlayer()
+        starPointsLayer = layerForStartPointsWithFrame(self.bounds, withGobanSize: gobanSize, padding: padding, starPoints: starPoints)
+        layer.addSublayer(starPointsLayer)
     }
     
     private func drawBorder() {
@@ -157,6 +181,15 @@ class GobanView: UIView {
         return gridLayer
     }
     
+    private func layerForStartPointsWithFrame(frame: CGRect, withGobanSize size: GobanSize, padding: CGFloat, starPoints: [GobanPoint]) -> CAShapeLayer {
+        let starPointsLayer = CAShapeLayer()
+        starPointsLayer.frame = frame
+        starPointsLayer.path = pathForStarPointsInRect(gridFrame, withGobanSize: gobanSize, starPoints: starPoints).CGPath
+        starPointsLayer.fillColor = lineColor.CGColor
+        
+        return starPointsLayer
+    }
+    
     private func layerForStoneWithFrame(frame: CGRect, color: UIColor) -> CAShapeLayer {
         let stoneLayer = CAShapeLayer()
         stoneLayer.frame = frame
@@ -186,6 +219,17 @@ class GobanView: UIView {
         }
         
         return gridPath
+    }
+    
+    private func pathForStarPointsInRect(rect: CGRect, withGobanSize gobanSize: GobanSize, starPoints: [GobanPoint]) -> UIBezierPath {
+        let starPointsPath = UIBezierPath()
+        let starSize = sizeForStarPointWithGobanSize(gobanSize, inFrame: rect)
+        for gobanPoint in starPoints {
+            let point = centerForStoneAtGobanPoint(gobanPoint, gobanSize: gobanSize, inFrame: rect)
+            starPointsPath.appendPath(UIBezierPath(ovalInRect: CGRectMake(point.x - starSize / 2.0, point.y - starSize / 2.0, starSize, starSize)))
+        }
+        
+        return starPointsPath
     }
     
     private func pathForStoneInRect(rect: CGRect) -> UIBezierPath {
@@ -276,6 +320,10 @@ class GobanView: UIView {
         let stoneSize = smallestGobanFrameSize / CGFloat(smallestGobanSize)
         
         return stoneSize
+    }
+    
+    private func sizeForStarPointWithGobanSize(gobanSize: GobanSize, inFrame frame: CGRect) -> CGFloat {
+        return sizeForStoneWithGobanSize(gobanSize, inFrame: frame) / 2.0
     }
     
     private func centerForStoneAtGobanPoint(gobanPoint: GobanPoint, gobanSize: GobanSize, inFrame frame: CGRect) -> CGPoint {
