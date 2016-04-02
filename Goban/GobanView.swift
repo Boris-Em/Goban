@@ -98,11 +98,17 @@ class GobanView: UIView {
         removeSubLayers()
 
         drawGrid()
+        drawBorder()
     }
     
     private func drawGrid() {
         gridLayer = layerForGridWithFrame(self.bounds, withGobanSize: gobanSize)
         layer.addSublayer(gridLayer)
+    }
+    
+    private func drawBorder() {
+        layer.borderWidth = lineWidth
+        layer.borderColor = lineColor.CGColor
     }
     
     private func drawStoneAtGobanPoint(gobanPoint: GobanPoint, gobanStoneColor: GobanStoneColor) {
