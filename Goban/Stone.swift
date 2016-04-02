@@ -23,6 +23,13 @@ struct Stone: StoneProtocol {
     var disabled = false
 }
 
+func ==(lhs: StoneModel, rhs: StoneModel) -> Bool {
+    return lhs.gobanPoint == rhs.gobanPoint &&
+        lhs.disabled == rhs.disabled &&
+        lhs.layer == rhs.layer &&
+        lhs.stoneColor == rhs.stoneColor
+}
+
 internal struct StoneModel: StoneProtocol {
     var stoneColor = GobanStoneColor.White
     var disabled = false
