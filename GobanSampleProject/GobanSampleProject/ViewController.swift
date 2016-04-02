@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        gobanView.gobanSize = GobanSize(width: 9, height: 9)
+        gobanView.gobanSize = GobanSize(width: 13, height: 13)
     }
     
     @IBAction func didTapClearGobanButton(sender: AnyObject) {
