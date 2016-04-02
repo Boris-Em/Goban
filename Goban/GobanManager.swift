@@ -24,6 +24,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
     
     func addNewStoneAtGobanPoint(gobanPoint: GobanPoint) {
         guard stoneAtGobanPoint(gobanPoint) == nil else {
+            removeTemporaryStone()
             return
         }
         
