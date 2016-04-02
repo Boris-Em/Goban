@@ -32,7 +32,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
         addStone(newStone, atGobanPoint: gobanPoint, isTemporary: false)
     }
     
-    func AddTemporaryStoneAtGobanPoint(gobanPoint: GobanPoint) {
+    func addTemporaryStoneAtGobanPoint(gobanPoint: GobanPoint) {
         guard stoneAtGobanPoint(gobanPoint) == nil &&
             temporaryStone?.gobanPoint != gobanPoint else {
                 return
@@ -86,7 +86,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
     // MARK: GobanTouchProtocol
     
     func didTouchGobanWithClosestGobanPoint(gobanView: GobanView, atGobanPoint gobanPoint: GobanPoint) {
-        AddTemporaryStoneAtGobanPoint(gobanPoint)
+        addTemporaryStoneAtGobanPoint(gobanPoint)
     }
     
     func didEndTouchGobanWithClosestGobanPoint(goban: GobanView, atGobanPoint gobanPoint: GobanPoint?) {
