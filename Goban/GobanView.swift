@@ -28,14 +28,9 @@ struct GobanSize {
     var height: Int = 0
 }
 
-enum GobanStoneColor {
-    case White
-    case Black
-}
-
 protocol GobanTouchProtocol: class {
     func didTouchGobanWithClosestGobanPoint(goban: GobanView, atGobanPoint gobanPoint: GobanPoint)
-    func didEndTouchGobanWithClosestGobanPoint(goban: GobanView, atGobanPoint gobanPoint: GobanPoint)
+    func didEndTouchGobanWithClosestGobanPoint(goban: GobanView, atGobanPoint gobanPoint: GobanPoint?)
 }
 
 protocol GobanProtocol: class {
@@ -70,8 +65,6 @@ class GobanView: UIView {
         }
     }
     
-    private(set) internal var lastSetStonePlayer: GobanStoneColor?
-    
     private var gridFrame: CGRect {
         get {
             return CGRectMake(frame.size.width * padding, frame.size.height * padding, frame.size.width - 2 * padding * frame.size.width, frame.size.height - 2 * padding * frame.size.height)
@@ -91,8 +84,6 @@ class GobanView: UIView {
         }
     }
     weak var delegate: GobanProtocol?
-    
-    private var stones = [GobanPoint : CAShapeLayer]()
     
     // MARK: Initializers
     
@@ -139,15 +130,18 @@ class GobanView: UIView {
         layer.borderColor = lineColor.CGColor
     }
     
-    private func drawStoneAtGobanPoint(gobanPoint: GobanPoint, gobanStoneColor: GobanStoneColor) {
+    private func drawStone(stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint) -> StoneModel {
         let stoneSize = sizeForStoneWithGobanSize(gobanSize, inFrame: gridFrame)
         let stoneCenter = centerForStoneAtGobanPoint(gobanPoint, gobanSize: gobanSize, inFrame: gridFrame)
         let stoneFrame = CGRectMake(stoneCenter.x - stoneSize / 2.0, stoneCenter.y - stoneSize / 2.0, stoneSize, stoneSize)
         
-        let stoneLayer = layerForStoneWithFrame(stoneFrame, color: gobanStoneColor == .White ? whiteStoneColor : blackStoneColor)
+        let stoneLayer = layerForStoneWithFrame(stoneFrame, color: colorForStone(stone))
         
-        stones[gobanPoint] = stoneLayer
+        let stoneModel = StoneModel(stoneColor: stone.stoneColor, disabled: stone.disabled, layer: stoneLayer, gobanPoint: gobanPoint)
+        
         layer.addSublayer(stoneLayer)
+        
+        return stoneModel
     }
     
     // MARK: Layers
@@ -202,46 +196,18 @@ class GobanView: UIView {
     
     // MARK: Stones
     
-    func setStoneAtGobanPoint(gobanPoint: GobanPoint, gobanStoneColor: GobanStoneColor, overwrite: Bool) {
+    func setStone(stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint) -> StoneModel? {
         guard gobanPoint.x >= 1 && gobanPoint.x <= gobanSize.width
             && gobanPoint.y >= 1 && gobanPoint.y <= gobanSize.height
             else {
                 print("setStoneAtPoint -- Point outside of Goban")
-                return
+                return nil
         }
         
-        if hasStoneAtGobanPoint(gobanPoint) {
-            if overwrite {
-                removeStoneAtGobanPoint(gobanPoint)
-            } else {
-                return
-            }
-        }
-        
-        drawStoneAtGobanPoint(gobanPoint, gobanStoneColor: gobanStoneColor)
-        lastSetStonePlayer = gobanStoneColor
+        let stoneModel = drawStone(stone, atGobanPoint: gobanPoint)
         delegate?.didSetStoneAtGobanPoint(self, gobanPoint: gobanPoint)
-    }
-    
-    func hasStoneAtGobanPoint(gobanPoint: GobanPoint) -> Bool {
-        return stones[gobanPoint] != nil
-    }
-    
-    func removeStoneAtGobanPoint(gobanPoint: GobanPoint) {
-        if let layer = stones[gobanPoint] {
-            layer.removeFromSuperlayer()
-            stones[gobanPoint] = nil
-            delegate?.didRemoveStoneAtGobanPoint(self, gobanPoint: gobanPoint)
-        }
-    }
-    
-    func clearGoban() {
-        for (gobanPoint, layer) in stones {
-            layer.removeFromSuperlayer()
-            delegate?.didRemoveStoneAtGobanPoint(self, gobanPoint: gobanPoint)
-        }
         
-        stones.removeAll()
+        return stoneModel
     }
     
     // MARK: Gesture Recognizers
@@ -257,9 +223,8 @@ class GobanView: UIView {
                 break
             case .Ended:
                 let tapLocation = longPressGestureRecognizer.locationInView(longPressGestureRecognizer.view)
-                if let closestGobanPoint = closestGobanPointFromPoint(tapLocation) {
-                    gobanTouchDelegate?.didEndTouchGobanWithClosestGobanPoint(self, atGobanPoint: closestGobanPoint)
-                }
+                let closestGobanPoint = closestGobanPointFromPoint(tapLocation)
+                gobanTouchDelegate?.didEndTouchGobanWithClosestGobanPoint(self, atGobanPoint: closestGobanPoint)
                 
                 break
             default:
@@ -293,6 +258,13 @@ class GobanView: UIView {
         closestGobanY = min(max(closestGobanY, 1), CGFloat(gobanSize.height))
         
         return GobanPoint(x: Int(round(closestGobanX)), y: Int(round(closestGobanY)))
+    }
+    
+    private func colorForStone(stone: StoneProtocol) -> UIColor {
+        let alpha: CGFloat = stone.disabled == true ? 0.7 : 1.0
+        let color = stone.stoneColor == GobanStoneColor.White ? whiteStoneColor : blackStoneColor
+        
+        return color.colorWithAlphaComponent(alpha)
     }
     
     // MARK: Calculations
