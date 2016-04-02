@@ -56,8 +56,13 @@ class GobanManager: NSObject, GobanTouchProtocol {
         }
     }
     
-    func removeStone(stone: StoneModel) {
+    func removeStone(stone: StoneModel, removeFromHistory: Bool) {
         stone.layer?.removeFromSuperlayer()
+        if removeFromHistory {
+            if let index = stoneHistory.indexOf({ $0 == stone }) {
+                stoneHistory.removeAtIndex(index)
+            }
+        }
     }
     
     func removeTemporaryStone() {
@@ -65,19 +70,19 @@ class GobanManager: NSObject, GobanTouchProtocol {
             return
         }
         
-        removeStone(temporaryStone!)
+        removeStone(temporaryStone!, removeFromHistory: false)
         temporaryStone = nil
     }
     
     func removeLastStone() {
         if let stoneModel = stoneHistory.last {
-            removeStone(stoneModel)
+            removeStone(stoneModel, removeFromHistory: true)
         }
     }
     
     func removeAllStones() {
         for stoneModel in stoneHistory {
-            removeStone(stoneModel)
+            removeStone(stoneModel, removeFromHistory: false)
         }
         
         removeTemporaryStone()
