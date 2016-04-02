@@ -120,6 +120,7 @@ class GobanView: UIView {
     
     private func commonInit() {
         backgroundColor = gobanBackgroundColor
+        layer.masksToBounds = true
     }
     
     // MARK: Drawings
