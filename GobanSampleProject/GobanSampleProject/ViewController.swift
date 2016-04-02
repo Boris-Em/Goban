@@ -27,7 +27,11 @@ class ViewController: UIViewController, GobanTouchProtocol {
         gobanView.setStoneAtGobanPoint(GobanPoint(x: 9, y: 4), gobanStoneColor: .White, overwrite: true)
     }
     
-    func didTouchGobanWithClosestGobanPoint(gobanView: GobanView, gobanPoint: GobanPoint) {
+    func didTouchGobanWithClosestGobanPoint(gobanView: GobanView, atGobanPoint gobanPoint: GobanPoint) {
+//        gobanView.setStoneAtGobanPoint(gobanPoint, gobanStoneColor: gobanView.lastSetStonePlayer == .Black ? .White : .Black, overwrite: false)
+    }
+    
+    func didEndTouchGobanWithClosestGobanPoint(goban: GobanView, atGobanPoint gobanPoint: GobanPoint) {
         gobanView.setStoneAtGobanPoint(gobanPoint, gobanStoneColor: gobanView.lastSetStonePlayer == .Black ? .White : .Black, overwrite: false)
     }
     
