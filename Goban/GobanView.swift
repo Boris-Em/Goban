@@ -34,7 +34,8 @@ enum GobanStoneColor {
 }
 
 protocol GobanTouchProtocol: class {
-    func didTouchGobanWithClosestGobanPoint(goban: GobanView, gobanPoint: GobanPoint)
+    func didTouchGobanWithClosestGobanPoint(goban: GobanView, atGobanPoint gobanPoint: GobanPoint)
+    func didEndTouchGobanWithClosestGobanPoint(goban: GobanView, atGobanPoint gobanPoint: GobanPoint)
 }
 
 protocol GobanProtocol: class {
@@ -78,7 +79,17 @@ class GobanView: UIView {
         set { }
     }
     
-    weak var gobanTouchDelegate: GobanTouchProtocol?
+    private var longPressGestureRecognizer: UILongPressGestureRecognizer?
+    
+    weak var gobanTouchDelegate: GobanTouchProtocol? {
+        didSet {
+            if longPressGestureRecognizer == nil {
+                let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(GobanView.didLongPressGoban(_:)))
+                longPressGestureRecognizer.minimumPressDuration = 0.0
+                self.addGestureRecognizer(longPressGestureRecognizer)
+            }
+        }
+    }
     weak var delegate: GobanProtocol?
     
     private var stones = [GobanPoint : CAShapeLayer]()
@@ -103,9 +114,6 @@ class GobanView: UIView {
     
     private func commonInit() {
         backgroundColor = gobanBackgroundColor
-        
-        let tapGestureHandler = UITapGestureRecognizer(target: self, action: #selector(GobanView.didTapGoban(_:)))
-        self.addGestureRecognizer(tapGestureHandler)
     }
     
     // MARK: Drawings
@@ -238,9 +246,26 @@ class GobanView: UIView {
     
     // MARK: Gesture Recognizers
     
-    func didTapGoban(tapGestureRecognizer: UITapGestureRecognizer) {
-        let tapLocation = tapGestureRecognizer.locationInView(tapGestureRecognizer.view)
-        gobanTouchDelegate?.didTouchGobanWithClosestGobanPoint(self, gobanPoint: closestGobanPointFromPoint(tapLocation))
+    func didLongPressGoban(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        if self.gobanTouchDelegate != nil {
+            switch longPressGestureRecognizer.state {
+            case .Began, .Changed:
+                let tapLocation = longPressGestureRecognizer.locationInView(longPressGestureRecognizer.view)
+                if let closestGobanPoint = closestGobanPointFromPoint(tapLocation) {
+                    gobanTouchDelegate?.didTouchGobanWithClosestGobanPoint(self, atGobanPoint: closestGobanPoint)
+                }
+                break
+            case .Ended:
+                let tapLocation = longPressGestureRecognizer.locationInView(longPressGestureRecognizer.view)
+                if let closestGobanPoint = closestGobanPointFromPoint(tapLocation) {
+                    gobanTouchDelegate?.didEndTouchGobanWithClosestGobanPoint(self, atGobanPoint: closestGobanPoint)
+                }
+                
+                break
+            default:
+                break
+            }
+        }
     }
     
     // MARK: Helper Methods
@@ -256,7 +281,11 @@ class GobanView: UIView {
         }
     }
     
-    func closestGobanPointFromPoint(point: CGPoint) -> GobanPoint {
+    func closestGobanPointFromPoint(point: CGPoint) -> GobanPoint? {
+        guard CGRectContainsPoint(bounds, point) else {
+            return nil
+        }
+        
         var closestGobanX =  CGFloat(gobanSize.width - 1) / (gridFrame.size.width / (point.x - gridFrame.origin.x)) + 1
         closestGobanX = min(max(closestGobanX, 1), CGFloat(gobanSize.width))
         
