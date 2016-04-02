@@ -86,7 +86,7 @@ class GobanView: UIView {
     private func commonInit() {
         backgroundColor = gobanBackgroundColor
         
-        let tapGestureHandler = UITapGestureRecognizer(target: self, action: "didTapGoban:")
+        let tapGestureHandler = UITapGestureRecognizer(target: self, action: #selector(GobanView.didTapGoban(_:)))
         self.addGestureRecognizer(tapGestureHandler)
     }
     
@@ -147,12 +147,12 @@ class GobanView: UIView {
         let heightLineInterval = rect.size.height / CGFloat(gobanSize.height - 1)
         let widthLineInterval = rect.size.width / CGFloat(gobanSize.width - 1)
 
-        for var i = 0; i < Int(gobanSize.height); i++ {
+        for i in 0 ..< Int(gobanSize.height) {
             gridPath.moveToPoint(CGPointMake(0.0, CGFloat(i) * heightLineInterval))
             gridPath.addLineToPoint(CGPointMake(rect.size.width, CGFloat(i) * heightLineInterval))
         }
 
-        for var i = 0; i < Int(gobanSize.width); i++ {
+        for i in 0 ..< Int(gobanSize.width) {
             gridPath.moveToPoint(CGPointMake(CGFloat(i) * widthLineInterval, 0.0))
             gridPath.addLineToPoint(CGPointMake(CGFloat(i) * widthLineInterval, rect.size.height))
         }
