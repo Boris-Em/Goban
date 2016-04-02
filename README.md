@@ -9,4 +9,4 @@
 - ~~Add padding to goban~~
 - Add legend to goban
 - Animations
-- Add stars
+- ~~Add stars~~
