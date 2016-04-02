@@ -116,7 +116,9 @@ class GobanView: UIView {
         removeSubLayers()
 
         drawGrid()
-        drawBorder()
+        if padding > 0.0 {
+            drawBorder()
+        }
     }
     
     private func drawGrid() {
