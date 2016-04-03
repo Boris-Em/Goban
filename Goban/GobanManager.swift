@@ -65,6 +65,12 @@ class GobanManager: NSObject, GobanTouchProtocol {
         }
     }
     
+    func removeStoneAtGobanPoint(gobanPoint: GobanPoint, removeFromHistory: Bool) {
+        if let stone = stoneAtGobanPoint(gobanPoint) {
+            removeStone(stone, removeFromHistory: removeFromHistory)
+        }
+    }
+    
     func removeTemporaryStone() {
         guard temporaryStone != nil else {
             return
