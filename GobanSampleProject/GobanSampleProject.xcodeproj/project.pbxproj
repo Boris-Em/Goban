@@ -1,0 +1,431 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C31B552E1C9DD10500B060D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31B552D1C9DD10500B060D8 /* AppDelegate.swift */; };
+		C31B55301C9DD10500B060D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31B552F1C9DD10500B060D8 /* ViewController.swift */; };
+		C31B55331C9DD10500B060D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C31B55311C9DD10500B060D8 /* Main.storyboard */; };
+		C31B55351C9DD10500B060D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C31B55341C9DD10500B060D8 /* Assets.xcassets */; };
+		C31B55381C9DD10500B060D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C31B55361C9DD10500B060D8 /* LaunchScreen.storyboard */; };
+		C31B55411C9DD1B000B060D8 /* GobanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31B55401C9DD1B000B060D8 /* GobanView.swift */; };
+		C3A1A08C1C9F93E400620CEA /* GobanViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A1A07C1C9F936B00620CEA /* GobanViewTests.swift */; };
+		C3D286321CB0341200DFC062 /* Stone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D286311CB0341200DFC062 /* Stone.swift */; };
+		C3D286341CB044D400DFC062 /* GobanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D286331CB044D400DFC062 /* GobanManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C3A1A0871C9F93DB00620CEA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C31B55221C9DD10500B060D8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C31B55291C9DD10500B060D8;
+			remoteInfo = GobanSampleProject;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C31B552A1C9DD10500B060D8 /* GobanSampleProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GobanSampleProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C31B552D1C9DD10500B060D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C31B552F1C9DD10500B060D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C31B55321C9DD10500B060D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C31B55341C9DD10500B060D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C31B55371C9DD10500B060D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C31B55391C9DD10500B060D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C31B55401C9DD1B000B060D8 /* GobanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanView.swift; sourceTree = "<group>"; };
+		C3A1A07C1C9F936B00620CEA /* GobanViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GobanViewTests.swift; path = ../GobanSampleProject/Tests/GobanViewTests.swift; sourceTree = "<group>"; };
+		C3A1A0821C9F93DB00620CEA /* GobanSampleProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GobanSampleProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3A1A0861C9F93DB00620CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3D286311CB0341200DFC062 /* Stone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stone.swift; sourceTree = "<group>"; };
+		C3D286331CB044D400DFC062 /* GobanManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanManager.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C31B55271C9DD10500B060D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3A1A07F1C9F93DB00620CEA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C31B55211C9DD10500B060D8 = {
+			isa = PBXGroup;
+			children = (
+				C31B553F1C9DD12100B060D8 /* Goban */,
+				C31B552C1C9DD10500B060D8 /* GobanSampleProject */,
+				C3A1A0831C9F93DB00620CEA /* GobanSampleProjectTests */,
+				C31B552B1C9DD10500B060D8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C31B552B1C9DD10500B060D8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C31B552A1C9DD10500B060D8 /* GobanSampleProject.app */,
+				C3A1A0821C9F93DB00620CEA /* GobanSampleProjectTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C31B552C1C9DD10500B060D8 /* GobanSampleProject */ = {
+			isa = PBXGroup;
+			children = (
+				C31B552D1C9DD10500B060D8 /* AppDelegate.swift */,
+				C31B552F1C9DD10500B060D8 /* ViewController.swift */,
+				C31B55311C9DD10500B060D8 /* Main.storyboard */,
+				C31B55341C9DD10500B060D8 /* Assets.xcassets */,
+				C31B55361C9DD10500B060D8 /* LaunchScreen.storyboard */,
+				C31B55391C9DD10500B060D8 /* Info.plist */,
+			);
+			path = GobanSampleProject;
+			sourceTree = "<group>";
+		};
+		C31B553F1C9DD12100B060D8 /* Goban */ = {
+			isa = PBXGroup;
+			children = (
+				C31B55401C9DD1B000B060D8 /* GobanView.swift */,
+				C3D286331CB044D400DFC062 /* GobanManager.swift */,
+				C3D286311CB0341200DFC062 /* Stone.swift */,
+			);
+			name = Goban;
+			path = ../Goban;
+			sourceTree = "<group>";
+		};
+		C3A1A0831C9F93DB00620CEA /* GobanSampleProjectTests */ = {
+			isa = PBXGroup;
+			children = (
+				C3A1A07C1C9F936B00620CEA /* GobanViewTests.swift */,
+				C3A1A0861C9F93DB00620CEA /* Info.plist */,
+			);
+			path = GobanSampleProjectTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C31B55291C9DD10500B060D8 /* GobanSampleProject */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C31B553C1C9DD10500B060D8 /* Build configuration list for PBXNativeTarget "GobanSampleProject" */;
+			buildPhases = (
+				C31B55261C9DD10500B060D8 /* Sources */,
+				C31B55271C9DD10500B060D8 /* Frameworks */,
+				C31B55281C9DD10500B060D8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GobanSampleProject;
+			productName = GobanSampleProject;
+			productReference = C31B552A1C9DD10500B060D8 /* GobanSampleProject.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C3A1A0811C9F93DB00620CEA /* GobanSampleProjectTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3A1A0891C9F93DB00620CEA /* Build configuration list for PBXNativeTarget "GobanSampleProjectTests" */;
+			buildPhases = (
+				C3A1A07E1C9F93DB00620CEA /* Sources */,
+				C3A1A07F1C9F93DB00620CEA /* Frameworks */,
+				C3A1A0801C9F93DB00620CEA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C3A1A0881C9F93DB00620CEA /* PBXTargetDependency */,
+			);
+			name = GobanSampleProjectTests;
+			productName = GobanSampleProjectTests;
+			productReference = C3A1A0821C9F93DB00620CEA /* GobanSampleProjectTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C31B55221C9DD10500B060D8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Boris Emorine";
+				TargetAttributes = {
+					C31B55291C9DD10500B060D8 = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 67V847367C;
+					};
+					C3A1A0811C9F93DB00620CEA = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = C31B55291C9DD10500B060D8;
+					};
+				};
+			};
+			buildConfigurationList = C31B55251C9DD10500B060D8 /* Build configuration list for PBXProject "GobanSampleProject" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C31B55211C9DD10500B060D8;
+			productRefGroup = C31B552B1C9DD10500B060D8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C31B55291C9DD10500B060D8 /* GobanSampleProject */,
+				C3A1A0811C9F93DB00620CEA /* GobanSampleProjectTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C31B55281C9DD10500B060D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C31B55381C9DD10500B060D8 /* LaunchScreen.storyboard in Resources */,
+				C31B55351C9DD10500B060D8 /* Assets.xcassets in Resources */,
+				C31B55331C9DD10500B060D8 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3A1A0801C9F93DB00620CEA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C31B55261C9DD10500B060D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C31B55301C9DD10500B060D8 /* ViewController.swift in Sources */,
+				C3D286341CB044D400DFC062 /* GobanManager.swift in Sources */,
+				C31B552E1C9DD10500B060D8 /* AppDelegate.swift in Sources */,
+				C31B55411C9DD1B000B060D8 /* GobanView.swift in Sources */,
+				C3D286321CB0341200DFC062 /* Stone.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3A1A07E1C9F93DB00620CEA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3A1A08C1C9F93E400620CEA /* GobanViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C3A1A0881C9F93DB00620CEA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C31B55291C9DD10500B060D8 /* GobanSampleProject */;
+			targetProxy = C3A1A0871C9F93DB00620CEA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C31B55311C9DD10500B060D8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C31B55321C9DD10500B060D8 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C31B55361C9DD10500B060D8 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C31B55371C9DD10500B060D8 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C31B553A1C9DD10500B060D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C31B553B1C9DD10500B060D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C31B553D1C9DD10500B060D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = GobanSampleProject/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = BEM.GobanSampleProject;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		C31B553E1C9DD10500B060D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = GobanSampleProject/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = BEM.GobanSampleProject;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		C3A1A08A1C9F93DB00620CEA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = GobanSampleProjectTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = BEM.GobanSampleProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GobanSampleProject.app/GobanSampleProject";
+			};
+			name = Debug;
+		};
+		C3A1A08B1C9F93DB00620CEA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = GobanSampleProjectTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = BEM.GobanSampleProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GobanSampleProject.app/GobanSampleProject";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C31B55251C9DD10500B060D8 /* Build configuration list for PBXProject "GobanSampleProject" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C31B553A1C9DD10500B060D8 /* Debug */,
+				C31B553B1C9DD10500B060D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C31B553C1C9DD10500B060D8 /* Build configuration list for PBXNativeTarget "GobanSampleProject" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C31B553D1C9DD10500B060D8 /* Debug */,
+				C31B553E1C9DD10500B060D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3A1A0891C9F93DB00620CEA /* Build configuration list for PBXNativeTarget "GobanSampleProjectTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3A1A08A1C9F93DB00620CEA /* Debug */,
+				C3A1A08B1C9F93DB00620CEA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C31B55221C9DD10500B060D8 /* Project object */;
+}
