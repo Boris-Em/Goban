@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class GobanManager: NSObject, GobanTouchProtocol {
     let gobanView: GobanView
@@ -24,7 +25,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
     
     func addNewStoneAtGobanPoint(gobanPoint: GobanPoint) {
         guard stoneAtGobanPoint(gobanPoint) == nil else {
-            removeTemporaryStone()
+            removeTemporaryStoneAnimated(false)
             return
         }
         
@@ -39,7 +40,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
                 return
         }
         
-        removeTemporaryStone()
+        removeTemporaryStoneAnimated(false)
         let lastStone: StoneProtocol = stoneHistory.last ?? Stone(stoneColor: .White, disabled: false)
         let newStone = Stone(stoneColor: lastStone.stoneColor == .White ? .Black : . White, disabled: true)
         addStone(newStone, atGobanPoint: gobanPoint, isTemporary: true)
@@ -49,15 +50,26 @@ class GobanManager: NSObject, GobanTouchProtocol {
         if let stoneModel = gobanView.setStone(stone, atGobanPoint: gobanPoint) {
             if isTemporary == false {
                 stoneHistory.append(stoneModel)
-                removeTemporaryStone()
+                removeTemporaryStoneAnimated(false)
             } else {
                 temporaryStone = stoneModel
             }
         }
     }
     
-    func removeStone(stone: StoneModel, removeFromHistory: Bool) {
-        stone.layer?.removeFromSuperlayer()
+    func removeStone(stone: StoneModel, removeFromHistory: Bool, animated: Bool) {
+        if animated {
+            let animation = fadeOutAnimationForStone(stone, withCompletion: { [weak self] (stone) -> Void in
+                self?.removeStone(stone, removeFromHistory: removeFromHistory)
+            })
+            stone.layer.addAnimation(animation, forKey: "opacity")
+        } else {
+            removeStone(stone, removeFromHistory: removeFromHistory)
+        }
+    }
+    
+    private func removeStone(stone: StoneModel, removeFromHistory: Bool) {
+        stone.layer.removeFromSuperlayer()
         if removeFromHistory {
             if let index = stoneHistory.indexOf({ $0 == stone }) {
                 stoneHistory.removeAtIndex(index)
@@ -65,33 +77,33 @@ class GobanManager: NSObject, GobanTouchProtocol {
         }
     }
     
-    func removeStoneAtGobanPoint(gobanPoint: GobanPoint, removeFromHistory: Bool) {
+    func removeStoneAtGobanPoint(gobanPoint: GobanPoint, removeFromHistory: Bool, animated: Bool) {
         if let stone = stoneAtGobanPoint(gobanPoint) {
-            removeStone(stone, removeFromHistory: removeFromHistory)
+            removeStone(stone, removeFromHistory: removeFromHistory, animated: animated)
         }
     }
     
-    func removeTemporaryStone() {
+    func removeTemporaryStoneAnimated(animated: Bool) {
         guard temporaryStone != nil else {
             return
         }
         
-        removeStone(temporaryStone!, removeFromHistory: false)
+        removeStone(temporaryStone!, removeFromHistory: false, animated: animated)
         temporaryStone = nil
     }
     
-    func removeLastStone() {
+    func removeLastStone(animated: Bool) {
         if let stoneModel = stoneHistory.last {
-            removeStone(stoneModel, removeFromHistory: true)
+            removeStone(stoneModel, removeFromHistory: true, animated: animated)
         }
     }
     
-    func removeAllStones() {
+    func removeAllStonesAnimated(animated: Bool) {
         for stoneModel in stoneHistory {
-            removeStone(stoneModel, removeFromHistory: false)
+            removeStone(stoneModel, removeFromHistory: false, animated: animated)
         }
         
-        removeTemporaryStone()
+        removeTemporaryStoneAnimated(animated)
         stoneHistory.removeAll()
     }
     
@@ -103,7 +115,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
     
     func didEndTouchGobanWithClosestGobanPoint(goban: GobanView, atGobanPoint gobanPoint: GobanPoint?) {
         guard gobanPoint != nil else {
-            removeTemporaryStone()
+            removeTemporaryStoneAnimated(false)
             return
         }
         
@@ -113,7 +125,44 @@ class GobanManager: NSObject, GobanTouchProtocol {
     // MARK: Helper Methods
     
     func stoneAtGobanPoint(gobanPoint: GobanPoint) -> StoneModel? {
-        let filteredArray = stoneHistory.filter({$0.gobanPoint == gobanPoint})
+        let filteredArray = stoneHistory.filter({ $0.gobanPoint == gobanPoint })
         return filteredArray.first
+    }
+    
+    // MARK: Animations
+    
+    private typealias animationCompletion = ((stone: StoneModel) -> Void)
+    private var animationCompletions = [StoneModel: animationCompletion]()
+    var animationDuration = 0.8
+    
+    private func fadeOutAnimationForStone(stone: StoneModel, withCompletion completion: animationCompletion?) -> CABasicAnimation {
+        let opacityAnimation = CABasicAnimation(keyPath: "opacity")
+        opacityAnimation.fromValue = 1.0
+        opacityAnimation.toValue = 0.0
+        opacityAnimation.delegate = self
+        opacityAnimation.duration = animationDuration
+        opacityAnimation.fillMode = kCAFillModeForwards
+        opacityAnimation.removedOnCompletion = false
+        
+        if completion != nil {
+            opacityAnimation.setValue(stone.hashValue, forKey: "stoneId")
+            animationCompletions[stone] = completion
+        }
+        
+        return opacityAnimation
+    }
+    
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        guard let stoneId = anim.valueForKey("stoneId") as? Int else {
+            return
+        }
+        
+        for stone in animationCompletions.keys {
+            if stone.hashValue == stoneId {
+                let completion = animationCompletions[stone]
+                completion!(stone: stone)
+                animationCompletions.removeValueForKey(stone)
+            }
+        }
     }
 }

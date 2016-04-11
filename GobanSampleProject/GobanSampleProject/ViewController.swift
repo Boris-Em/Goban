@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func didTapClearGobanButton(sender: AnyObject) {
-        gobanManager?.removeAllStones()
+        gobanManager?.removeAllStonesAnimated(true)
     }
 
     override func didReceiveMemoryWarning() {

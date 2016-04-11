@@ -30,9 +30,13 @@ func ==(lhs: StoneModel, rhs: StoneModel) -> Bool {
         lhs.stoneColor == rhs.stoneColor
 }
 
-internal struct StoneModel: StoneProtocol {
+internal struct StoneModel: StoneProtocol, Hashable {
     var stoneColor = GobanStoneColor.White
     var disabled = false
-    var layer: CAShapeLayer?
-    var gobanPoint: GobanPoint?    
+    var layer: CAShapeLayer
+    var gobanPoint: GobanPoint
+    var hashValue: Int {
+        get { return "\(gobanPoint.x) \(gobanPoint.y) \(unsafeAddressOf(layer))".hashValue }
+        set { }
+    }
 }
