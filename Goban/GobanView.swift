@@ -210,6 +210,10 @@ class GobanView: UIView {
         return stoneModel
     }
     
+    func reload() {
+        drawGoban()
+    }
+    
     // MARK: Layers
     
     private func layerForGridWithFrame(frame: CGRect, withGobanSize size: GobanSize, padding: CGFloat) -> CAShapeLayer {
