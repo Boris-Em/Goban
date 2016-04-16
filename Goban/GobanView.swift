@@ -33,15 +33,24 @@ protocol GobanTouchProtocol: class {
     func didEndTouchGobanWithClosestGobanPoint(goban: GobanView, atGobanPoint gobanPoint: GobanPoint?)
 }
 
+/** The delegate of a `GobanView` must adopt the `GobanTouchProtocol`.
+The protocol allows the delegate to get information about when a stone gets set.
+ */
 protocol GobanProtocol: class {
     func didSetStoneAtGobanPoint(gobanView: GobanView, gobanPoint: GobanPoint)
-    func didRemoveStoneAtGobanPoint(gobanView: GobanView, gobanPoint: GobanPoint)
 }
 
+/** `GobanView` is used to create highly custmizable Goban representations.
+ */
 class GobanView: UIView {
     
-    // MARK: Properties
+    // MARK: Variables
     
+    /** The actual size of the goban. That is, the number of lines that composes each side of the board.
+    Setting this variable to a new value will redraw the `GobanView`.
+    If `gobanSize` is set to a common size (9x9, 13x13 or 19x19), the star points will be automatically calculated. Defaults to 19x19.
+    - SeeAlso: `startPoints`
+    */
     var gobanSize: GobanSize = GobanSize(width: 19, height: 19) {
         didSet {
             if self.starPoints.isEmpty {
@@ -57,17 +66,37 @@ class GobanView: UIView {
         }
     }
     
+    /** An array of positions for the star points on the Goban to be drawn. Defautls to an empty array.
+     - SeeAlso: `gobanSize`
+     */
     var starPoints = [GobanPoint]() {
         didSet {
             drawStarPoints()
         }
     }
     
+    /** The color of the lines (grid) on the goban. Defaults to R:0.35, G: 0.35, B: 0.35, A: 1.0.
+     */
     let lineColor = UIColor(red: 90.0 / 255.0, green: 90.0 / 255.0, blue: 90.0 / 255.0, alpha: 1.0)
+    
+    /** The width of the lines (grid) on the goban. Defaults to 2.0.
+     */
     let lineWidth: CGFloat = 2.0
+    
+    /** The background color of the goban. Defaults to R:0.96, G: 0.82, B: 0.63, A: 1.0.
+     */
     let gobanBackgroundColor = UIColor(red: 240.0 / 255.0, green: 211.0 / 255.0, blue: 159.0 / 255.0, alpha: 1.0)
+    
+    /** The color of the white stones. Defaults to white.
+     */
     let whiteStoneColor = UIColor.whiteColor()
+    
+    /** The color of the black stones. Defaults to black.
+     */
     let blackStoneColor = UIColor.blackColor()
+    
+    /** The empty space between the grid and the actual goban limits as a percentage of the goban size. Defaults to 0.07.
+     */
     var padding: CGFloat = 0.07 {
         didSet {
             if padding > 1.0 {
@@ -80,15 +109,23 @@ class GobanView: UIView {
         }
     }
     
+    /** The frame of the grid on the goban.
+     */
     private var gridFrame: CGRect {
         get {
             return CGRectMake(frame.size.width * padding, frame.size.height * padding, frame.size.width - 2 * padding * frame.size.width, frame.size.height - 2 * padding * frame.size.height)
         }
         set { }
     }
-    
+
+    /** Gesture recognizer used to track user inputs on the goban.
+    - SeeAlso: `gobanTouchDelegate`
+     */
     private var longPressGestureRecognizer: UILongPressGestureRecognizer?
     
+    /** The object that acts as the delegate for touch inputs on `GobanView`.
+    - SeeAlso: `GobanTouchProtocol`
+     */
     weak var gobanTouchDelegate: GobanTouchProtocol? {
         didSet {
             if longPressGestureRecognizer == nil {
@@ -98,6 +135,10 @@ class GobanView: UIView {
             }
         }
     }
+    
+    /** The object that acts as the delegate of `GobanView`.
+    - SeeAlso: `GobanProtocol`
+     */
     weak var delegate: GobanProtocol?
     
     // MARK: Initializers
