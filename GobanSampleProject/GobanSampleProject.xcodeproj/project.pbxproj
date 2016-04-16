@@ -13,7 +13,8 @@
 		C31B55351C9DD10500B060D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C31B55341C9DD10500B060D8 /* Assets.xcassets */; };
 		C31B55381C9DD10500B060D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C31B55361C9DD10500B060D8 /* LaunchScreen.storyboard */; };
 		C31B55411C9DD1B000B060D8 /* GobanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31B55401C9DD1B000B060D8 /* GobanView.swift */; };
-		C3A1A08C1C9F93E400620CEA /* GobanViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A1A07C1C9F936B00620CEA /* GobanViewTests.swift */; };
+		C3B2A19E1CC2A64A0066C401 /* GobanManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B2A19D1CC2A64A0066C401 /* GobanManagerTests.swift */; };
+		C3B2A1A01CC2A6730066C401 /* GobanViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B2A19F1CC2A6730066C401 /* GobanViewTests.swift */; };
 		C3D286321CB0341200DFC062 /* Stone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D286311CB0341200DFC062 /* Stone.swift */; };
 		C3D286341CB044D400DFC062 /* GobanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D286331CB044D400DFC062 /* GobanManager.swift */; };
 /* End PBXBuildFile section */
@@ -37,9 +38,10 @@
 		C31B55371C9DD10500B060D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C31B55391C9DD10500B060D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C31B55401C9DD1B000B060D8 /* GobanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanView.swift; sourceTree = "<group>"; };
-		C3A1A07C1C9F936B00620CEA /* GobanViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GobanViewTests.swift; path = ../GobanSampleProject/Tests/GobanViewTests.swift; sourceTree = "<group>"; };
 		C3A1A0821C9F93DB00620CEA /* GobanSampleProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GobanSampleProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3A1A0861C9F93DB00620CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3B2A19D1CC2A64A0066C401 /* GobanManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanManagerTests.swift; sourceTree = "<group>"; };
+		C3B2A19F1CC2A6730066C401 /* GobanViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanViewTests.swift; sourceTree = "<group>"; };
 		C3D286311CB0341200DFC062 /* Stone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stone.swift; sourceTree = "<group>"; };
 		C3D286331CB044D400DFC062 /* GobanManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,7 +110,8 @@
 		C3A1A0831C9F93DB00620CEA /* GobanSampleProjectTests */ = {
 			isa = PBXGroup;
 			children = (
-				C3A1A07C1C9F936B00620CEA /* GobanViewTests.swift */,
+				C3B2A19F1CC2A6730066C401 /* GobanViewTests.swift */,
+				C3B2A19D1CC2A64A0066C401 /* GobanManagerTests.swift */,
 				C3A1A0861C9F93DB00620CEA /* Info.plist */,
 			);
 			path = GobanSampleProjectTests;
@@ -228,7 +231,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3A1A08C1C9F93E400620CEA /* GobanViewTests.swift in Sources */,
+				C3B2A1A01CC2A6730066C401 /* GobanViewTests.swift in Sources */,
+				C3B2A19E1CC2A64A0066C401 /* GobanManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
