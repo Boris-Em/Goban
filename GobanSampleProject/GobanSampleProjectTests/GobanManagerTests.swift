@@ -19,12 +19,12 @@ class GobanManagerTests: XCTestCase {
         super.tearDown()
     }
     
+    let initialNumberOfSublayers = 2
+    
     func testAddNewStoneAtGobanPoint() {
         let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRectZero)
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
-        
-        let initialNumberOfSublayers = 2
         
         // Stone outside of goban
         var gobanPoint = GobanPoint(x: 0, y: 0)
@@ -89,8 +89,6 @@ class GobanManagerTests: XCTestCase {
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
         
-        let initialNumberOfSublayers = 2
-        
         // Adding a temporary stone shouldn't increase the stone history count
         let gobanPoint = GobanPoint(x: 0, y: 0)
         gobanManager.addTemporaryStoneAtGobanPoint(gobanPoint)
@@ -104,8 +102,6 @@ class GobanManagerTests: XCTestCase {
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
         
-        let initialNumberOfSublayers = 2
-
         // Add new stone and remove it from GobanView and stone history
         var gobanPoint = GobanPoint(x: 2, y: 7)
         gobanManager.addNewStoneAtGobanPoint(gobanPoint)
@@ -168,8 +164,6 @@ class GobanManagerTests: XCTestCase {
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
         
-        let initialNumberOfSublayers = 2
-        
         // Add new stone and remove it from GobanView and stone history
         var gobanPoint = GobanPoint(x: 2, y: 7)
         gobanManager.addNewStoneAtGobanPoint(gobanPoint)
@@ -230,8 +224,6 @@ class GobanManagerTests: XCTestCase {
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
         
-        let initialNumberOfSublayers = 2
-        
         // Add new stone and remove it from GobanView and stone history
         let gobanPoint = GobanPoint(x: 2, y: 7)
         gobanManager.addNewStoneAtGobanPoint(gobanPoint)
@@ -247,8 +239,6 @@ class GobanManagerTests: XCTestCase {
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
         
-        let initialNumberOfSublayers = 2
-
         // Add two stones and remove them all
         var gobanPoint = GobanPoint(x: 2, y: 2)
         gobanManager.addNewStoneAtGobanPoint(gobanPoint)
@@ -266,8 +256,6 @@ class GobanManagerTests: XCTestCase {
         let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRectZero)
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
-        
-        let initialNumberOfSublayers = 2
         
         // Add stone and retrieve it
         var gobanPoint = GobanPoint(x: 2, y: 2)
