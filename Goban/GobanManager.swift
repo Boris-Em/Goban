@@ -46,7 +46,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
         addStone(newStone, atGobanPoint: gobanPoint, isTemporary: true)
     }
     
-    func addStone(stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint, isTemporary: Bool) {
+    private func addStone(stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint, isTemporary: Bool) {
         if let stoneModel = gobanView.setStone(stone, atGobanPoint: gobanPoint) {
             if isTemporary == false {
                 stoneHistory.append(stoneModel)
@@ -92,7 +92,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
         temporaryStone = nil
     }
     
-    func removeLastStone(animated: Bool) {
+    func removeLastStoneAnimated(animated: Bool) {
         if let stoneModel = stoneHistory.last {
             removeStone(stoneModel, removeFromHistory: true, animated: animated)
         }
