@@ -21,6 +21,30 @@ struct GobanPoint: Hashable {
             return "\(self.x), \(self.y)".hashValue
         }
     }
+    
+    init(x: Int, y: Int) {
+        self.x = x
+        self.y = y
+    }
+    
+    init?(SGFString: String) {
+        guard SGFString.characters.count == 2 else {
+            return nil
+        }
+        
+        let alphabet = "abcdefghijklmnopqrstuvwxyz"
+        if let indexForCharacterInString = alphabet.characters.indexOf(SGFString.characters.first!) {
+            x = alphabet.startIndex.distanceTo(indexForCharacterInString) + 1
+        } else {
+            return nil
+        }
+        
+        if let indexForCharacterInString = alphabet.characters.indexOf(SGFString.characters.last!) {
+            y = alphabet.startIndex.distanceTo(indexForCharacterInString) + 1
+        } else {
+            return nil
+        }
+    }
 }
 
 struct GobanSize {
@@ -53,14 +77,12 @@ class GobanView: UIView {
     */
     var gobanSize: GobanSize = GobanSize(width: 19, height: 19) {
         didSet {
-            if self.starPoints.isEmpty {
-                if gobanSize.width == 9 && gobanSize.height == 9 {
-                    self.starPoints = [GobanPoint(x: 3, y: 3), GobanPoint(x: 7, y: 3), GobanPoint(x: 5, y: 5), GobanPoint(x: 3, y: 7), GobanPoint(x: 7, y: 7)]
-                } else if gobanSize.width == 13 && gobanSize.height == 13 {
-                    self.starPoints = [GobanPoint(x: 4, y: 4), GobanPoint(x: 10, y: 4), GobanPoint(x: 7, y: 7), GobanPoint(x: 4, y: 10), GobanPoint(x: 10, y: 10)]
-                } else if gobanSize.width == 19 && gobanSize.height == 19 {
-                    self.starPoints = [GobanPoint(x: 4, y: 4), GobanPoint(x: 10, y: 4), GobanPoint(x: 16, y: 4), GobanPoint(x: 4, y: 10), GobanPoint(x: 10, y: 10), GobanPoint(x: 16, y: 10), GobanPoint(x: 4, y: 16), GobanPoint(x: 10, y: 16), GobanPoint(x: 16, y: 16)]
-                }
+            if gobanSize.width == 9 && gobanSize.height == 9 {
+                self.starPoints = [GobanPoint(x: 3, y: 3), GobanPoint(x: 7, y: 3), GobanPoint(x: 5, y: 5), GobanPoint(x: 3, y: 7), GobanPoint(x: 7, y: 7)]
+            } else if gobanSize.width == 13 && gobanSize.height == 13 {
+                self.starPoints = [GobanPoint(x: 4, y: 4), GobanPoint(x: 10, y: 4), GobanPoint(x: 7, y: 7), GobanPoint(x: 4, y: 10), GobanPoint(x: 10, y: 10)]
+            } else if gobanSize.width == 19 && gobanSize.height == 19 {
+                self.starPoints = [GobanPoint(x: 4, y: 4), GobanPoint(x: 10, y: 4), GobanPoint(x: 16, y: 4), GobanPoint(x: 4, y: 10), GobanPoint(x: 10, y: 10), GobanPoint(x: 16, y: 10), GobanPoint(x: 4, y: 16), GobanPoint(x: 10, y: 16), GobanPoint(x: 16, y: 16)]
             }
             drawGoban()
         }

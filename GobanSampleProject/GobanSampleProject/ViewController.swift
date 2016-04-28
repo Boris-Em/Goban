@@ -22,14 +22,20 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         gobanView.gobanSize = GobanSize(width: 13, height: 13)
+        
+        let path = NSBundle.mainBundle().URLForResource("Lee-Sedol-vs-AlphaGo-20160309", withExtension:"sgf")
+        gobanManager?.loadSGFFileAtURL(path!)
     }
     
     @IBAction func didTapClearGobanButton(sender: AnyObject) {
         gobanManager?.removeAllStonesAnimated(true)
+    }
+    
+    @IBAction func didTapNextButton(sender: AnyObject) {
+        gobanManager?.handleNextNode()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 }
-

@@ -15,6 +15,10 @@
 		C31B55411C9DD1B000B060D8 /* GobanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31B55401C9DD1B000B060D8 /* GobanView.swift */; };
 		C3B2A19E1CC2A64A0066C401 /* GobanManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B2A19D1CC2A64A0066C401 /* GobanManagerTests.swift */; };
 		C3B2A1A01CC2A6730066C401 /* GobanViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B2A19F1CC2A6730066C401 /* GobanViewTests.swift */; };
+		C3B5211D1CD02D5500B890B7 /* SGFGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B5211C1CD02D5500B890B7 /* SGFGame.swift */; };
+		C3B5211F1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf in Resources */ = {isa = PBXBuildFile; fileRef = C3B5211E1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf */; };
+		C3B521211CD0887000B890B7 /* SGFParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B521201CD0887000B890B7 /* SGFParser.swift */; };
+		C3B521231CD0890000B890B7 /* SGFNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B521221CD0890000B890B7 /* SGFNode.swift */; };
 		C3D286321CB0341200DFC062 /* Stone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D286311CB0341200DFC062 /* Stone.swift */; };
 		C3D286341CB044D400DFC062 /* GobanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D286331CB044D400DFC062 /* GobanManager.swift */; };
 /* End PBXBuildFile section */
@@ -42,6 +46,10 @@
 		C3A1A0861C9F93DB00620CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3B2A19D1CC2A64A0066C401 /* GobanManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanManagerTests.swift; sourceTree = "<group>"; };
 		C3B2A19F1CC2A6730066C401 /* GobanViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanViewTests.swift; sourceTree = "<group>"; };
+		C3B5211C1CD02D5500B890B7 /* SGFGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SGFGame.swift; path = "SGF Parser/SGFGame.swift"; sourceTree = "<group>"; };
+		C3B5211E1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Lee-Sedol-vs-AlphaGo-20160309.sgf"; sourceTree = "<group>"; };
+		C3B521201CD0887000B890B7 /* SGFParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SGFParser.swift; path = "SGF Parser/SGFParser.swift"; sourceTree = "<group>"; };
+		C3B521221CD0890000B890B7 /* SGFNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFNode.swift; sourceTree = "<group>"; };
 		C3D286311CB0341200DFC062 /* Stone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stone.swift; sourceTree = "<group>"; };
 		C3D286331CB044D400DFC062 /* GobanManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,6 +94,7 @@
 		C31B552C1C9DD10500B060D8 /* GobanSampleProject */ = {
 			isa = PBXGroup;
 			children = (
+				C3B5211E1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf */,
 				C31B552D1C9DD10500B060D8 /* AppDelegate.swift */,
 				C31B552F1C9DD10500B060D8 /* ViewController.swift */,
 				C31B55311C9DD10500B060D8 /* Main.storyboard */,
@@ -99,6 +108,7 @@
 		C31B553F1C9DD12100B060D8 /* Goban */ = {
 			isa = PBXGroup;
 			children = (
+				C3B521191CD0183900B890B7 /* SGF Parser */,
 				C31B55401C9DD1B000B060D8 /* GobanView.swift */,
 				C3D286331CB044D400DFC062 /* GobanManager.swift */,
 				C3D286311CB0341200DFC062 /* Stone.swift */,
@@ -115,6 +125,16 @@
 				C3A1A0861C9F93DB00620CEA /* Info.plist */,
 			);
 			path = GobanSampleProjectTests;
+			sourceTree = "<group>";
+		};
+		C3B521191CD0183900B890B7 /* SGF Parser */ = {
+			isa = PBXGroup;
+			children = (
+				C3B5211C1CD02D5500B890B7 /* SGFGame.swift */,
+				C3B521201CD0887000B890B7 /* SGFParser.swift */,
+				C3B521221CD0890000B890B7 /* SGFNode.swift */,
+			);
+			name = "SGF Parser";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +221,7 @@
 			files = (
 				C31B55381C9DD10500B060D8 /* LaunchScreen.storyboard in Resources */,
 				C31B55351C9DD10500B060D8 /* Assets.xcassets in Resources */,
+				C3B5211F1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf in Resources */,
 				C31B55331C9DD10500B060D8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,10 +240,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3B5211D1CD02D5500B890B7 /* SGFGame.swift in Sources */,
 				C31B55301C9DD10500B060D8 /* ViewController.swift in Sources */,
 				C3D286341CB044D400DFC062 /* GobanManager.swift in Sources */,
 				C31B552E1C9DD10500B060D8 /* AppDelegate.swift in Sources */,
+				C3B521211CD0887000B890B7 /* SGFParser.swift in Sources */,
 				C31B55411C9DD1B000B060D8 /* GobanView.swift in Sources */,
+				C3B521231CD0890000B890B7 /* SGFNode.swift in Sources */,
 				C3D286321CB0341200DFC062 /* Stone.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
