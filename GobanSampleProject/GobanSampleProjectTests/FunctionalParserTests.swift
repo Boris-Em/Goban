@@ -113,5 +113,77 @@ class FunctionalParserTests: XCTestCase {
         let result: [((Character,Character), ArraySlice<Character>)] = testParseString(sequenceParser, "acd")
         XCTAssertEmptyResult(result)
     }
+    
+    func testCombinatorOperator() {
+        let toInteger2 = { (a:Character) -> Character -> Int in
+            return { b in
+                let combinedString = String(a) + String(b)
+                return Int(combinedString)!
+            }
+        }
+        
+        let combinatorparser = pure(toInteger2) <*> parseIsCharacter("3") <*> parseIsCharacter("3")
+        
+        XCTAssertOnlyResult(testParseString(combinatorparser, "33"), equals: 33, remainder: "")
+    }
+
+    func testCombineWithCurryChoice() {
+        let aOrB = parseIsCharacter("a") <|> parseIsCharacter("b")
+        let parser = pure(curry { String([$0,$1,$2]) }) <*> aOrB <*> aOrB <*> parseIsCharacter("c")
+        
+        XCTAssertOnlyResult(testParseString(parser, "abc"), equals: "abc", remainder: "")
+        XCTAssertOnlyResult(testParseString(parser, "bbc"), equals: "bbc", remainder: "")
+    }
+
+    func testCombineWithCurryChoiceFailure() {
+        let aOrB = parseIsCharacter("a") <|> parseIsCharacter("b")
+        let parser = pure(curry { String([$0,$1,$2]) }) <*> aOrB <*> aOrB <*> parseIsCharacter("c")
+        
+        XCTAssertEmptyResult(testParseString(parser, "cbc"))
+    }
+    
+    let isDecimalDigit = isCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet())
+    
+    func testIsCharacterFromSet() {
+        XCTAssertOnlyResult(testParseString(isDecimalDigit, "3"), equals: "3")
+    }
+
+    func testIsCharacterFromSetFailure() {
+        XCTAssertEmptyResult(testParseString(isDecimalDigit, "a"))
+    }
+    
+    func testZeroOrMore_Zero() {
+        let zeroOrMoreDecimalDigits = zeroOrMore(isDecimalDigit)
+        
+        let result = testParseString(zeroOrMoreDecimalDigits, "abc")
+        XCTAssertEqual(result.first!.0,[])
+    }
+
+    func testZeroOrMore_More() {
+        let zeroOrMoreDecimalDigits = zeroOrMore(isDecimalDigit)
+        let result = testParseString(zeroOrMoreDecimalDigits, "1234")
+        XCTAssertEqual(result.first!.0,["1","2","3","4"])
+    }
+    
+    func testOneOrMore_More() {
+        let result = testParseString(oneOrMore(isDecimalDigit), "1234")
+        XCTAssertEqual(result.first!.0,["1","2","3","4"])
+    }
+
+    func testOneOrMore_Zero_Fails() {
+        let result = testParseString(oneOrMore(isDecimalDigit), "abcd")
+        XCTAssertEmptyResult(result)
+    }
+
+    func testIntFromChars_OneOrMore() {
+        let results = testParseString(pure(intFromChars) <*> oneOrMore(isDecimalDigit), "1234")
+        XCTAssertEqual(results.first!.0, 1234)
+    }
+
+    func testPureCombinatorOperator() {
+        let results = testParseString(intFromChars </> oneOrMore(isDecimalDigit), "1234")
+        XCTAssertEqual(results.first!.0, 1234)
+    }
+
 
 }
