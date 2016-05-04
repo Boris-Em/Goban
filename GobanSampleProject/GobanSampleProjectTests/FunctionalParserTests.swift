@@ -31,6 +31,10 @@ class FunctionalParserTests: XCTestCase {
         XCTAssertEqual(results.first!.0, testResult)
     }
 
+    func XCTAssertFirstResult<Result: Equatable>(results: [(Result, ArraySlice<Character>)], equals testResult: Result) {
+        XCTAssertEqual(results.first!.0, testResult)
+    }
+
     func XCTAssertOnlyResult<Result: Equatable>(results: [(Result, ArraySlice<Character>)], equals testResult: Result, remainder: String) {
         XCTAssertEqual(results.count, 1)
         XCTAssertEqual(results.first!.0, testResult)
@@ -177,12 +181,19 @@ class FunctionalParserTests: XCTestCase {
 
     func testIntFromChars_OneOrMore() {
         let results = testParseString(pure(intFromChars) <*> oneOrMore(isDecimalDigit), "1234")
-        XCTAssertEqual(results.first!.0, 1234)
+        XCTAssertFirstResult(results, equals:1234)
     }
 
     func testPureCombinatorOperator() {
         let results = testParseString(intFromChars </> oneOrMore(isDecimalDigit), "1234")
-        XCTAssertEqual(results.first!.0, 1234)
+        XCTAssertFirstResult(results, equals:1234)
+    }
+    
+    func testParseMultiplication() {
+        let number = intFromChars </> oneOrMore(isDecimalDigit)
+        let multiplicationParser = curry(*) </> number <* parseIsCharacter("*") <*> number
+        
+        XCTAssertFirstResult(testParseString(multiplicationParser, "3*15"), equals: 45)
     }
 
 

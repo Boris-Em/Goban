@@ -101,11 +101,11 @@ func lazy<Token,A>(f: () -> Parser<Token,A>) -> Parser<Token,A> {
     return Parser { f().parse($0) }
 }
 
-func zeroOrMore<Token, A>(p: Parser<Token, A>) -> Parser<Token, [A]> {
+func zeroOrMore<Token,A>(p: Parser<Token, A>) -> Parser<Token, [A]> {
     return (pure(prepend) <*> p <*> lazy { zeroOrMore(p) }) <|> pure([])
 }
 
-func oneOrMore<Token, A>(p: Parser<Token, A>) -> Parser<Token, [A]> {
+func oneOrMore<Token,A>(p: Parser<Token, A>) -> Parser<Token, [A]> {
     return pure(prepend) <*> p <*> zeroOrMore(p)
 }
 
@@ -117,4 +117,17 @@ func intFromChars(chars: [Character]) -> Int {
 infix operator </> { associativity left precedence 170 }
 func </><Token, A,B>(f: A -> B, r: Parser<Token, A>) -> Parser<Token, B> {
     return pure(f) <*> r
+}
+
+
+// parse, but throw away the result on right
+infix operator <* { associativity left precedence 150 }
+func <* <Token,A,B>(p: Parser<Token,A>, q: Parser<Token,B>) -> Parser<Token, A> {
+    return { x in { _ in x } } </> p <*> q
+}
+
+// parse, but throw away the result on left
+infix operator *> { associativity left precedence 150 }
+func *> <Token,A,B>(p: Parser<Token,A>, q: Parser<Token,B>) -> Parser<Token, B> {
+    return { _ in { y in y } } </> p <*> q
 }
