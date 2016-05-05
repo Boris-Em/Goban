@@ -85,7 +85,7 @@ func curry<A,B,C,D>(f: (A,B,C) -> D) -> A -> B -> C -> D  {
     return { a in { b in { c in f(a,b,c) } } }
 }
 
-func isCharacterFromSet(set: NSCharacterSet) -> Parser<Character, Character> {
+func parseCharacterFromSet(set: NSCharacterSet) -> Parser<Character, Character> {
     return parseSatisfying { (ch: Character) in
         let uniChar = (String(ch) as NSString).characterAtIndex(0)
         return set.characterIsMember(uniChar)
@@ -97,8 +97,17 @@ func prepend<A>(l: A) -> [A] -> [A] {
     return { r in return [l] + r }
 }
 
+func prepend<A>(l: [A]) -> [A] -> [A] {
+    return { r in return l + r }
+}
+
+
 func lazy<Token,A>(f: () -> Parser<Token,A>) -> Parser<Token,A> {
     return Parser { f().parse($0) }
+}
+
+func optional<Token,A>(p: Parser<Token, A>) -> Parser<Token, [A]> {
+    return (pure { [$0] } <*> p ) <|> pure([])
 }
 
 func zeroOrMore<Token,A>(p: Parser<Token, A>) -> Parser<Token, [A]> {
@@ -107,6 +116,10 @@ func zeroOrMore<Token,A>(p: Parser<Token, A>) -> Parser<Token, [A]> {
 
 func oneOrMore<Token,A>(p: Parser<Token, A>) -> Parser<Token, [A]> {
     return pure(prepend) <*> p <*> zeroOrMore(p)
+}
+
+func stringFromChars(chars: [Character]) -> String {
+    return String(chars)
 }
 
 func intFromChars(chars: [Character]) -> Int {
