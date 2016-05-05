@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SGFCValueType {
+enum SGFCValueType: CustomStringConvertible {
     case None
     case Number(value: Int)
     case Real(value: Float)
@@ -19,6 +19,21 @@ enum SGFCValueType {
     case Point(column: Character, row: Character)
     case Move(column: Character, row: Character)
     case Stone(column: Character, row: Character)
+    
+    var description: String {
+        switch self {
+        case .None: return "None"
+        case .Number(let v): return "Number:\(v)"
+        case .Real(let v): return "Real:\(v)"
+        case .Double(let v): return "Double:\(v)"
+        case .Color(let v): return "Color:\(v)"
+        case .SimpleText(let v): return "SimpleText:\(v)"
+        case .Text(let v): return "Text:\(v)"
+        case .Point(let c, let r): return "Point:\(c)\(r)"
+        case .Move(let c, let r): return "Move:\(c)\(r)"
+        case .Stone(let c, let r): return "Stone:\(c)\(r)"
+        }
+    }
 }
 
 struct SGFCValueTypeParser {

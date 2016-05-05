@@ -12,17 +12,38 @@ import Foundation
 class SGFParserC {
     typealias Token = Character
     
-    struct SGFCollection { let games: [SGFGameTree] }
-    struct SGFGameTree { let sequence: SGFSequence }
-    struct SGFSequence { let nodes: [SGFNode] }
-    struct SGFNode { let properties: [SGFProperty] }
-    struct SGFProperty { let identifier: SGFPropIdent; let values: [SGFPropValue] }
-    struct SGFPropIdent { let name: [SGFUcLetter] }
+    struct SGFCollection: CustomStringConvertible {
+        let games: [SGFGameTree]
+        var description: String { return "Collection: \(games.map{$0.description}.joinWithSeparator("\n"))" }
+    }
+    struct SGFGameTree: CustomStringConvertible {
+        let sequence: SGFSequence
+        var description: String { return "GameTree: \(sequence.description)" }
+    }
+    struct SGFSequence: CustomStringConvertible {
+        let nodes: [SGFNode]
+        var description: String { return "Sequence: \(nodes.map{$0.description}.joinWithSeparator("\n"))" }
+    }
+    struct SGFNode: CustomStringConvertible {
+        let properties: [SGFProperty]
+        var description: String { return "Node: \(properties.map{$0.description}.joinWithSeparator(""))" }
+    }
+    struct SGFProperty: CustomStringConvertible {
+        let identifier: SGFPropIdent;
+        let values: [SGFPropValue]
+        var description: String { return "\(identifier)\(values.map{"[\($0)]"}.joinWithSeparator(""))" }
+    }
+    struct SGFPropIdent: CustomStringConvertible {
+        let name: [SGFUcLetter]
+        var description: String { return String(name) }
+    }
     typealias SGFUcLetter = Character
-    struct SGFPropValue { let value: SGFCValueType }
     
-    let noVariationSample = "(;FF[4]GM[1]SZ[19];B[aa];W[bb];B[cc];W[dd];B[ad];W[bd])"
-
+    struct SGFPropValue: CustomStringConvertible {
+        let value: SGFCValueType
+        var description: String { return "\(value)" }
+    }
+    
     
     let valueTypeParser = SGFCValueTypeParser()
     
