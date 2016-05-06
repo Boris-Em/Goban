@@ -53,24 +53,24 @@ class FunctionalParserTests: XCParserTestBase {
         XCTAssertOnlyResult(result, equals: charA, remainder: "bc")
     }
     
-    func testParseIsTokenSuccess() {
+    func testparseTokenSuccess() {
         let charA: Character = "a"
         
-        let result = testParseString(parseIsToken(charA), "abc")
+        let result = testParseString(parseToken(charA), "abc")
         
         XCTAssertOnlyResult(result, equals: charA)
     }
 
-    func testParseIsTokenFailure() {
+    func testparseTokenFailure() {
         let charA: Character = "a"
         
-        let result = testParseString(parseIsToken(charA), "b")
+        let result = testParseString(parseToken(charA), "b")
         
         XCTAssertEmptyResult(result)
     }
     
     func testChooseOperator() {
-        let chooseParser = parseIsCharacter("a") <|> parseIsCharacter("b")
+        let chooseParser = parseCharacter("a") <|> parseCharacter("b")
         
         XCTAssertOnlyResult(testParseString(chooseParser, "abc"), equals: "a", remainder: "bc")
         XCTAssertOnlyResult(testParseString(chooseParser, "bcd"), equals: "b", remainder: "cd")
@@ -78,7 +78,7 @@ class FunctionalParserTests: XCParserTestBase {
     }
     
     func testSequence() {
-        let sequenceParser = sequence(parseIsCharacter("a"), parseIsCharacter("b"))
+        let sequenceParser = sequence(parseCharacter("a"), parseCharacter("b"))
         
         let result: [((Character,Character), ArraySlice<Character>)] = testParseString(sequenceParser, "abc")
         XCTAssertEqual(result.count, 1)
@@ -88,7 +88,7 @@ class FunctionalParserTests: XCParserTestBase {
     }
 
     func testSequenceFailure() {
-        let sequenceParser = sequence(parseIsCharacter("a"), parseIsCharacter("b"))
+        let sequenceParser = sequence(parseCharacter("a"), parseCharacter("b"))
         
         let result: [((Character,Character), ArraySlice<Character>)] = testParseString(sequenceParser, "acd")
         XCTAssertEmptyResult(result)
@@ -102,22 +102,22 @@ class FunctionalParserTests: XCParserTestBase {
             }
         }
         
-        let combinatorparser = pure(toInteger2) <*> parseIsCharacter("3") <*> parseIsCharacter("3")
+        let combinatorparser = pure(toInteger2) <*> parseCharacter("3") <*> parseCharacter("3")
         
         XCTAssertOnlyResult(testParseString(combinatorparser, "33"), equals: 33, remainder: "")
     }
 
     func testCombineWithCurryChoice() {
-        let aOrB = parseIsCharacter("a") <|> parseIsCharacter("b")
-        let parser = pure(curry { String([$0,$1,$2]) }) <*> aOrB <*> aOrB <*> parseIsCharacter("c")
+        let aOrB = parseCharacter("a") <|> parseCharacter("b")
+        let parser = pure(curry { String([$0,$1,$2]) }) <*> aOrB <*> aOrB <*> parseCharacter("c")
         
         XCTAssertOnlyResult(testParseString(parser, "abc"), equals: "abc", remainder: "")
         XCTAssertOnlyResult(testParseString(parser, "bbc"), equals: "bbc", remainder: "")
     }
 
     func testCombineWithCurryChoiceFailure() {
-        let aOrB = parseIsCharacter("a") <|> parseIsCharacter("b")
-        let parser = pure(curry { String([$0,$1,$2]) }) <*> aOrB <*> aOrB <*> parseIsCharacter("c")
+        let aOrB = parseCharacter("a") <|> parseCharacter("b")
+        let parser = pure(curry { String([$0,$1,$2]) }) <*> aOrB <*> aOrB <*> parseCharacter("c")
         
         XCTAssertEmptyResult(testParseString(parser, "cbc"))
     }
@@ -167,10 +167,31 @@ class FunctionalParserTests: XCParserTestBase {
     
     func testParseMultiplication() {
         let number = intFromChars </> oneOrMore(isDecimalDigit)
-        let multiplicationParser = curry(*) </> number <* parseIsCharacter("*") <*> number
+        let multiplicationParser = curry(*) </> number <* parseCharacter("*") <*> number
         
         XCTAssertFirstResult(testParseString(multiplicationParser, "3*15"), equals: 45)
     }
+    
+    func testJust() {
+        XCTAssertFirstResult(testParseString(parseCharacter("a"), "abc"), equals: "a")
+        XCTAssertEmptyResult(testParseString(just(parseCharacter("a")), "abc"))
+    }
+
+    func testPack() {
+        let results = testParseString(pack(parseCharacter("a"), start:"[", end:"]"), "[a]")
+        XCTAssertOnlyResult(results, equals: "a")
+    }
+    
+    func testignoreLeadWS(){
+        let results = testParseString(ignoreLeadWS(parseCharacter("a")), " \na")
+        XCTAssertOnlyResult(results, equals: "a")
+    }
+
+    func testParseTokens(){
+        let results = testParseString(parseTokens(["a","b","c"]), "abc")
+        XCTAssertEqual(results.first!.0, ["a","b","c"])
+    }
+
 
 
 }

@@ -9,34 +9,42 @@
 import Foundation
 
 
-class SGFParserC {
+class SGFParserCombinator {
     typealias Token = Character
+    
+    // MARK: SFG structures
     
     struct SGFCollection: CustomStringConvertible {
         let games: [SGFGameTree]
         var description: String { return "Collection: \(games.map{$0.description}.joinWithSeparator("\n"))" }
     }
+
     struct SGFGameTree: CustomStringConvertible {
         let sequence: SGFSequence
         var description: String { return "GameTree: \(sequence.description)" }
     }
+
     struct SGFSequence: CustomStringConvertible {
         let nodes: [SGFNode]
         var description: String { return "Sequence: \(nodes.map{$0.description}.joinWithSeparator("\n"))" }
     }
+    
     struct SGFNode: CustomStringConvertible {
         let properties: [SGFProperty]
         var description: String { return "Node: \(properties.map{$0.description}.joinWithSeparator(""))" }
     }
+    
     struct SGFProperty: CustomStringConvertible {
         let identifier: SGFPropIdent;
         let values: [SGFPropValue]
         var description: String { return "\(identifier)\(values.map{"[\($0)]"}.joinWithSeparator(""))" }
     }
+    
     struct SGFPropIdent: CustomStringConvertible {
         let name: [SGFUcLetter]
         var description: String { return String(name) }
     }
+    
     typealias SGFUcLetter = Character
     
     struct SGFPropValue: CustomStringConvertible {
@@ -45,15 +53,14 @@ class SGFParserC {
     }
     
     
-    let valueTypeParser = SGFCValueTypeParser()
-    
+    // MARK: SFG parsers
 
     func parseCollection() -> Parser<Character, SGFCollection> {
         return { SGFCollection(games: $0) } </> oneOrMore(parseGameTree())
     }
 
     func parseGameTree() -> Parser<Character, SGFGameTree> {
-        return { SGFGameTree(sequence: $0) } </> (parseIsCharacter("(") *> parseSequence() <* parseIsCharacter(")"))
+        return { SGFGameTree(sequence: $0) } </> (parseCharacter("(") *> parseSequence() <* parseCharacter(")"))
     }
 
     func parseSequence() -> Parser<Character, SGFSequence> {
@@ -61,7 +68,7 @@ class SGFParserC {
     }
     
     func parseNode() -> Parser<Character, SGFNode> {
-        return { SGFNode(properties: $0) } </> (parseIsCharacter(";") *> zeroOrMore(parseProperty()))
+        return { SGFNode(properties: $0) } </> (parseCharacter(";") *> zeroOrMore(parseProperty()))
     }
 
     func parseProperty() -> Parser<Character, SGFProperty> {
@@ -72,10 +79,12 @@ class SGFParserC {
         return { SGFPropIdent(name: $0) } </> oneOrMore(parseCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet()))
     }
     
+    let valueTypeParser = SGFCValueTypeParser()
     func parsePropertyValue() -> Parser<Character,SGFPropValue> {
-        return { SGFPropValue(value: $0) } </> (parseIsCharacter("[") *> valueTypeParser.parseCValue() <* parseIsCharacter("]"))
+        return { SGFPropValue(value: $0) } </> (parseCharacter("[") *> valueTypeParser.parseCValue() <* parseCharacter("]"))
     }
 
-
+    
+    
 }
 

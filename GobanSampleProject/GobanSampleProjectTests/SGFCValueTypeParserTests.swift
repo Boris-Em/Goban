@@ -54,11 +54,28 @@ class SGFCValueTypeParserTests: XCParserTestBase {
         XCTAssertEmptyResult(results)
     }
 
+    func testParseReal() {
+        let results = testParseString(valueParser.parseReal(), "123.456")
+        guard case SGFCValueType.Real(123.456) = firstResult(results) else {
+            return  XCTAssertTrue(false)
+        }
+    }
+    
+    func testParseSimpleText() {
+        let newLineText = "New\nLine"
+        let results = testParseString(valueParser.parseSimpleText(), newLineText)
+        guard case SGFCValueType.SimpleText(let text) = firstResult(results) where text == newLineText else {
+            return  XCTAssertTrue(false)
+        }
+    }
+    
     func testParseCValue() {
-        let values = ["1234", "12.34", "1", "B", "W"]
+        let values = ["1234", "12.34", "1", "B", "W", "The quick brown", "New\nLine"]
         for v in values {
             let results = testParseString(valueParser.parseCValue(), v)
             XCTAssert(results.count != 0)
         }
     }
+    
+
 }

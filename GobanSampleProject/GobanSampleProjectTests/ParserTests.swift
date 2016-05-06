@@ -13,9 +13,17 @@ class XCParserTestBase: XCTestCase {
     func testParseString<Result>(parser: Parser<Character, Result>, _ testString: String) -> [(Result, ArraySlice<Character>)] {
         return Array(parser.parse(testString.slice))
     }
+
+    func testParseStringResultsOnly<Result>(parser: Parser<Character, Result>, _ testString: String) -> [Result] {
+        return dropRemainders(testParseString(parser, testString))
+    }
+
+    func dropRemainders<Result>(results: [(Result, ArraySlice<Character>)]) -> [Result] {
+        return results.map { $0.0 }
+    }
     
     func firstResult<Result>(results: [(Result, ArraySlice<Character>)]) -> Result {
-        return results.first!.0
+        return dropRemainders(results).first!
     }
     
     func XCTAssertOnlyResult<Result: Equatable>(results: [(Result, ArraySlice<Character>)], equals testResult: Result) {
@@ -37,4 +45,14 @@ class XCParserTestBase: XCTestCase {
         XCTAssertEqual(result.count, 0)
     }
     
+    func XCTAssertResultsContains<Result>(results: [(Result, ArraySlice<Character>)], satisfying satisfies: (Result) -> Bool) {
+        let resultsOnly: [Result] = dropRemainders(results)
+        XCTAssert(resultsOnly.contains(satisfies))
+    }
+
+    func XCTAssertResultsContains<Result: Equatable>(results: [(Result, ArraySlice<Character>)], result: Result) {
+        let resultsOnly: [Result] = dropRemainders(results)
+        XCTAssert(resultsOnly.contains { $0 == result } )
+    }
+
 }

@@ -94,3 +94,27 @@ extension String {
     }
 }
 
+func curry<A,B,C>(f: (A,B) -> C) -> A -> B -> C  {
+    return { a in { b in f(a,b) } }
+}
+
+func curry<A,B,C,D>(f: (A,B,C) -> D) -> A -> B -> C -> D  {
+    return { a in { b in { c in f(a,b,c) } } }
+}
+
+func prepend<A>(l: A) -> [A] -> [A] {
+    return { r in return [l] + r }
+}
+
+func concat<A>(l: [A]) -> [A] -> [A] {
+    return { r in return l + r }
+}
+
+func stringFromChars(chars: [Character]) -> String {
+    return String(chars)
+}
+
+func intFromChars(chars: [Character]) -> Int {
+    return Int(String(chars))!
+}
+
