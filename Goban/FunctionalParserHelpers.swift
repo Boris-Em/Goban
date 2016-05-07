@@ -62,6 +62,34 @@ extension GeneratorType {
     }
 }
 
+struct TakeWhileGenerator<G: GeneratorType>: GeneratorType {
+    var base: G
+    let predicate: G.Element -> Bool
+    
+    mutating func next() -> G.Element? {
+        guard let n = base.next() where predicate(n) else {
+            return nil
+        }
+        return n
+    }
+}
+
+struct LazyTakeWhileSequence<S: SequenceType>: LazySequenceType {
+    let base: S
+    let predicate: S.Generator.Element -> Bool
+    
+    func generate() -> TakeWhileGenerator<S.Generator> {
+        return TakeWhileGenerator(base: base.generate(), predicate: predicate)
+    }
+}
+
+extension LazySequenceType {
+    func takeWhile(predicate: Generator.Element -> Bool) -> LazyTakeWhileSequence<Self> {
+        return LazyTakeWhileSequence(base: self, predicate: predicate)
+    }
+}
+
+
 // Add flatmap for AnySequence
 extension AnySequence {
     func flatMap<T, Seq: SequenceType where Seq.Generator.Element == T>(f: Element -> Seq) -> AnySequence<T> {

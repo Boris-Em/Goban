@@ -9,7 +9,6 @@
 import XCTest
 
 class SGFParserCombinatorTests: XCParserTestBase {
-    let noVariationSample = "(;FF[4]GM[1]SZ[19];B[aa];W[bb];B[cc];W[dd];B[ad];W[bd])"
     let parser = SGFParserCombinator()
 
     override func setUp() {
@@ -75,6 +74,12 @@ class SGFParserCombinatorTests: XCParserTestBase {
     func testParseMultipleGames() {
         let results = testParseString(parser.parseGameTree(), "(;W[bd])(;W[bd])")
         XCTAssertEqual(results.count, 5)
+    }
+    
+    func testParseNoVariationSample() {
+        let noVariationSample = "(;FF[4]GM[1]SZ[19];B[aa];W[bb];B[cc];W[dd];B[ad];W[bd])"
+        let results = testParseString(parser.parseGameTree(), noVariationSample)
+        XCTAssertEqual(results.count, 1250000)
     }
     
 }

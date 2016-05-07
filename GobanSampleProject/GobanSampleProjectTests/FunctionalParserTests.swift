@@ -124,8 +124,16 @@ class FunctionalParserTests: XCParserTestBase {
     
     let isDecimalDigit = parseCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet())
     
-    func testparseCharacterFromSet() {
+    func testParseCharacterFromSet() {
         XCTAssertOnlyResult(testParseString(isDecimalDigit, "3"), equals: "3")
+    }
+
+    func testParseGreedyCharacterFromSet() {
+        let greedyParser = parseGreedyCharactersFromSet(NSCharacterSet.decimalDigitCharacterSet())
+        let results = testParseString(greedyParser, "123abc")
+        XCTAssertEqual(results.count, 1)
+        XCTAssertEqual(results.first!.0, ["1","2","3"])
+        XCTAssertEqual(results.first!.1, ["a","b","c"])
     }
 
     func testparseCharacterFromSetFailure() {

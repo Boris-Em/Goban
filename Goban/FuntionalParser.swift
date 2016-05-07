@@ -58,6 +58,19 @@ func parseCharacterFromSet(set: NSCharacterSet) -> Parser<Character, Character> 
     }
 }
 
+// take as many characters from the set as possible, don't provide alternatives
+func parseGreedyCharactersFromSet(set: NSCharacterSet) -> Parser<Character, [Character]> {
+    return Parser { input in
+        let chars = input.lazy.takeWhile {
+            let uniChar = (String($0) as NSString).characterAtIndex(0)
+            return set.characterIsMember(uniChar)
+        }
+        let charsArray = Array(chars)
+        return anySequenceOfOne((charsArray, input.dropFirst(charsArray.count)))
+    }
+}
+
+
 // parse any whitespace character
 let parseWhitespace = parseCharacterFromSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
 

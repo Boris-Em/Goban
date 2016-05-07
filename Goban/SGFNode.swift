@@ -1,5 +1,5 @@
 //
-//  SGFNode.swift
+//  SGF.Node.swift
 //  GobanSampleProject
 //
 //  Created by Bobo on 4/26/16.
