@@ -44,8 +44,8 @@ struct SGFP {
     typealias UcLetter = Character
     
     struct PropValue: CustomStringConvertible {
-        let value: SGFP.ValueType
-        var description: String { return "\(value)" }
+        let valueChars: [Character]
+        var description: String { return "\(String(valueChars))" }
     }
     
     

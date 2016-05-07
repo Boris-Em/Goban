@@ -66,6 +66,9 @@ func parseGreedyCharactersFromSet(set: NSCharacterSet) -> Parser<Character, [Cha
             return set.characterIsMember(uniChar)
         }
         let charsArray = Array(chars)
+        guard !charsArray.isEmpty else {
+            return emptySequence()
+        }
         return anySequenceOfOne((charsArray, input.dropFirst(charsArray.count)))
     }
 }
@@ -153,12 +156,27 @@ func optional<Token,A>(p: Parser<Token, A>) -> Parser<Token, A?> {
 
 // return [A]{0,*}
 func zeroOrMore<Token,A>(p: Parser<Token, A>) -> Parser<Token, [A]> {
-    return (pure(prepend) <*> p <*> lazy { zeroOrMore(p) }) <|> pure([])
+    return (prepend </> p <*> lazy { zeroOrMore(p) }) <|> pure([])
 }
 
 // return [A]{1,*}
 func oneOrMore<Token,A>(p: Parser<Token, A>) -> Parser<Token, [A]> {
-    return pure(prepend) <*> p <*> zeroOrMore(p)
+    return prepend </> p <*> zeroOrMore(p)
+}
+
+// return [A]{1,*}
+func greedy<Token,A>(p: Parser<Token, A>) -> Parser<Token, A> {
+    return Parser { input in
+        return greediestResults(p.parse(input))
+    }
+}
+
+// return only the results that consume the most tokens
+func greediestResults<Token, A>(results: AnySequence<(A, ArraySlice<Token>)>) -> AnySequence<(A, ArraySlice<Token>)> {
+    guard let shortestTail = (results.map { $0.1.count }.minElement()) else {
+        return results
+    }
+    return AnySequence(results.filter { $0.1.count == shortestTail })
 }
 
 // no matter what you pass, it returs A

@@ -27,13 +27,15 @@ class SGFParserCombinatorTests: XCParserTestBase {
     }
 
     func testParsePropertyValueNumber() {
-        let results = testParseString(parser.parsePropertyValue(), "[7]")
-        XCTAssertResultsContains(results, satisfying: { $0.value == .Number(value: 7) })
+        let results = testParseString(parser.parsePropertyValueChars(), "[7]")
+        XCTAssertEqual(results.count, 1)
+        XCTAssertEqual(results.first!.0.valueChars, ["7"] )
     }
 
     func testParsePropertyValueMove() {
-        let results = testParseString(parser.parsePropertyValue(), "[bd]")
-        XCTAssertResultsContains(results, satisfying: { $0.value == .Move(column:"b", row:"d") } )
+        let results = testParseString(parser.parsePropertyValueChars(), "[bd]")
+        XCTAssertEqual(results.count, 1)
+        XCTAssertEqual(results.first!.0.valueChars, ["b","d"] )
     }
 
     func testParseProperty() {
@@ -48,38 +50,38 @@ class SGFParserCombinatorTests: XCParserTestBase {
 
     func testParseNodeMultipleProperties() {
         let results = testParseString(parser.parseNode(), ";FF[4]GM[1]SZ[19]")
-        XCTAssertEqual(results.count, 105) // empty node & point, move, stone are the same
+        XCTAssertEqual(results.count, 1) // empty node & point, move, stone are the same
     }
     
     func testParseSequence() {
         let results = testParseString(parser.parseSequence(), ";W[bd]")
-        XCTAssertEqual(results.count, 6) // empty node & point, move, stone are the same
+        XCTAssertEqual(results.count, 1) // empty node & point, move, stone are the same
     }
 
     func testParseSequenceMultipleNodes() {
         let results = testParseString(parser.parseSequence(), ";W[bd];B[ad]")
-        XCTAssertEqual(results.count, 36)
+        XCTAssertEqual(results.count, 1)
     }
 
     func testParseGameTree() {
         let results = testParseString(parser.parseGameTree(), "(;W[bd];B[ad])")
-        XCTAssertEqual(results.count, 25)
+        XCTAssertEqual(results.count, 1)
     }
 
     func testParseCollection() {
         let results = testParseString(parser.parseGameTree(), "(;W[bd])")
-        XCTAssertEqual(results.count, 5)
+        XCTAssertEqual(results.count, 1)
     }
 
     func testParseMultipleGames() {
-        let results = testParseString(parser.parseGameTree(), "(;W[bd])(;W[bd])")
-        XCTAssertEqual(results.count, 5)
+        let results = testParseString(parser.parseCollection(), "(;W[bd])(;W[bd])")
+        XCTAssertEqual(results.count, 1)
     }
     
     func testParseNoVariationSample() {
         let noVariationSample = "(;FF[4]GM[1]SZ[19];B[aa];W[bb];B[cc];W[dd];B[ad];W[bd])"
         let results = testParseString(parser.parseGameTree(), noVariationSample)
-        XCTAssertEqual(results.count, 1250000)
+        XCTAssertEqual(results.count, 1)
     }
     
 }

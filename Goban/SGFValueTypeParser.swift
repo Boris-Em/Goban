@@ -11,7 +11,7 @@ import Foundation
 
 struct SGFValueTypeParser {
     let parseDigit = parseCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet())
-    let parseDigits = oneOrMore(parseCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet()))
+    let parseDigits = parseGreedyCharactersFromSet(NSCharacterSet.decimalDigitCharacterSet())
     let parseUcLetter = parseCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet())
     let parseLcLetter = parseCharacterFromSet(NSCharacterSet.lowercaseLetterCharacterSet())
     let parseNone = parseCharacter(" ")
@@ -30,6 +30,7 @@ struct SGFValueTypeParser {
     func parseReal() -> Parser<Character, SGFP.ValueType> {
         return curry { SGFValueTypeParser.realFromWholeDigits($0, fractionDigits: $1) } </> parseNumberCharacters() <*> optional(parseDecimalPt *> oneOrMore(parseDigit))
     }
+    
     static func realFromWholeDigits(wholeDigits: [Character], fractionDigits: [Character]?) -> SGFP.ValueType {
         let wholeChars = String(wholeDigits)
         let fractionChars = fractionDigits != nil ? String(fractionDigits!) : ""
@@ -48,13 +49,13 @@ struct SGFValueTypeParser {
     func parseSimpleText() -> Parser<Character, SGFP.ValueType> {
         let anythingButBracket = NSCharacterSet(charactersInString: "]").invertedSet
         
-        return { SGFP.ValueType.SimpleText(text: String($0)) } </> zeroOrMore(parseCharacterFromSet(anythingButBracket))
+        return { SGFP.ValueType.SimpleText(text: String($0)) } </> parseGreedyCharactersFromSet(anythingButBracket)
     }
     
     func parseText() -> Parser<Character, SGFP.ValueType> {
         let anythingButBracket = NSCharacterSet(charactersInString: "]").invertedSet
         
-        return { SGFP.ValueType.Text(text: String($0)) } </> zeroOrMore(parseCharacterFromSet(anythingButBracket))
+        return { SGFP.ValueType.Text(text: String($0)) } </> parseGreedyCharactersFromSet(anythingButBracket)
     }
     
     func parseGoPoint() -> Parser<Character, SGFP.ValueType> {
@@ -64,6 +65,7 @@ struct SGFValueTypeParser {
     func parseGoMove() -> Parser<Character, SGFP.ValueType> {
         return curry { SGFP.ValueType.Move(column: $0, row: $1) } </> parseLcLetter <*> parseLcLetter
     }
+    
     func parseGoStone() -> Parser<Character, SGFP.ValueType> {
         return curry { SGFP.ValueType.Stone(column: $0, row: $1) } </> parseLcLetter <*> parseLcLetter
     }
