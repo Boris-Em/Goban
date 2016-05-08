@@ -38,8 +38,19 @@ class SGFParserCombinatorTests: XCParserTestBase {
         XCTAssertEqual(results.first!.0.valueChars, ["b","d"] )
     }
 
+    func testParsePropertyValueEscapedBracket() {
+        let results = testParseString(parser.parsePropertyValueChars(), "[[bd\\]\\\\]")
+        XCTAssertEqual(results.count, 1)
+        XCTAssertEqual(results.first!.0.valueChars, ["[","b","d","\\", "]", "\\", "\\"] )
+    }
+    
     func testParseProperty() {
         let results = testParseString(parser.parseProperty(), "W[bd]")
+        XCTAssertResultsContains(results, satisfying: { $0.identifier.name == ["W"] } )
+    }
+
+    func testParseEmptyProperty() {
+        let results = testParseString(parser.parseProperty(), "W[]")
         XCTAssertResultsContains(results, satisfying: { $0.identifier.name == ["W"] } )
     }
 
@@ -77,6 +88,12 @@ class SGFParserCombinatorTests: XCParserTestBase {
         let results = testParseString(parser.parseCollection(), "(;W[bd])(;W[bd])")
         XCTAssertEqual(results.count, 1)
     }
+
+    func testSequenceWithGame() {
+        let results = testParseString(parser.parseCollection(), "(;FF[4] (;B[pd]) )")
+        XCTAssertEqual(results.count, 1)
+    }
+
     
     func testParseNoVariationSample() {
         let noVariationSample = "(;FF[4]GM[1]SZ[19];B[aa];W[bb];B[cc];W[dd];B[ad];W[bd])"

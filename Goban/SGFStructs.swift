@@ -22,6 +22,7 @@ struct SGFP {
     
     struct Sequence: CustomStringConvertible {
         let nodes: [SGFP.Node]
+        let games: [SGFP.GameTree]
         var description: String { return "Sequence: \(nodes.map{$0.description}.joinWithSeparator("\n"))" }
     }
     

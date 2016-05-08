@@ -60,22 +60,36 @@ func parseCharacterFromSet(set: NSCharacterSet) -> Parser<Character, Character> 
 
 // take as many characters from the set as possible, don't provide alternatives
 func parseGreedyCharactersFromSet(set: NSCharacterSet) -> Parser<Character, [Character]> {
+    func uniChar(ch: Character) -> UniChar {
+        return String(ch).utf16.first!
+    }
+    
     return Parser { input in
-        let chars = input.lazy.takeWhile {
-            let uniChar = (String($0) as NSString).characterAtIndex(0)
-            return set.characterIsMember(uniChar)
+        let escapeChar = Character("\\")
+        var escapeNext = false
+        var lastCharInSet: Int?
+
+        for (i,ch) in input.enumerate() {
+            if !(set.characterIsMember(uniChar(ch)) || escapeNext) {
+                break
+            }
+            lastCharInSet = i
+            escapeNext = (ch == escapeChar) && !escapeNext
         }
-        let charsArray = Array(chars)
-        guard !charsArray.isEmpty else {
+        
+        guard let _ = lastCharInSet else {
             return emptySequence()
         }
-        return anySequenceOfOne((charsArray, input.dropFirst(charsArray.count)))
+        
+        let chars = Array(input.prefix(lastCharInSet! + 1))
+        return anySequenceOfOne((chars, input.dropFirst(chars.count)))
     }
 }
 
-
-// parse any whitespace character
-let parseWhitespace = parseCharacterFromSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+// eat up whitespace
+func eatWS() -> Parser<Character, [Character]> {
+    return (parseGreedyCharactersFromSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) <|> pure([]))
+}
 
 // consumes no Tokens and returns contained T
 func pure<Token, T>(value: T) -> Parser<Token, T> {
@@ -198,11 +212,6 @@ func parseString(string: String) -> Parser<Character, String> {
 // choose one of parsers from array
 func oneOf<Token, A>(parsers: [Parser<Token, A>]) -> Parser<Token, A> {
     return parsers.reduce(parseFail(), combine: <|>)
-}
-
-// eat up leading whitespace
-func ignoreLeadWS<A>(p: Parser<Character, A>) -> Parser<Character, A> {
-    return zeroOrMore(parseWhitespace) *> p
 }
 
 func just<Token, A>(p: Parser<Token, A>) -> Parser<Token, A> {

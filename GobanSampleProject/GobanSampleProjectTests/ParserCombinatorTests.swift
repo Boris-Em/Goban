@@ -8,7 +8,7 @@
 
 import XCTest
 
-class FunctionalParserTests: XCParserTestBase {
+class ParserCombinatorTests: XCParserTestBase {
 
     override func setUp() {
         super.setUp()
@@ -19,7 +19,6 @@ class FunctionalParserTests: XCParserTestBase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-
 
     // tests
     
@@ -136,6 +135,15 @@ class FunctionalParserTests: XCParserTestBase {
         XCTAssertEqual(results.first!.1, ["a","b","c"])
     }
 
+    func testParseGreedyCharacterFromSetWithEscapes() {
+        let notEndBracket = NSCharacterSet(charactersInString: "]").invertedSet
+        let greedyParser = parseGreedyCharactersFromSet(notEndBracket)
+        let results = testParseString(greedyParser, "foo\\]]")
+        XCTAssertEqual(results.count, 1)
+        XCTAssertEqual(results.first!.0, ["f","o","o","\\", "]"])
+    }
+
+    
     func testparseCharacterFromSetFailure() {
         XCTAssertEmptyResult(testParseString(isDecimalDigit, "a"))
     }
@@ -191,7 +199,7 @@ class FunctionalParserTests: XCParserTestBase {
     }
     
     func testignoreLeadWS(){
-        let results = testParseString(ignoreLeadWS(parseCharacter("a")), " \na")
+        let results = testParseString(eatWS() *> parseCharacter("a"), " \na")
         XCTAssertOnlyResult(results, equals: "a")
     }
 
@@ -199,7 +207,5 @@ class FunctionalParserTests: XCParserTestBase {
         let results = testParseString(parseTokens(["a","b","c"]), "abc")
         XCTAssertEqual(results.first!.0, ["a","b","c"])
     }
-
-
 
 }
