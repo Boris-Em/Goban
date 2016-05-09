@@ -26,12 +26,6 @@ class SGFValueTypeParserTests: XCParserTestBase {
         let results = testParseString(valueParser.parseDigits, "123")
         XCTAssertEqual(results.first!.0, ["1","2","3"])
     }
-
-    func testParseUcLetter() {
-        let results = testParseString(valueParser.parseUcLetter, "ABc")
-        XCTAssertFirstResult(results, equals: "A")
-    }
-
     
     func testParseNumber() {
         let results = testParseString(valueParser.parseNumber(), "123abc")

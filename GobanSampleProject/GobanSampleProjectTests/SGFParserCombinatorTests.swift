@@ -23,7 +23,7 @@ class SGFParserCombinatorTests: XCParserTestBase {
     
     func testParsePropertyIdent() {
         let results = testParseString(parser.parsePropertyIdent(), "W")
-        XCTAssertResultsContains(results, satisfying: { $0.name == ["W"] } )
+        XCTAssertResultsContains(results, satisfying: { $0.name == "W" } )
     }
 
     func testParsePropertyValueNumber() {
@@ -46,12 +46,12 @@ class SGFParserCombinatorTests: XCParserTestBase {
     
     func testParseProperty() {
         let results = testParseString(parser.parseProperty(), "W[bd]")
-        XCTAssertResultsContains(results, satisfying: { $0.identifier.name == ["W"] } )
+        XCTAssertResultsContains(results, satisfying: { $0.identifier.name == "W" } )
     }
 
     func testParseEmptyProperty() {
         let results = testParseString(parser.parseProperty(), "W[]")
-        XCTAssertResultsContains(results, satisfying: { $0.identifier.name == ["W"] } )
+        XCTAssertResultsContains(results, satisfying: { $0.identifier.name == "W" } )
     }
 
     func testParseNode() {

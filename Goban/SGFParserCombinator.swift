@@ -38,7 +38,7 @@ class SGFParserCombinator {
     }
 
     func parsePropertyIdent() -> Parser<Character, SGFP.PropIdent> {
-        return { SGFP.PropIdent(name: $0) } </>
+        return { SGFP.PropIdent(name: String($0)) } </>
             parseGreedyCharactersFromSet(NSCharacterSet.uppercaseLetterCharacterSet())
     }
     

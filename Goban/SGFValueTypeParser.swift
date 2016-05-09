@@ -12,7 +12,6 @@ import Foundation
 struct SGFValueTypeParser {
     let parseDigit = parseCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet())
     let parseDigits = parseGreedyCharactersFromSet(NSCharacterSet.decimalDigitCharacterSet())
-    let parseUcLetter = parseCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet())
     let parseLcLetter = parseCharacterFromSet(NSCharacterSet.lowercaseLetterCharacterSet())
     let parseNone = parseCharacter(" ")
     let parseDecimalPt = parseCharacter(".")
@@ -72,7 +71,7 @@ struct SGFValueTypeParser {
     
     
     func parseCValue() -> Parser<Character, SGFP.ValueType> {
-        return  parseNumber() <|> parseReal() <|> parseDouble() <|> parseColor() <|> parseGoPoint() <|> parseGoMove() <|> parseGoStone() <|> parseSimpleText() <|>  parseText()
+        return parseNumber() <|> parseReal() <|> parseDouble() <|> parseColor() <|> parseGoPoint() <|> parseGoMove() <|> parseGoStone() <|> parseSimpleText() <|>  parseText()
     }
     
 }

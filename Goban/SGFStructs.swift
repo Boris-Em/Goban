@@ -38,11 +38,9 @@ struct SGFP {
     }
     
     struct PropIdent: CustomStringConvertible {
-        let name: [SGFP.UcLetter]
-        var description: String { return String(name) }
+        let name: String
+        var description: String { return name }
     }
-    
-    typealias UcLetter = Character
     
     struct PropValue: CustomStringConvertible {
         let valueChars: [Character]
