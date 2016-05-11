@@ -29,19 +29,19 @@ class SGFParserCombinatorTests: XCParserTestBase {
     func testParsePropertyValueNumber() {
         let results = testParseString(parser.parsePropertyValueChars(), "[7]")
         XCTAssertEqual(results.count, 1)
-        XCTAssertEqual(results.first!.0.valueChars, ["7"] )
+        XCTAssertEqual(results.first!.0.valueString, "7" )
     }
 
     func testParsePropertyValueMove() {
         let results = testParseString(parser.parsePropertyValueChars(), "[bd]")
         XCTAssertEqual(results.count, 1)
-        XCTAssertEqual(results.first!.0.valueChars, ["b","d"] )
+        XCTAssertEqual(results.first!.0.valueString, "bd" )
     }
 
     func testParsePropertyValueEscapedBracket() {
         let results = testParseString(parser.parsePropertyValueChars(), "[[bd\\]\\\\]")
         XCTAssertEqual(results.count, 1)
-        XCTAssertEqual(results.first!.0.valueChars, ["[","b","d","\\", "]", "\\", "\\"] )
+        XCTAssertEqual(results.first!.0.valueString, "[bd\\]\\\\" )
     }
     
     func testParseProperty() {

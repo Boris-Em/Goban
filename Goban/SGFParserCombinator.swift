@@ -34,7 +34,7 @@ class SGFParserCombinator {
 
     func parseProperty() -> Parser<Character, SGFP.Property> {
         return curry { SGFP.Property(identifier: $0, values: $1) } </>
-            parsePropertyIdent() <*> greedy(oneOrMore(eatWS() *> parsePropertyValueChars()))
+            parsePropertyIdent() <*> greedy(oneOrMore(eatWS() *> parsePropertyValueString()))
     }
 
     func parsePropertyIdent() -> Parser<Character, SGFP.PropIdent> {
@@ -42,10 +42,10 @@ class SGFParserCombinator {
             parseGreedyCharactersFromSet(NSCharacterSet.uppercaseLetterCharacterSet())
     }
     
-    func parsePropertyValueChars() -> Parser<Character, SGFP.PropValue> {
+    func parsePropertyValueString() -> Parser<Character, SGFP.PropValue> {
         // parse the whole value as text for now, to keep the variations smaller
         let anythingButBracket = NSCharacterSet(charactersInString: "]").invertedSet
-        return { SGFP.PropValue(valueChars: $0) } </>
+        return { SGFP.PropValue(valueString: String($0)) } </>
             pack(parseGreedyCharactersFromSet(anythingButBracket) <|> pure([]), start:"[", end:"]")
     }
     

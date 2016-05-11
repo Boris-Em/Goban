@@ -40,6 +40,7 @@
 		D6C30FB91CD9A9E600CA22CB /* ParserCombinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C30FB81CD9A9E600CA22CB /* ParserCombinatorTests.swift */; };
 		D6C30FBB1CD9ADBF00CA22CB /* FuntionalParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C30FBA1CD9ADBF00CA22CB /* FuntionalParser.swift */; };
 		D6C30FBC1CD9ADBF00CA22CB /* FuntionalParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C30FBA1CD9ADBF00CA22CB /* FuntionalParser.swift */; };
+		D6C592DF1CE18C2E008BFB76 /* SGFPropertiesFF4.txt in Resources */ = {isa = PBXBuildFile; fileRef = D6C592DE1CE18C2E008BFB76 /* SGFPropertiesFF4.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		D6C30FB51CD9A9CC00CA22CB /* FunctionalParserHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalParserHelpers.swift; sourceTree = "<group>"; };
 		D6C30FB81CD9A9E600CA22CB /* ParserCombinatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserCombinatorTests.swift; sourceTree = "<group>"; };
 		D6C30FBA1CD9ADBF00CA22CB /* FuntionalParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuntionalParser.swift; sourceTree = "<group>"; };
+		D6C592DE1CE18C2E008BFB76 /* SGFPropertiesFF4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SGFPropertiesFF4.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				C31B55341C9DD10500B060D8 /* Assets.xcassets */,
 				C31B55361C9DD10500B060D8 /* LaunchScreen.storyboard */,
 				C31B55391C9DD10500B060D8 /* Info.plist */,
+				D6C592DE1CE18C2E008BFB76 /* SGFPropertiesFF4.txt */,
 			);
 			path = GobanSampleProject;
 			sourceTree = "<group>";
@@ -191,9 +194,9 @@
 			children = (
 				D6C30FB51CD9A9CC00CA22CB /* FunctionalParserHelpers.swift */,
 				D6C30FBA1CD9ADBF00CA22CB /* FuntionalParser.swift */,
-				D60082851CDBB2E800C86687 /* SGFValueTypeParser.swift */,
 				D60082821CDAECCE00C86687 /* SGFParserCombinator.swift */,
 				D6614B211CDD177300DEDD9D /* SGFStructs.swift */,
+				D60082851CDBB2E800C86687 /* SGFValueTypeParser.swift */,
 			);
 			name = "Parser Combinator";
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 				C31B55351C9DD10500B060D8 /* Assets.xcassets in Resources */,
 				C3B5211F1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf in Resources */,
 				C31B55331C9DD10500B060D8 /* Main.storyboard in Resources */,
+				D6C592DF1CE18C2E008BFB76 /* SGFPropertiesFF4.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
