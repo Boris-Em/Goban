@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct SGFNode {
+protocol SGFNodeProtocol {
+
+}
+
+struct SGFNode: SGFNodeProtocol {
     
     private(set) var actions = [SGFAction]()
     private(set) var comment: String?

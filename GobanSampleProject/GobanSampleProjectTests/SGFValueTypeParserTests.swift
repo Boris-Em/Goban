@@ -8,13 +8,13 @@
 
 import XCTest
 
-class SGFValueTypeParserTests: XCParserTestBase {
-    var valueParser: SGFValueTypeParser!
+class SGFPValueTypeParserTests: XCParserTestBase {
+    var valueParser: SGFPValueTypeParser!
     
     override func setUp() {
         super.setUp()
 
-        valueParser = SGFValueTypeParser()
+        valueParser = SGFPValueTypeParser()
     }
     
     override func tearDown() {

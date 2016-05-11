@@ -29,6 +29,13 @@ struct SGFP {
     struct Node: CustomStringConvertible {
         let properties: [SGFP.Property]
         var description: String { return "Node: \(properties.map{$0.description}.joinWithSeparator(""))" }
+        
+        func propertyWithName(name: String) -> Property? {
+            if let i = properties.indexOf( { $0.identifier.name == name } ) {
+                return properties[i]
+            }
+            return nil
+        }
     }
     
     struct Property: CustomStringConvertible {
@@ -46,9 +53,9 @@ struct SGFP {
         let valueString: String
         var description: String { return "\(String(valueString))" }
         
-        var valueParser: SGFValueTypeParser { return SGFValueTypeParser() }
-        func parseWith(parserFrom: (SGFValueTypeParser) -> Parser<Character, SGFP.ValueType>) -> SGFP.ValueType? {
-            return parserFrom(SGFValueTypeParser()).parse(valueString.slice).generate().next()?.0
+        var valueParser: SGFPValueTypeParser { return SGFPValueTypeParser() }
+        func parseWith(parserFrom: (SGFPValueTypeParser) -> Parser<Character, SGFP.ValueType>) -> SGFP.ValueType? {
+            return parserFrom(SGFPValueTypeParser()).parse(valueString.slice).generate().next()?.0
         }
         func parse(p: Parser<Character, SGFP.ValueType>) -> SGFP.ValueType? {
             return p.parse(valueString.slice).generate().next()?.0

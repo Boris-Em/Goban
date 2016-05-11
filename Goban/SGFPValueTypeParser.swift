@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct SGFValueTypeParser {
+struct SGFPValueTypeParser {
     let parseDigit = parseCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet())
     let parseDigits = parseGreedyCharactersFromSet(NSCharacterSet.decimalDigitCharacterSet())
     let parseLcLetter = parseCharacterFromSet(NSCharacterSet.lowercaseLetterCharacterSet())
@@ -27,7 +27,7 @@ struct SGFValueTypeParser {
     }
     
     func parseReal() -> Parser<Character, SGFP.ValueType> {
-        return curry { SGFValueTypeParser.realFromWholeDigits($0, fractionDigits: $1) } </> parseNumberCharacters() <*> optional(parseDecimalPt *> oneOrMore(parseDigit))
+        return curry { SGFPValueTypeParser.realFromWholeDigits($0, fractionDigits: $1) } </> parseNumberCharacters() <*> optional(parseDecimalPt *> oneOrMore(parseDigit))
     }
     
     static func realFromWholeDigits(wholeDigits: [Character], fractionDigits: [Character]?) -> SGFP.ValueType {

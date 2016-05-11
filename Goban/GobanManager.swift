@@ -168,7 +168,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
     
     // MARK: SGF
     
-    private var game: SGFGame?
+    private var game: SGFGameProtocol?
     private var currentNodeIndex = -1
     
     func loadSGFFileAtURL(path: NSURL) {
@@ -189,10 +189,10 @@ class GobanManager: NSObject, GobanTouchProtocol {
         game = SGFGame(SGFString: SGFString!)
         
         removeAllStonesAnimated(false)
-        gobanView.gobanSize = GobanSize(width: game!.boardSize, height: game!.boardSize)
+        gobanView.gobanSize = GobanSize(width: game!.boardSize!, height: game!.boardSize!)
     }
     
-    func nextNode() -> SGFNode? {
+    func nextNode() -> SGFNodeProtocol? {
         guard game?.nodes.count >= currentNodeIndex else {
                 return nil
         }
@@ -200,7 +200,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
         return game?.nodes[currentNodeIndex + 1]
     }
     
-    func previousNode() -> SGFNode? {
+    func previousNode() -> SGFNodeProtocol? {
         guard currentNodeIndex > 0 else {
                 return nil
         }
@@ -208,7 +208,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
         return game?.nodes[currentNodeIndex - 1]
     }
     
-    func currentNode() -> SGFNode? {
+    func currentNode() -> SGFNodeProtocol? {
         guard game?.nodes.count >= (currentNodeIndex + 1) else {
                 return nil
         }
@@ -216,7 +216,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
         return game?.nodes[currentNodeIndex]
     }
     
-    func nodeAtIndex(index: Int) -> SGFNode? {
+    func nodeAtIndex(index: Int) -> SGFNodeProtocol? {
         guard index < game?.nodes.count &&
             index >= 0 else {
                 return nil
@@ -253,7 +253,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
             return
         }
         
-        handleNode(node)
+        handleNode(node as! SGFNode)
         currentNodeIndex += 1
     }
     
