@@ -184,13 +184,28 @@ class GobanManager: NSObject, GobanTouchProtocol {
             return
         }
         
-        SGFString = SGFString?.stringByReplacingOccurrencesOfString("\n", withString: "")
-        game = SGFGame(SGFString: SGFString!)
+        let newParser = true
+        if newParser {
+            let parser = SGFParserCombinator().parseCollection()
+            guard let collection = Array(parser.parse(SGFString!.slice)).first?.0 else {
+                return
+            }
+
+            game = collection.games.first
+        } else {
+            SGFString = SGFString?.stringByReplacingOccurrencesOfString("\n", withString: "")
+            game = SGFGame(SGFString: SGFString!)
+        }
         
         removeAllStonesAnimated(false)
         gobanView.gobanSize = GobanSize(width: game!.boardSize!, height: game!.boardSize!)
     }
         
+    func unloadSGF() {
+        game = nil
+        gameNodeGenerator = nil
+    }
+
     private var gameNodeGenerator: AnyGenerator<SGFNodeProtocol>!
     
     func handleNextNode() {
@@ -238,8 +253,4 @@ class GobanManager: NSObject, GobanTouchProtocol {
         }
     }
     
-    func unloadSGF() {
-        game = nil
-        gameNodeGenerator = nil
-    }
 }
