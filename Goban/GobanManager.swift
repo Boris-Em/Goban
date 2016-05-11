@@ -169,7 +169,6 @@ class GobanManager: NSObject, GobanTouchProtocol {
     // MARK: SGF
     
     private var game: SGFGameProtocol?
-    private var currentNodeIndex = -1
     
     func loadSGFFileAtURL(path: NSURL) {
         unloadSGF()
@@ -191,74 +190,56 @@ class GobanManager: NSObject, GobanTouchProtocol {
         removeAllStonesAnimated(false)
         gobanView.gobanSize = GobanSize(width: game!.boardSize!, height: game!.boardSize!)
     }
+        
+    private var gameNodeGenerator: AnyGenerator<SGFNodeProtocol>!
     
-    func nextNode() -> SGFNodeProtocol? {
-        guard game?.nodes.count >= currentNodeIndex else {
-                return nil
+    func handleNextNode() {
+        if gameNodeGenerator == nil,
+            let generator = game?.nodes.generate()  {
+            gameNodeGenerator = AnyGenerator(generator)
         }
         
-        return game?.nodes[currentNodeIndex + 1]
-    }
-    
-    func previousNode() -> SGFNodeProtocol? {
-        guard currentNodeIndex > 0 else {
-                return nil
+        if let node = gameNodeGenerator.next() {
+            handleMoveAndSetupForNode(node)
         }
-        
-        return game?.nodes[currentNodeIndex - 1]
     }
-    
-    func currentNode() -> SGFNodeProtocol? {
-        guard game?.nodes.count >= (currentNodeIndex + 1) else {
-                return nil
-        }
-        
-        return game?.nodes[currentNodeIndex]
-    }
-    
-    func nodeAtIndex(index: Int) -> SGFNodeProtocol? {
-        guard index < game?.nodes.count &&
-            index >= 0 else {
-                return nil
-        }
-        
-        return game?.nodes[index]
-    }
-    
-    func handleNode(node: SGFNode) {
-        for action in node.actions {
-            switch action.actionType {
-            case .AddBlack:
-                break
-            case .AddWhite:
-                break
-            case .AddEmpty:
-                break
-            case .MoveBlack:
-                if let gobanPoint = GobanPoint(SGFString: action.value) {
-                    addNewStoneAtGobanPoint(gobanPoint)
+
+    func handleMoveAndSetupForNode(node: SGFNodeProtocol) {
+        for (k,v) in node.simpleproperties {
+            if let setup = SGFSetupProperties(rawValue: k) {
+                switch setup {
+                case .AB:
+                    break
+                case .AE:
+                    break
+                case .AW:
+                    break
+                case .PL:
+                    break
                 }
-                break
-            case .MoveWhite:
-                if let gobanPoint = GobanPoint(SGFString: action.value) {
-                    addNewStoneAtGobanPoint(gobanPoint)
+            }
+            
+            if let move = SGFMoveProperties(rawValue: k) {
+                switch move {
+                case .B:
+                    if let gobanPoint = GobanPoint(SGFString: v) {
+                        addNewStoneAtGobanPoint(gobanPoint)
+                    }
+                case .W:
+                    if let gobanPoint = GobanPoint(SGFString: v) {
+                        addNewStoneAtGobanPoint(gobanPoint)
+                    }
+                case .KO:
+                    break
+                case .MN:
+                    break
                 }
-                break
             }
         }
     }
     
-    func handleNextNode() {
-        guard let node = nextNode() else {
-            return
-        }
-        
-        handleNode(node as! SGFNode)
-        currentNodeIndex += 1
-    }
-    
     func unloadSGF() {
         game = nil
-        currentNodeIndex = -1
+        gameNodeGenerator = nil
     }
 }

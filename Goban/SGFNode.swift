@@ -9,15 +9,19 @@
 import Foundation
 
 protocol SGFNodeProtocol {
-
+    var simpleproperties: [(name: String, value: String)] { get }
 }
 
 struct SGFNode: SGFNodeProtocol {
+    var simpleproperties: [(name: String, value: String)] = []
     
     private(set) var actions = [SGFAction]()
     private(set) var comment: String?
     
     mutating func parsePropertyWithKey(key: String, value: String) {
+        // keep simple properties along with actions
+        simpleproperties.append((key, value))
+        
         switch key {
         case "AB":
             actions.append(SGFAction(actionType: .AddBlack, value: value))
