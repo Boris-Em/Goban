@@ -16,12 +16,11 @@ class SGFFilesTests: XCParserTestBase {
         }
         return try! String(contentsOfFile: path)
     }
-    var parser: SGFParserCombinator!
+
+    typealias SGFPC = SGFParserCombinator
     
     override func setUp() {
         super.setUp()
-        
-        parser = SGFParserCombinator()
     }
     
     override func tearDown() {
@@ -31,31 +30,31 @@ class SGFFilesTests: XCParserTestBase {
 
     func testHeader() {
         let testString = "(;GM[1])"
-        let results = testParseString(parser.parseCollection(), testString)
+        let results = testParseString(SGFPC.collectionParser(), testString)
         XCTAssertEqual(1, results.count)
     }
 
     func testLeeSodolHeader() {
         let testString = contentsOfFileWithName("LeeSedolHeader.sgf")!
-        let results = testParseString(parser.parseCollection(), testString)
+        let results = testParseString(SGFPC.collectionParser(), testString)
         XCTAssertEqual(1, results.count)
     }
     
     func testLeeSedol() {
         let testString = contentsOfFileWithName("Lee-Sedol-vs-AlphaGo-20160309.sgf")!
-        let results = testParseString(parser.parseCollection(), testString)
+        let results = testParseString(SGFPC.collectionParser(), testString)
         XCTAssertEqual(1, results.count)
     }
 
     func testFF4ExampleSimplifiedFile() {
         let testString = contentsOfFileWithName("ff4_ex_simplified.sgf")!
-        let results = testParseString(parser.parseCollection(), testString)
+        let results = testParseString(SGFPC.collectionParser(), testString)
         XCTAssertEqual(1, results.count)
     }
 
     func testFF4ExampleFile() {
         let testString = contentsOfFileWithName("ff4_ex.sgf")!
-        let results = testParseString(parser.parseCollection(), testString)
+        let results = testParseString(SGFPC.collectionParser(), testString)
         XCTAssertEqual(1, results.count)
     }
 

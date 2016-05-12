@@ -9,40 +9,40 @@
 import Foundation
 
 
-class SGFParserCombinator {
+struct SGFParserCombinator {
     
-    func parseCollection() -> Parser<Character, SGFP.Collection> {
+    static func collectionParser() -> Parser<Character, SGFP.Collection> {
         return { SGFP.Collection(games: $0) } </>
-            just(greedy(oneOrMore(eatWS() *> parseGameTree())) <* eatWS())
+            just(greedy(oneOrMore(eatWS() *> gameTreeParser())) <* eatWS())
     }
 
-    func parseGameTree() -> Parser<Character, SGFP.GameTree> {
+    static func gameTreeParser() -> Parser<Character, SGFP.GameTree> {
         return { SGFP.GameTree(sequence: $0) } </>
-            pack(parseSequence() <* eatWS(), start: "(", end: ")")
+            pack(sequenceParser() <* eatWS(), start: "(", end: ")")
     }
 
-    func parseSequence() -> Parser<Character, SGFP.Sequence> {
+    static func sequenceParser() -> Parser<Character, SGFP.Sequence> {
         return curry { SGFP.Sequence(nodes: $0, games:$1) } </>
-            greedy(oneOrMore(eatWS() *> parseNode())) <*>
-            zeroOrMore(eatWS() *> lazy { self.parseGameTree() })
+            greedy(oneOrMore(eatWS() *> nodeParser())) <*>
+            zeroOrMore(eatWS() *> lazy { gameTreeParser() })
     }
     
-    func parseNode() -> Parser<Character, SGFP.Node> {
+    static func nodeParser() -> Parser<Character, SGFP.Node> {
         return { SGFP.Node(properties: $0) } </>
-            (parseCharacter(";") *> greedy(zeroOrMore(eatWS() *> parseProperty())))
+            (parseCharacter(";") *> greedy(zeroOrMore(eatWS() *> propertyParser())))
     }
 
-    func parseProperty() -> Parser<Character, SGFP.Property> {
+    static func propertyParser() -> Parser<Character, SGFP.Property> {
         return curry { SGFP.Property(identifier: $0, values: $1) } </>
-            parsePropertyIdent() <*> greedy(oneOrMore(eatWS() *> parsePropertyValueString()))
+            propIdentParser() <*> greedy(oneOrMore(eatWS() *> propValueStringParser()))
     }
 
-    func parsePropertyIdent() -> Parser<Character, SGFP.PropIdent> {
+    static func propIdentParser() -> Parser<Character, SGFP.PropIdent> {
         return { SGFP.PropIdent(name: String($0)) } </>
             parseGreedyCharactersFromSet(NSCharacterSet.uppercaseLetterCharacterSet())
     }
     
-    func parsePropertyValueString() -> Parser<Character, SGFP.PropValue> {
+    static func propValueStringParser() -> Parser<Character, SGFP.PropValue> {
         // parse the whole value as text for now, to keep the variations smaller
         let anythingButBracket = NSCharacterSet(charactersInString: "]").invertedSet
         return { SGFP.PropValue(valueString: String($0)) } </>

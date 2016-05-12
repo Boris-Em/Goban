@@ -186,7 +186,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
         
         let newParser = true
         if newParser {
-            let parser = SGFParserCombinator().parseCollection()
+            let parser = SGFParserCombinator.collectionParser()
             guard let collection = Array(parser.parse(SGFString!.slice)).first?.0 else {
                 return
             }
