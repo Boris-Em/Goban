@@ -26,8 +26,8 @@
 		C3D286321CB0341200DFC062 /* Stone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D286311CB0341200DFC062 /* Stone.swift */; };
 		C3D286341CB044D400DFC062 /* GobanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D286331CB044D400DFC062 /* GobanManager.swift */; };
 		D60082831CDAECCE00C86687 /* SGFParserCombinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082821CDAECCE00C86687 /* SGFParserCombinator.swift */; };
-		D60082861CDBB2E800C86687 /* SGFPValueTypeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082851CDBB2E800C86687 /* SGFPValueTypeParser.swift */; };
-		D60082871CDBB2E800C86687 /* SGFPValueTypeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082851CDBB2E800C86687 /* SGFPValueTypeParser.swift */; };
+		D60082861CDBB2E800C86687 /* SGFPValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082851CDBB2E800C86687 /* SGFPValueParser.swift */; };
+		D60082871CDBB2E800C86687 /* SGFPValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082851CDBB2E800C86687 /* SGFPValueParser.swift */; };
 		D6614B221CDD177300DEDD9D /* SGFPStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6614B211CDD177300DEDD9D /* SGFPStructs.swift */; };
 		D6614B231CDD17F100DEDD9D /* SGFPStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6614B211CDD177300DEDD9D /* SGFPStructs.swift */; };
 		D6614B261CDEDF0E00DEDD9D /* SGFFilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6614B251CDEDF0E00DEDD9D /* SGFFilesTests.swift */; };
@@ -83,7 +83,7 @@
 		C3D286311CB0341200DFC062 /* Stone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stone.swift; sourceTree = "<group>"; };
 		C3D286331CB044D400DFC062 /* GobanManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanManager.swift; sourceTree = "<group>"; };
 		D60082821CDAECCE00C86687 /* SGFParserCombinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFParserCombinator.swift; sourceTree = "<group>"; };
-		D60082851CDBB2E800C86687 /* SGFPValueTypeParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFPValueTypeParser.swift; sourceTree = "<group>"; };
+		D60082851CDBB2E800C86687 /* SGFPValueParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFPValueParser.swift; sourceTree = "<group>"; };
 		D6614B211CDD177300DEDD9D /* SGFPStructs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFPStructs.swift; sourceTree = "<group>"; };
 		D6614B251CDEDF0E00DEDD9D /* SGFFilesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFFilesTests.swift; sourceTree = "<group>"; };
 		D6614B281CDEE3A300DEDD9D /* LeeSedolHeader.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LeeSedolHeader.sgf; sourceTree = "<group>"; };
@@ -215,7 +215,7 @@
 				D6C30FB41CD9A96900CA22CB /* Parser Combinator */,
 				D60082821CDAECCE00C86687 /* SGFParserCombinator.swift */,
 				D6614B211CDD177300DEDD9D /* SGFPStructs.swift */,
-				D60082851CDBB2E800C86687 /* SGFPValueTypeParser.swift */,
+				D60082851CDBB2E800C86687 /* SGFPValueParser.swift */,
 				D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */,
 				D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */,
 			);
@@ -333,7 +333,7 @@
 				C3B5211D1CD02D5500B890B7 /* SGFGame.swift in Sources */,
 				C31B55301C9DD10500B060D8 /* ViewController.swift in Sources */,
 				D60082831CDAECCE00C86687 /* SGFParserCombinator.swift in Sources */,
-				D60082861CDBB2E800C86687 /* SGFPValueTypeParser.swift in Sources */,
+				D60082861CDBB2E800C86687 /* SGFPValueParser.swift in Sources */,
 				D6C30FB61CD9A9CC00CA22CB /* FunctionalParserHelpers.swift in Sources */,
 				C3D286341CB044D400DFC062 /* GobanManager.swift in Sources */,
 				D6614B221CDD177300DEDD9D /* SGFPStructs.swift in Sources */,
@@ -366,7 +366,7 @@
 				D6C592E51CE2D1A9008BFB76 /* SGFProperties.swift in Sources */,
 				D6C592ED1CE2D8A7008BFB76 /* SGFGameProtocol.swift in Sources */,
 				D6C30FB71CD9A9CC00CA22CB /* FunctionalParserHelpers.swift in Sources */,
-				D60082871CDBB2E800C86687 /* SGFPValueTypeParser.swift in Sources */,
+				D60082871CDBB2E800C86687 /* SGFPValueParser.swift in Sources */,
 				D6C592EE1CE2EF74008BFB76 /* SGFNode.swift in Sources */,
 				3A35C54A1CDBBEE30068F8B3 /* XCParserTestBase.swift in Sources */,
 			);

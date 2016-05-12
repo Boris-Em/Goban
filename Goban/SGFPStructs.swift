@@ -52,60 +52,8 @@ struct SGFP {
     struct PropValue: CustomStringConvertible {
         let valueString: String
         var description: String { return "\(String(valueString))" }
-        
-        var valueParser: SGFPValueTypeParser { return SGFPValueTypeParser() }
-        func parseWith(parserFrom: (SGFPValueTypeParser) -> Parser<Character, SGFP.ValueType>) -> SGFP.ValueType? {
-            return parserFrom(SGFPValueTypeParser()).parse(valueString.slice).generate().next()?.0
-        }
-        func parse(p: Parser<Character, SGFP.ValueType>) -> SGFP.ValueType? {
-            return p.parse(valueString.slice).generate().next()?.0
-        }
-        
-        func toNumber() -> Int? {
-            if let v = parseWith({ $0.parseNumber() }), case let .Number(n) = v { return n }
-            return nil
-        }
-        
-        func toReal() -> Float? {
-            if let v = parseWith({ $0.parseReal() }), case let .Real(n) = v { return n }
-            return nil
-        }
-
-        func toDouble() -> Character? {
-            if let v = parseWith({ $0.parseDouble() }), case let .Double(n) = v { return n }
-            return nil
-        }
-
-        func toColor() -> String? {
-            if let v = parseWith({ $0.parseColor() }), case let .Color(n) = v { return n }
-            return nil
-        }
-        
-        func toSimpleText() -> String? {
-            if let v = parseWith({ $0.parseSimpleText() }), case let .SimpleText(n) = v { return n }
-            return nil
-        }
-        
-        func toText() -> String? {
-            if let v = parseWith({ $0.parseText() }), case let .Text(n) = v { return n }
-            return nil
-        }
-
-        func toPoint() -> (col: Character, row: Character)? {
-            if let v = parseWith({ $0.parseGoPoint() }), case let .Point(c, r) = v { return (col:c, row:r) }
-            return nil
-        }
-
-        func toMove() -> (col: Character, row: Character)? {
-            if let v = parseWith({ $0.parseGoMove() }), case let .Move(c, r) = v { return (col:c, row:r) }
-            return nil
-        }
-
-        func toStone() -> (col: Character, row: Character)? {
-            if let v = parseWith({ $0.parseGoStone() }), case let .Stone(c, r) = v { return (col:c, row:r) }
-            return nil
-        }
     }
+    
     
     enum ValueType: Equatable, CustomStringConvertible {
         case None
@@ -133,8 +81,60 @@ struct SGFP {
             case .Stone(let c, let r): return "Stone:\(c)\(r)"
             }
         }
-        
-        
+    }
+}
+
+extension SGFP.PropValue {
+    
+    typealias ValueParser = SGFPValueParser
+    
+    func parseWith(p: Parser<Character, SGFP.ValueType>) -> SGFP.ValueType? {
+        return p.parse(valueString.slice).generate().next()?.0
+    }
+    
+    func toNumber() -> Int? {
+        if let v = parseWith(ValueParser.numberParser() ), case let .Number(n) = v { return n }
+        return nil
+    }
+    
+    func toReal() -> Float? {
+        if let v = parseWith(ValueParser.realParser()), case let .Real(n) = v { return n }
+        return nil
+    }
+    
+    func toDouble() -> Character? {
+        if let v = parseWith(ValueParser.doubleParser() ), case let .Double(n) = v { return n }
+        return nil
+    }
+    
+    func toColor() -> String? {
+        if let v = parseWith(ValueParser.colorParser() ), case let .Color(n) = v { return n }
+        return nil
+    }
+    
+    func toSimpleText() -> String? {
+        if let v = parseWith(ValueParser.simpleTextParser() ), case let .SimpleText(n) = v { return n }
+        return nil
+    }
+    
+    func toText() -> String? {
+        if let v = parseWith(ValueParser.textParser()), case let .Text(n) = v { return n }
+        return nil
+    }
+    
+    func toPoint() -> (col: Character, row: Character)? {
+        if let v = parseWith(ValueParser.goPointParser()), case let .Point(c, r) = v { return (col:c, row:r) }
+        return nil
+    }
+    
+    func toMove() -> (col: Character, row: Character)? {
+        if let v = parseWith(ValueParser.goMoveParser()), case let .Move(c, r) = v { return (col:c, row:r) }
+        return nil
+    }
+    
+    func toStone() -> (col: Character, row: Character)? {
+        if let v = parseWith(ValueParser.goStoneParser()), case let .Stone(c, r) = v { return (col:c, row:r) }
+        return nil
     }
 }
 
