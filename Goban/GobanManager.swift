@@ -209,39 +209,47 @@ class GobanManager: NSObject, GobanTouchProtocol {
         }
         
         if let node = gameNodeGenerator.next() {
-            handleMoveAndSetupForNode(node)
+            handleNode(node)
         }
     }
 
-    func handleMoveAndSetupForNode(node: SGFNodeProtocol) {
+    func handleNode(node: SGFNodeProtocol) {
         for (k,v) in node.simpleproperties {
             if let setup = SGFSetupProperties(rawValue: k) {
-                switch setup {
-                case .AB:
-                    break
-                case .AE:
-                    break
-                case .AW:
-                    break
-                case .PL:
-                    break
-                }
+                handleSetupProperty(setup, withValue: v)
             } else if let move = SGFMoveProperties(rawValue: k) {
-                switch move {
-                case .B:
-                    if let gobanPoint = GobanPoint(SGFString: v) {
-                        addNewStoneAtGobanPoint(gobanPoint)
-                    }
-                case .W:
-                    if let gobanPoint = GobanPoint(SGFString: v) {
-                        addNewStoneAtGobanPoint(gobanPoint)
-                    }
-                case .KO:
-                    break
-                case .MN:
-                    break
-                }
+                handleMoveProperty(move, withValue: v)
             }
+        }
+    }
+    
+    private func handleSetupProperty(setup: SGFSetupProperties, withValue value: String) {
+        switch setup {
+        case .AB:
+            break
+        case .AE:
+            break
+        case .AW:
+            break
+        case .PL:
+            break
+        }
+    }
+    
+    private func handleMoveProperty(move: SGFMoveProperties, withValue value: String) {
+        switch move {
+        case .B:
+            if let gobanPoint = GobanPoint(SGFString: value) {
+                addNewStoneAtGobanPoint(gobanPoint)
+            }
+        case .W:
+            if let gobanPoint = GobanPoint(SGFString: value) {
+                addNewStoneAtGobanPoint(gobanPoint)
+            }
+        case .KO:
+            break
+        case .MN:
+            break
         }
     }
     
