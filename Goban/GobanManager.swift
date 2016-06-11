@@ -21,7 +21,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
     
     private var temporaryStone: StoneModel?
     
-    // MARK: Stones Management
+    // MARK: Stone Management
     
     func addNewStoneAtGobanPoint(gobanPoint: GobanPoint) {
         guard stoneAtGobanPoint(gobanPoint) == nil else {
