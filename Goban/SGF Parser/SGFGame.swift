@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SGFGame {
+struct SGFGame: SGFGameProtocol {
     
     /** The name of the person commenting the game.
      */
@@ -20,7 +20,7 @@ struct SGFGame {
     
     /** The SGF file format.
      */
-    private(set) var fileFormat = 3
+    private(set) var fileFormat: Int? = 3
     
     /** The copyright of the file.
      */
@@ -64,7 +64,7 @@ struct SGFGame {
     
     /** The rule set used for the game.
      */
-    private(set) var rules = "Japanese"
+    private(set) var rules: String? = "Japanese"
     
     /** The source of the SGF file.
     */
@@ -72,7 +72,7 @@ struct SGFGame {
     
     /** The size of the board used for the game.
      */
-    private(set) var boardSize = 19
+    private(set) var boardSize: Int? = 19
     
     /** The time limit in seconds.
      */
@@ -114,7 +114,7 @@ struct SGFGame {
     
     /** Game nodes.
      */
-    private(set) var nodes = [SGFNode]()
+    private(set) var nodes = [SGFNodeProtocol]()
     
     init(SGFString: String) {
         guard SGFString.substringToIndex(SGFString.startIndex.advancedBy(2)) == "(;" else {

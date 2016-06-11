@@ -168,8 +168,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
     
     // MARK: SGF
     
-    private var game: SGFGame?
-    private var currentNodeIndex = -1
+    private var game: SGFGameProtocol?
     
     func loadSGFFileAtURL(path: NSURL) {
         unloadSGF()
@@ -185,80 +184,73 @@ class GobanManager: NSObject, GobanTouchProtocol {
             return
         }
         
-        SGFString = SGFString?.stringByReplacingOccurrencesOfString("\n", withString: "")
-        game = SGFGame(SGFString: SGFString!)
+        let newParser = true
+        if newParser {
+            let parser = SGFParserCombinator.collectionParser()
+            guard let collection = Array(parser.parse(SGFString!.slice)).first?.0 else {
+                return
+            }
+
+            game = collection.games.first
+        } else {
+            SGFString = SGFString?.stringByReplacingOccurrencesOfString("\n", withString: "")
+            game = SGFGame(SGFString: SGFString!)
+        }
         
         removeAllStonesAnimated(false)
-        gobanView.gobanSize = GobanSize(width: game!.boardSize, height: game!.boardSize)
+        gobanView.gobanSize = GobanSize(width: game!.boardSize!, height: game!.boardSize!)
     }
+        
+    func unloadSGF() {
+        game = nil
+        gameNodeGenerator = nil
+    }
+
+    private var gameNodeGenerator: AnyGenerator<SGFNodeProtocol>!
     
-    func nextNode() -> SGFNode? {
-        guard game?.nodes.count >= currentNodeIndex else {
-                return nil
+    func handleNextNode() {
+        if gameNodeGenerator == nil,
+            let generator = game?.nodes.generate()  {
+            gameNodeGenerator = AnyGenerator(generator)
         }
         
-        return game?.nodes[currentNodeIndex + 1]
-    }
-    
-    func previousNode() -> SGFNode? {
-        guard currentNodeIndex > 0 else {
-                return nil
+        if let node = gameNodeGenerator.next() {
+            handleMoveAndSetupForNode(node)
         }
-        
-        return game?.nodes[currentNodeIndex - 1]
     }
-    
-    func currentNode() -> SGFNode? {
-        guard game?.nodes.count >= (currentNodeIndex + 1) else {
-                return nil
-        }
-        
-        return game?.nodes[currentNodeIndex]
-    }
-    
-    func nodeAtIndex(index: Int) -> SGFNode? {
-        guard index < game?.nodes.count &&
-            index >= 0 else {
-                return nil
-        }
-        
-        return game?.nodes[index]
-    }
-    
-    func handleNode(node: SGFNode) {
-        for action in node.actions {
-            switch action.actionType {
-            case .AddBlack:
-                break
-            case .AddWhite:
-                break
-            case .AddEmpty:
-                break
-            case .MoveBlack:
-                if let gobanPoint = GobanPoint(SGFString: action.value) {
-                    addNewStoneAtGobanPoint(gobanPoint)
+
+    func handleMoveAndSetupForNode(node: SGFNodeProtocol) {
+        for (k,v) in node.simpleproperties {
+            if let setup = SGFSetupProperties(rawValue: k) {
+                switch setup {
+                case .AB:
+                    break
+                case .AE:
+                    break
+                case .AW:
+                    break
+                case .PL:
+                    break
                 }
-                break
-            case .MoveWhite:
-                if let gobanPoint = GobanPoint(SGFString: action.value) {
-                    addNewStoneAtGobanPoint(gobanPoint)
+            }
+            
+            if let move = SGFMoveProperties(rawValue: k) {
+                switch move {
+                case .B:
+                    if let gobanPoint = GobanPoint(SGFString: v) {
+                        addNewStoneAtGobanPoint(gobanPoint)
+                    }
+                case .W:
+                    if let gobanPoint = GobanPoint(SGFString: v) {
+                        addNewStoneAtGobanPoint(gobanPoint)
+                    }
+                case .KO:
+                    break
+                case .MN:
+                    break
                 }
-                break
             }
         }
     }
     
-    func handleNextNode() {
-        guard let node = nextNode() else {
-            return
-        }
-        
-        handleNode(node)
-        currentNodeIndex += 1
-    }
-    
-    func unloadSGF() {
-        game = nil
-        currentNodeIndex = -1
-    }
 }

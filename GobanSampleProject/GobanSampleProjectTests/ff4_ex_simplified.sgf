@@ -1,0 +1,15 @@
+(;AB[dd][de][df][dg][do:gq]
+AW[jd][je][jf][jg][kn:lq][pn:pq]
+N[Setup]C[Black & white stones at the top are added as single stones.
+
+Black & white stones at the bottom are added using compressed point lists.]
+;AE[ep][fp][kn][lo][lq][pn:pq]
+C[AddEmpty
+
+Black stones & stones of left white group are erased in FF[3\] way.
+
+White stones at bottom right were erased using compressed point list.]
+;AB[pd]AW[pp]PL[B]C[Added two stones.
+
+Node marked with "Black to play".];PL[W]
+C[Node marked with "White to play"])
