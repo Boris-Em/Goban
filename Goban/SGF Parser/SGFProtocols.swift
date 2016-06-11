@@ -82,3 +82,7 @@ protocol SGFGameProtocol {
     // Game nodes.
     var nodes: [SGFNodeProtocol] { get }
 }
+
+protocol SGFNodeProtocol {
+    var simpleproperties: [(name: String, value: String)] { get }
+}

@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol SGFNodeProtocol {
-    var simpleproperties: [(name: String, value: String)] { get }
-}
-
 extension SGFP.Node: SGFNodeProtocol {
     var simpleproperties: [(name: String, value: String)] {
         return properties.map {

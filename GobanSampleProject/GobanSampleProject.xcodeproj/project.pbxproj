@@ -42,8 +42,8 @@
 		D6C592E51CE2D1A9008BFB76 /* SGFProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */; };
 		D6C592EA1CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */; };
 		D6C592EB1CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */; };
-		D6C592EC1CE2D8A6008BFB76 /* SGFGameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E61CE2D5DD008BFB76 /* SGFGameProtocol.swift */; };
-		D6C592ED1CE2D8A7008BFB76 /* SGFGameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E61CE2D5DD008BFB76 /* SGFGameProtocol.swift */; };
+		D6C592EC1CE2D8A6008BFB76 /* SGFProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E61CE2D5DD008BFB76 /* SGFProtocols.swift */; };
+		D6C592ED1CE2D8A7008BFB76 /* SGFProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E61CE2D5DD008BFB76 /* SGFProtocols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,7 +87,7 @@
 		D6C30FBA1CD9ADBF00CA22CB /* FuntionalParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuntionalParser.swift; sourceTree = "<group>"; };
 		D6C592DE1CE18C2E008BFB76 /* SGFPropertiesFF4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SGFPropertiesFF4.txt; sourceTree = "<group>"; };
 		D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFProperties.swift; sourceTree = "<group>"; };
-		D6C592E61CE2D5DD008BFB76 /* SGFGameProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SGFGameProtocol.swift; path = "SGF Parser/SGFGameProtocol.swift"; sourceTree = "<group>"; };
+		D6C592E61CE2D5DD008BFB76 /* SGFProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SGFProtocols.swift; path = "SGF Parser/SGFProtocols.swift"; sourceTree = "<group>"; };
 		D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SGFPGameTree+GameProtocol.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,7 +170,7 @@
 		C3B521191CD0183900B890B7 /* SGF Parser */ = {
 			isa = PBXGroup;
 			children = (
-				D6C592E61CE2D5DD008BFB76 /* SGFGameProtocol.swift */,
+				D6C592E61CE2D5DD008BFB76 /* SGFProtocols.swift */,
 				D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */,
 				D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */,
 			);
@@ -330,7 +330,7 @@
 				C31B55411C9DD1B000B060D8 /* GobanView.swift in Sources */,
 				D6C30FBB1CD9ADBF00CA22CB /* FuntionalParser.swift in Sources */,
 				D6C592E41CE2D1A9008BFB76 /* SGFProperties.swift in Sources */,
-				D6C592EC1CE2D8A6008BFB76 /* SGFGameProtocol.swift in Sources */,
+				D6C592EC1CE2D8A6008BFB76 /* SGFProtocols.swift in Sources */,
 				C3D286321CB0341200DFC062 /* Stone.swift in Sources */,
 				D6C592EA1CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift in Sources */,
 			);
@@ -351,7 +351,7 @@
 				3A35C5481CDBBEA80068F8B3 /* SGFValueTypeParserTests.swift in Sources */,
 				C3B2A19E1CC2A64A0066C401 /* GobanManagerTests.swift in Sources */,
 				D6C592E51CE2D1A9008BFB76 /* SGFProperties.swift in Sources */,
-				D6C592ED1CE2D8A7008BFB76 /* SGFGameProtocol.swift in Sources */,
+				D6C592ED1CE2D8A7008BFB76 /* SGFProtocols.swift in Sources */,
 				D6C30FB71CD9A9CC00CA22CB /* FunctionalParserHelpers.swift in Sources */,
 				D60082871CDBB2E800C86687 /* SGFPValueParser.swift in Sources */,
 				3A35C54A1CDBBEE30068F8B3 /* XCParserTestBase.swift in Sources */,
