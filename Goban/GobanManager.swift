@@ -184,18 +184,12 @@ class GobanManager: NSObject, GobanTouchProtocol {
             return
         }
         
-        let newParser = true
-        if newParser {
-            let parser = SGFParserCombinator.collectionParser()
-            guard let collection = Array(parser.parse(SGFString!.slice)).first?.0 else {
-                return
-            }
-
-            game = collection.games.first
-        } else {
-            SGFString = SGFString?.stringByReplacingOccurrencesOfString("\n", withString: "")
-            game = SGFGame(SGFString: SGFString!)
+        let parser = SGFParserCombinator.collectionParser()
+        guard let collection = Array(parser.parse(SGFString!.slice)).first?.0 else {
+            return
         }
+        
+        game = collection.games.first
         
         removeAllStonesAnimated(false)
         gobanView.gobanSize = GobanSize(width: game!.boardSize!, height: game!.boardSize!)
