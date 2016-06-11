@@ -44,7 +44,6 @@ enum SGFMiscellaneousProperties {
     case FG, PM, VW
 }
 
-
 enum GoProperties: String {
     case HA, KM, TB, TW
 }
