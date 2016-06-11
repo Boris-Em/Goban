@@ -147,7 +147,6 @@
 			isa = PBXGroup;
 			children = (
 				D6C592EF1CE2F289008BFB76 /* SGFP ParserCombinator */,
-				C3B521191CD0183900B890B7 /* SGF Parser */,
 				C31B55401C9DD1B000B060D8 /* GobanView.swift */,
 				C3D286331CB044D400DFC062 /* GobanManager.swift */,
 				C3D286311CB0341200DFC062 /* Stone.swift */,
@@ -167,16 +166,6 @@
 			path = GobanSampleProjectTests;
 			sourceTree = "<group>";
 		};
-		C3B521191CD0183900B890B7 /* SGF Parser */ = {
-			isa = PBXGroup;
-			children = (
-				D6C592E61CE2D5DD008BFB76 /* SGFProtocols.swift */,
-				D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */,
-				D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */,
-			);
-			name = "SGF Parser";
-			sourceTree = "<group>";
-		};
 		D6614B241CDEDEAB00DEDD9D /* ParserCombinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,22 +181,17 @@
 			name = ParserCombinator;
 			sourceTree = "<group>";
 		};
-		D6C30FB41CD9A96900CA22CB /* Parser Combinator */ = {
+		D6C592EF1CE2F289008BFB76 /* SGFP ParserCombinator */ = {
 			isa = PBXGroup;
 			children = (
 				D6C30FB51CD9A9CC00CA22CB /* FunctionalParserHelpers.swift */,
 				D6C30FBA1CD9ADBF00CA22CB /* FuntionalParser.swift */,
-			);
-			name = "Parser Combinator";
-			sourceTree = "<group>";
-		};
-		D6C592EF1CE2F289008BFB76 /* SGFP ParserCombinator */ = {
-			isa = PBXGroup;
-			children = (
-				D6C30FB41CD9A96900CA22CB /* Parser Combinator */,
 				D60082821CDAECCE00C86687 /* SGFParserCombinator.swift */,
 				D6614B211CDD177300DEDD9D /* SGFPStructs.swift */,
 				D60082851CDBB2E800C86687 /* SGFPValueParser.swift */,
+				D6C592E61CE2D5DD008BFB76 /* SGFProtocols.swift */,
+				D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */,
+				D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */,
 			);
 			name = "SGFP ParserCombinator";
 			sourceTree = "<group>";
