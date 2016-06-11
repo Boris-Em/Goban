@@ -153,4 +153,33 @@ class GobanViewTests: XCTestCase {
         goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 3)
     }
+    
+    func testInitWithSGFString() {
+        var testSGFString: String = ""
+        XCTAssertNil(GobanPoint(SGFString: testSGFString))
+        
+        testSGFString = "  "
+        XCTAssertNil(GobanPoint(SGFString: testSGFString))
+        
+        testSGFString = "abc"
+        XCTAssertNil(GobanPoint(SGFString: testSGFString))
+        
+        testSGFString = "12"
+        XCTAssertNil(GobanPoint(SGFString: testSGFString))
+        
+        testSGFString = "aa"
+        var point = GobanPoint(SGFString: testSGFString)
+        XCTAssert(point?.x == 1)
+        XCTAssert(point?.y == 1)
+        
+        testSGFString = "mm"
+        point = GobanPoint(SGFString: testSGFString)
+        XCTAssert(point?.x == 13)
+        XCTAssert(point?.y == 13)
+        
+        testSGFString = "bf"
+        point = GobanPoint(SGFString: testSGFString)
+        XCTAssert(point?.x == 2)
+        XCTAssert(point?.y == 6)
+    }
 }
