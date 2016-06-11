@@ -240,11 +240,13 @@ class GobanManager: NSObject, GobanTouchProtocol {
         switch move {
         case .B:
             if let gobanPoint = GobanPoint(SGFString: value) {
-                addNewStoneAtGobanPoint(gobanPoint)
+                let stone = Stone(stoneColor: .Black, disabled: false)
+                addStone(stone, atGobanPoint: gobanPoint, isTemporary: false)
             }
         case .W:
             if let gobanPoint = GobanPoint(SGFString: value) {
-                addNewStoneAtGobanPoint(gobanPoint)
+                let stone = Stone(stoneColor: .White, disabled: false)
+                addStone(stone, atGobanPoint: gobanPoint, isTemporary: false)
             }
         case .KO:
             break
