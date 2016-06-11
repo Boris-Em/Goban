@@ -226,9 +226,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
                 case .PL:
                     break
                 }
-            }
-            
-            if let move = SGFMoveProperties(rawValue: k) {
+            } else if let move = SGFMoveProperties(rawValue: k) {
                 switch move {
                 case .B:
                     if let gobanPoint = GobanPoint(SGFString: v) {
