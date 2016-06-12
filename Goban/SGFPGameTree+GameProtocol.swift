@@ -67,8 +67,8 @@ extension SGFP.GameTree: SGFGameProtocol {
     }
     
     // The komi. Points added to the white player.
-    var komi: Int? { 
-        return rootNode?.propertyWithName(GoProperties.KM.rawValue)?.values.first?.toNumber() 
+    var komi: Float? {
+        return rootNode?.propertyWithName(GoProperties.KM.rawValue)?.values.first?.toReal()
     }
     
     // The overtime system used by the game.
@@ -87,8 +87,8 @@ extension SGFP.GameTree: SGFGameProtocol {
     }
     
     // Round of the game.
-    var round: Int? { 
-        return gameInfoProperty(.RO)?.values.first?.toNumber() 
+    var round: String? {
+        return gameInfoProperty(.RO)?.values.first?.toText()
     }
     
     // The rule set used for the game.

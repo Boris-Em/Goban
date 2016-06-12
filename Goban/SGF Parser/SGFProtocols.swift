@@ -27,7 +27,7 @@ protocol SGFGameProtocol {
     var handicap: Int? { get }
     
     // The komi. Points added to the white player.
-    var komi: Int? { get }
+    var komi: Float? { get }
     
     // The overtime system used by the game.
     var overtime: String? { get }
@@ -39,7 +39,7 @@ protocol SGFGameProtocol {
     var result: String? { get }
     
     // Round of the game.
-    var round: Int? { get }
+    var round: String? { get }
     
     // The rule set used for the game.
     var rules: String? { get }
