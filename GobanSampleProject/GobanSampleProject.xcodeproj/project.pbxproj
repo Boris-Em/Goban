@@ -22,6 +22,8 @@
 		C3B5211F1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf in Resources */ = {isa = PBXBuildFile; fileRef = C3B5211E1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf */; };
 		C3D286321CB0341200DFC062 /* Stone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D286311CB0341200DFC062 /* Stone.swift */; };
 		C3D286341CB044D400DFC062 /* GobanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D286331CB044D400DFC062 /* GobanManager.swift */; };
+		C3DE82281D0CA6EC00FF0289 /* Problem.sgf in Resources */ = {isa = PBXBuildFile; fileRef = C3DE82271D0CA6EC00FF0289 /* Problem.sgf */; };
+		C3DE822A1D0CE1A700FF0289 /* Lee-Sedol-vs-AlphaGo-Simplified.sgf in Resources */ = {isa = PBXBuildFile; fileRef = C3DE82291D0CE1A700FF0289 /* Lee-Sedol-vs-AlphaGo-Simplified.sgf */; };
 		D60082831CDAECCE00C86687 /* SGFParserCombinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082821CDAECCE00C86687 /* SGFParserCombinator.swift */; };
 		D60082861CDBB2E800C86687 /* SGFPValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082851CDBB2E800C86687 /* SGFPValueParser.swift */; };
 		D60082871CDBB2E800C86687 /* SGFPValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082851CDBB2E800C86687 /* SGFPValueParser.swift */; };
@@ -75,6 +77,8 @@
 		C3B5211E1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Lee-Sedol-vs-AlphaGo-20160309.sgf"; sourceTree = "<group>"; };
 		C3D286311CB0341200DFC062 /* Stone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stone.swift; sourceTree = "<group>"; };
 		C3D286331CB044D400DFC062 /* GobanManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanManager.swift; sourceTree = "<group>"; };
+		C3DE82271D0CA6EC00FF0289 /* Problem.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Problem.sgf; sourceTree = "<group>"; };
+		C3DE82291D0CE1A700FF0289 /* Lee-Sedol-vs-AlphaGo-Simplified.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Lee-Sedol-vs-AlphaGo-Simplified.sgf"; sourceTree = "<group>"; };
 		D60082821CDAECCE00C86687 /* SGFParserCombinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFParserCombinator.swift; sourceTree = "<group>"; };
 		D60082851CDBB2E800C86687 /* SGFPValueParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFPValueParser.swift; sourceTree = "<group>"; };
 		D6614B211CDD177300DEDD9D /* SGFPStructs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFPStructs.swift; sourceTree = "<group>"; };
@@ -131,6 +135,7 @@
 		C31B552C1C9DD10500B060D8 /* GobanSampleProject */ = {
 			isa = PBXGroup;
 			children = (
+				C3DE82271D0CA6EC00FF0289 /* Problem.sgf */,
 				C3B5211E1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf */,
 				C31B552D1C9DD10500B060D8 /* AppDelegate.swift */,
 				C31B552F1C9DD10500B060D8 /* ViewController.swift */,
@@ -169,6 +174,7 @@
 		D6614B241CDEDEAB00DEDD9D /* ParserCombinator */ = {
 			isa = PBXGroup;
 			children = (
+				C3DE82291D0CE1A700FF0289 /* Lee-Sedol-vs-AlphaGo-Simplified.sgf */,
 				D6614B2C1CDEF14F00DEDD9D /* ff4_ex_simplified.sgf */,
 				D6614B2A1CDEEF4B00DEDD9D /* ff4_ex.sgf */,
 				D6614B281CDEE3A300DEDD9D /* LeeSedolHeader.sgf */,
@@ -282,6 +288,7 @@
 				C31B55351C9DD10500B060D8 /* Assets.xcassets in Resources */,
 				C3B5211F1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf in Resources */,
 				C31B55331C9DD10500B060D8 /* Main.storyboard in Resources */,
+				C3DE82281D0CA6EC00FF0289 /* Problem.sgf in Resources */,
 				D6C592DF1CE18C2E008BFB76 /* SGFPropertiesFF4.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -290,6 +297,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3DE822A1D0CE1A700FF0289 /* Lee-Sedol-vs-AlphaGo-Simplified.sgf in Resources */,
 				D6614B2D1CDEF14F00DEDD9D /* ff4_ex_simplified.sgf in Resources */,
 				D6614B2B1CDEEF4B00DEDD9D /* ff4_ex.sgf in Resources */,
 				D6614B291CDEE3A300DEDD9D /* LeeSedolHeader.sgf in Resources */,

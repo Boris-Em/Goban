@@ -41,9 +41,51 @@ class SGFFilesTests: XCParserTestBase {
     }
     
     func testLeeSedol() {
-        let testString = contentsOfFileWithName("Lee-Sedol-vs-AlphaGo-20160309.sgf")!
+        let testString = contentsOfFileWithName("Lee-Sedol-vs-AlphaGo-Simplified.sgf")!
         let results = testParseString(SGFPC.collectionParser(), testString)
         XCTAssertEqual(1, results.count)
+        
+        let game: SGFGameProtocol? = results.first?.0.games.first
+        XCTAssertNotNil(game)
+        
+        XCTAssertEqual(game?.fileFormat, 4)
+        XCTAssertEqual(game?.application, "CGoban:3")
+        XCTAssertEqual(game?.rules, "Chinese")
+        XCTAssertEqual(game?.boardSize, 19)
+        XCTAssertEqual(game?.komi, 7.5)
+        XCTAssertEqual(game?.timeLimit, 7200)
+        XCTAssertEqual(game?.overtime, "3x60 byo-yomi")
+        XCTAssertEqual(game?.whiteName, "AlphaGo")
+        XCTAssertEqual(game?.blackName, "Lee Sedol")
+        XCTAssertEqual(game?.blackRank, "9d")
+        XCTAssertEqual(game?.date?.timeIntervalSince1970, 1452326400.0)
+        XCTAssertEqual(game?.eventName, "Google DeepMind Challenge Match")
+        XCTAssertEqual(game?.round, "Game 1")
+        XCTAssertEqual(game?.locationName, "Seoul, Korea")
+        XCTAssertEqual(game?.whiteTeam, "Computer")
+        XCTAssertEqual(game?.blackTeam, "Human")
+        XCTAssertEqual(game?.source, "https://gogameguru.com/")
+        XCTAssertEqual(game?.result, "W+Resign")
+        XCTAssertEqual(game?.nodes.count, 9)
+        
+        let expectations = [[21],
+                            [1, "B", "qd"],
+                            [1, "W", "dd"],
+                            [1, "B", "pq"],
+                            [1, "W", "dp"],
+                            [1, "B", "fc"],
+                            [1, "W", "cf"],
+                            [1, "B", "gh"],
+                            [2, "W", "fh"]]
+        
+        for (index, node) in game!.nodes.enumerate() {
+            XCTAssertEqual(node.simpleproperties.count, expectations[index][0])
+            if index != 0 {
+                let property = node.simpleproperties[0]
+                XCTAssertEqual(property.name, expectations[index][1])
+                XCTAssertEqual(property.value, expectations[index][2])
+            }
+        }
     }
 
     func testFF4ExampleSimplifiedFile() {

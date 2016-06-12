@@ -94,7 +94,6 @@ class SGFParserCombinatorTests: XCParserTestBase {
         XCTAssertEqual(results.count, 1)
     }
 
-    
     func testParseNoVariationSample() {
         let noVariationSample = "(;FF[4]GM[1]SZ[19];B[aa];W[bb];B[cc];W[dd];B[ad];W[bd])"
         let results = testParseString(SGFPC.gameTreeParser(), noVariationSample)
