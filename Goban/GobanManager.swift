@@ -243,11 +243,13 @@ class GobanManager: NSObject, GobanTouchProtocol {
                 let stone = Stone(stoneColor: .Black, disabled: false)
                 addStone(stone, atGobanPoint: gobanPoint, isTemporary: false)
             }
+            break
         case .W:
             if let gobanPoint = GobanPoint(SGFString: value) {
                 let stone = Stone(stoneColor: .White, disabled: false)
                 addStone(stone, atGobanPoint: gobanPoint, isTemporary: false)
             }
+            break
         case .KO:
             break
         case .MN:
