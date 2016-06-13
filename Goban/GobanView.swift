@@ -191,6 +191,10 @@ class GobanView: UIView {
     private var gridLayer = CAShapeLayer()
     private var starPointsLayer = CAShapeLayer()
     
+    override func drawRect(rect: CGRect) {
+        drawGoban()
+    }
+    
     private func drawGoban() {
         removeSubLayers()
 
