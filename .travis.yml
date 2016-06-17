@@ -1,0 +1,7 @@
+language: swift
+osx_image: xcode7.3
+# xcode_project: GobanSampleProject/GobanSampleProject.xcodeproj
+# xcode_scheme: GobanSampleProjectTests
+# xcode_sdk: iphonesimulator
+script:
+- xcodebuild clean build test -project "GobanSampleProject/GobanSampleProject.xcodeproj" -scheme GobanSampleProject -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
