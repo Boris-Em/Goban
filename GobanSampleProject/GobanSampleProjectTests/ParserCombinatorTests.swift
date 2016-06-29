@@ -52,18 +52,18 @@ class ParserCombinatorTests: XCParserTestBase {
         XCTAssertOnlyResult(result, equals: charA, remainder: "bc")
     }
     
-    func testparseTokenSuccess() {
+    func testparseCharacterSuccess() {
         let charA: Character = "a"
         
-        let result = testParseString(parseToken(charA), "abc")
+        let result = testParseString(parseCharacter(charA), "abc")
         
         XCTAssertOnlyResult(result, equals: charA)
     }
 
-    func testparseTokenFailure() {
+    func testparseCharacterFailure() {
         let charA: Character = "a"
         
-        let result = testParseString(parseToken(charA), "b")
+        let result = testParseString(parseCharacter(charA), "b")
         
         XCTAssertEmptyResult(result)
     }
@@ -203,8 +203,8 @@ class ParserCombinatorTests: XCParserTestBase {
         XCTAssertOnlyResult(results, equals: "a")
     }
 
-    func testParseTokens(){
-        let results = testParseString(parseTokens(["a","b","c"]), "abc")
+    func testparseCharacters(){
+        let results = testParseString(parseCharacters(["a","b","c"]), "abc")
         XCTAssertEqual(results.first!.0, ["a","b","c"])
     }
 

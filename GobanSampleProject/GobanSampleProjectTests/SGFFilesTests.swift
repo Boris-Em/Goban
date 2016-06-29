@@ -45,7 +45,7 @@ class SGFFilesTests: XCParserTestBase {
         let results = testParseString(SGFPC.collectionParser(), testString)
         XCTAssertEqual(1, results.count)
         
-        let game: SGFGameProtocol? = results.first?.0.games.first
+        let game: SGFP.GameTree? = results.first?.0.games.first
         XCTAssertNotNil(game)
         
         XCTAssertEqual(game?.fileFormat, 4)
@@ -79,13 +79,20 @@ class SGFFilesTests: XCParserTestBase {
                             [2, "W", "fh"]]
         
         for (index, node) in game!.nodes.enumerate() {
-            XCTAssertEqual(node.simpleproperties.count, expectations[index][0])
+            XCTAssertEqual(node.properties.count, expectations[index][0])
             if index != 0 {
-                let property = node.simpleproperties[0]
-                XCTAssertEqual(property.name, expectations[index][1])
-                XCTAssertEqual(property.value, expectations[index][2])
+                let property = node.properties.first!
+                XCTAssertEqual(property.identifier, expectations[index][1])
+                XCTAssertEqual(property.values.first!.asString, expectations[index][2])
             }
         }
+    }
+    
+    func testPropertyList() {
+        let testString = contentsOfFileWithName("Lee-Sedol-vs-AlphaGo-Simplified.sgf")!
+        let results = testParseString(SGFPC.collectionParser(), testString)
+        XCTAssertEqual(1, results.count)
+
     }
 
     func testFF4ExampleSimplifiedFile() {

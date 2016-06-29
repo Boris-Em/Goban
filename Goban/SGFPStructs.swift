@@ -31,7 +31,7 @@ struct SGFP {
         var description: String { return "Node: \(properties.map{$0.description}.joinWithSeparator(""))" }
         
         func propertyWithName(name: String) -> Property? {
-            if let i = properties.indexOf( { $0.identifier.name == name } ) {
+            if let i = properties.indexOf( { $0.identifier == name } ) {
                 return properties[i]
             }
             return nil
@@ -39,57 +39,23 @@ struct SGFP {
     }
     
     struct Property: CustomStringConvertible {
-        let identifier: SGFP.PropIdent;
+        let identifier: String
         let values: [SGFP.PropValue]
         var description: String { return "\(identifier)\(values.map{"[\($0)]"}.joinWithSeparator(""))" }
     }
     
-    struct PropIdent: CustomStringConvertible {
-        let name: String
-        var description: String { return name }
-    }
-    
     struct PropValue: CustomStringConvertible {
-        let valueString: String
-        var description: String { return "\(String(valueString))" }
-    }
-    
-    
-    enum ValueType: Equatable, CustomStringConvertible {
-        case None
-        case Number(value: Int)
-        case Real(value: Float)
-        case Double(value: Character)
-        case Color(colorName: String)
-        case SimpleText(text: String)
-        case Text(text: String)
-        case Point(column: Character, row: Character)
-        case Move(column: Character, row: Character)
-        case Stone(column: Character, row: Character)
-        
-        var description: String {
-            switch self {
-            case .None: return "None"
-            case .Number(let v): return "Number:\(v)"
-            case .Real(let v): return "Real:\(v)"
-            case .Double(let v): return "Double:\(v)"
-            case .Color(let v): return "Color:\(v)"
-            case .SimpleText(let v): return "SimpleText:\(v)"
-            case .Text(let v): return "Text:\(v)"
-            case .Point(let c, let r): return "Point:\(c)\(r)"
-            case .Move(let c, let r): return "Move:\(c)\(r)"
-            case .Stone(let c, let r): return "Stone:\(c)\(r)"
-            }
-        }
+        let asString: String
+        var description: String { return "\(String(asString))" }
     }
 }
 
 extension SGFP.PropValue {
     
-    typealias ValueParser = SGFPValueParser
+    typealias ValueParser = SGFPValueTypeParser
     
-    func parseWith(p: Parser<Character, SGFP.ValueType>) -> SGFP.ValueType? {
-        return p.parse(valueString.slice).generate().next()?.0
+    func parseWith(p: CharacterParser<SGFP.ValueType>) -> SGFP.ValueType? {
+        return just(p).parse(asString.slice).generate().next()?.0
     }
     
     func toNumber() -> Int? {
@@ -136,23 +102,19 @@ extension SGFP.PropValue {
         if let v = parseWith(ValueParser.goStoneParser()), case let .Stone(c, r) = v { return (col:c, row:r) }
         return nil
     }
-}
-
-
-
-func ==(l: SGFP.ValueType, r: SGFP.ValueType) -> Bool {
-    switch l {
-    case .None:                 if case .None = r { return true }
-    case .Number(let vl):       if case .Number(let vr) = r where vl == vr { return true }
-    case .Real(let vl):         if case .Real(let vr) = r where vl == vr { return true }
-    case .Double(let vl):       if case .Double(let vr) = r where vl == vr { return true }
-    case .Color(let vl):        if case .Color(let vr) = r where vl == vr { return true }
-    case .SimpleText(let vl):   if case .SimpleText(let vr) = r where vl == vr { return true }
-    case .Text(let vl):         if case .Text(let vr) = r where vl == vr { return true }
-    case .Point(let cl, let rl):if case .Point(let cr, let rr) = r where cl == cr && rl == rr { return true }
-    case .Move(let cl, let rl): if case .Move(let cr, let rr) = r where cl == cr && rl == rr { return true }
-    case .Stone(let cl, let rl):if case .Stone(let cr, let rr) = r where cl == cr && rl == rr { return true }
+    
+    func toCompresedPoints() -> (upperLeftCol: Character, upperLeftRow: Character, lowerRightCol: Character, lowerRightRow: Character)? {
+        if let v = parseWith(ValueParser.goCompressedPointsParser()),
+            case let .CompressedPoints(ul, lr) = v,
+            case let .Point(upperLeftCol, upperLeftRow) = ul,
+            case let .Point(lowerRightCol, lowerRightRow) = lr {
+            
+            return (upperLeftCol: upperLeftCol, upperLeftRow: upperLeftRow, lowerRightCol: lowerRightCol, lowerRightRow: lowerRightRow)
+        }
+        return nil
     }
-    return false
+
 }
+
+
 

@@ -102,6 +102,11 @@ func anySequenceOfOne<A>(x: A) -> AnySequence<A> {
     return AnySequence(GeneratorOfOne(x))
 }
 
+// empty sequence
+func emptySequence<T>() -> AnySequence<T> {
+    return AnySequence([])
+}
+
 // Array(Slice) decomponse helpers
 
 extension Array {

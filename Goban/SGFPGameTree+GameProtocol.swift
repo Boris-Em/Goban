@@ -8,16 +8,7 @@
 
 import Foundation
 
-extension SGFP.Node: SGFNodeProtocol {
-    var simpleproperties: [(name: String, value: String)] {
-        return properties.map {
-            (name: $0.identifier.name, value: $0.values.first!.valueString)
-        }
-    }
-}
-
-
-extension SGFP.GameTree: SGFGameProtocol {
+extension SGFP.GameTree {
     
     // The name of the person commenting the game.
     var annotation: String? {
@@ -159,8 +150,8 @@ extension SGFP.GameTree: SGFGameProtocol {
         return sequence.nodes.first
     }
 
-    var nodes: [SGFNodeProtocol] {
-        return sequence.nodes.map { $0 as SGFNodeProtocol }
+    var nodes: [SGFP.Node] {
+        return sequence.nodes
     }
    
     func rootProperty(property: SGFRootProperties) -> SGFP.Property? {

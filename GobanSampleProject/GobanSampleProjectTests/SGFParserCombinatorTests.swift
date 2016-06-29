@@ -21,37 +21,32 @@ class SGFParserCombinatorTests: XCParserTestBase {
         super.tearDown()
     }
     
-    func testParsePropertyIdent() {
-        let results = testParseString(SGFPC.propIdentParser(), "W")
-        XCTAssertResultsContains(results, satisfying: { $0.name == "W" } )
-    }
-
     func testParsePropertyValueNumber() {
-        let results = testParseString(SGFPC.propValueStringParser(), "[7]")
+        let results = testParseString(SGFPC.propValueAsStringParser(), "[7]")
         XCTAssertEqual(results.count, 1)
-        XCTAssertEqual(results.first!.0.valueString, "7" )
+        XCTAssertEqual(results.first!.0.asString, "7" )
     }
 
     func testParsePropertyValueMove() {
-        let results = testParseString(SGFPC.propValueStringParser(), "[bd]")
+        let results = testParseString(SGFPC.propValueAsStringParser(), "[bd]")
         XCTAssertEqual(results.count, 1)
-        XCTAssertEqual(results.first!.0.valueString, "bd" )
+        XCTAssertEqual(results.first!.0.asString, "bd" )
     }
 
     func testParsePropertyValueEscapedBracket() {
-        let results = testParseString(SGFPC.propValueStringParser(), "[[bd\\]\\\\]")
+        let results = testParseString(SGFPC.propValueAsStringParser(), "[[bd\\]\\\\]")
         XCTAssertEqual(results.count, 1)
-        XCTAssertEqual(results.first!.0.valueString, "[bd\\]\\\\" )
+        XCTAssertEqual(results.first!.0.asString, "[bd\\]\\\\" )
     }
     
     func testParseProperty() {
         let results = testParseString(SGFPC.propertyParser(), "W[bd]")
-        XCTAssertResultsContains(results, satisfying: { $0.identifier.name == "W" } )
+        XCTAssertResultsContains(results, satisfying: { $0.identifier == "W" } )
     }
 
     func testParseEmptyProperty() {
         let results = testParseString(SGFPC.propertyParser(), "W[]")
-        XCTAssertResultsContains(results, satisfying: { $0.identifier.name == "W" } )
+        XCTAssertResultsContains(results, satisfying: { $0.identifier == "W" } )
     }
 
     func testParseNode() {
@@ -100,4 +95,35 @@ class SGFParserCombinatorTests: XCParserTestBase {
         XCTAssertEqual(results.count, 1)
     }
     
+    func testParsePoint() {
+        let pointSample="ep"
+        let results = testParseString(SGFPValueTypeParser.goPointParser(), pointSample)
+        XCTAssertEqual(results.count, 1)
+    }
+
+    func testParseCompressedPoints() {
+        let pointSample="pn:pq"
+        let results = testParseString(SGFPValueTypeParser.goCompressedPointsParser(), pointSample)
+        XCTAssertEqual(results.count, 1)
+    }
+
+    func testParsePointsListWithCompressedPoints() {
+        let pointListSample=";AE[ep][fp][kn][lo][lq][pn:qr]"
+
+        let results = testParseString(SGFPC.nodeParser(), pointListSample)
+        XCTAssertEqual(results.count, 1)
+        
+        let node = results.first!.0 as SGFP.Node
+        XCTAssertEqual(node.properties.count, 1)
+        
+        let property = node.properties.first!
+        XCTAssertEqual(property.identifier, "AE")
+        XCTAssertEqual(property.values.count, 6)
+        
+        let (upperLeftCol, upperLeftRow, lowerRightCol, lowerRightRow) = property.values.last!.toCompresedPoints()!
+        XCTAssertEqual(upperLeftCol, "p")
+        XCTAssertEqual(upperLeftRow, "n")
+        XCTAssertEqual(lowerRightCol, "q")
+        XCTAssertEqual(lowerRightRow, "r")
+    }
 }

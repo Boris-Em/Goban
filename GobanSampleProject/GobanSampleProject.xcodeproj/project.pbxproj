@@ -11,6 +11,8 @@
 		3A35C54A1CDBBEE30068F8B3 /* XCParserTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A35C5491CDBBEE30068F8B3 /* XCParserTestBase.swift */; };
 		3A35C54C1CDBE4620068F8B3 /* SGFParserCombinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A35C54B1CDBE4620068F8B3 /* SGFParserCombinatorTests.swift */; };
 		3A35C54D1CDBE4CA0068F8B3 /* SGFParserCombinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082821CDAECCE00C86687 /* SGFParserCombinator.swift */; };
+		A1426F381D2448D600AEEE67 /* AB-AE-Tests.sgf in Resources */ = {isa = PBXBuildFile; fileRef = A1426F371D2448D600AEEE67 /* AB-AE-Tests.sgf */; };
+		A1426F391D244A1800AEEE67 /* AB-AE-Tests.sgf in Resources */ = {isa = PBXBuildFile; fileRef = A1426F371D2448D600AEEE67 /* AB-AE-Tests.sgf */; };
 		C31B552E1C9DD10500B060D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31B552D1C9DD10500B060D8 /* AppDelegate.swift */; };
 		C31B55301C9DD10500B060D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31B552F1C9DD10500B060D8 /* ViewController.swift */; };
 		C31B55331C9DD10500B060D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C31B55311C9DD10500B060D8 /* Main.storyboard */; };
@@ -25,8 +27,8 @@
 		C3DE82281D0CA6EC00FF0289 /* Problem.sgf in Resources */ = {isa = PBXBuildFile; fileRef = C3DE82271D0CA6EC00FF0289 /* Problem.sgf */; };
 		C3DE822A1D0CE1A700FF0289 /* Lee-Sedol-vs-AlphaGo-Simplified.sgf in Resources */ = {isa = PBXBuildFile; fileRef = C3DE82291D0CE1A700FF0289 /* Lee-Sedol-vs-AlphaGo-Simplified.sgf */; };
 		D60082831CDAECCE00C86687 /* SGFParserCombinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082821CDAECCE00C86687 /* SGFParserCombinator.swift */; };
-		D60082861CDBB2E800C86687 /* SGFPValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082851CDBB2E800C86687 /* SGFPValueParser.swift */; };
-		D60082871CDBB2E800C86687 /* SGFPValueParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082851CDBB2E800C86687 /* SGFPValueParser.swift */; };
+		D60082861CDBB2E800C86687 /* SGFPValueTypeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082851CDBB2E800C86687 /* SGFPValueTypeParser.swift */; };
+		D60082871CDBB2E800C86687 /* SGFPValueTypeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082851CDBB2E800C86687 /* SGFPValueTypeParser.swift */; };
 		D6614B221CDD177300DEDD9D /* SGFPStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6614B211CDD177300DEDD9D /* SGFPStructs.swift */; };
 		D6614B231CDD17F100DEDD9D /* SGFPStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6614B211CDD177300DEDD9D /* SGFPStructs.swift */; };
 		D6614B261CDEDF0E00DEDD9D /* SGFFilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6614B251CDEDF0E00DEDD9D /* SGFFilesTests.swift */; };
@@ -37,15 +39,15 @@
 		D6C30FB61CD9A9CC00CA22CB /* FunctionalParserHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C30FB51CD9A9CC00CA22CB /* FunctionalParserHelpers.swift */; };
 		D6C30FB71CD9A9CC00CA22CB /* FunctionalParserHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C30FB51CD9A9CC00CA22CB /* FunctionalParserHelpers.swift */; };
 		D6C30FB91CD9A9E600CA22CB /* ParserCombinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C30FB81CD9A9E600CA22CB /* ParserCombinatorTests.swift */; };
-		D6C30FBB1CD9ADBF00CA22CB /* FuntionalParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C30FBA1CD9ADBF00CA22CB /* FuntionalParser.swift */; };
-		D6C30FBC1CD9ADBF00CA22CB /* FuntionalParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C30FBA1CD9ADBF00CA22CB /* FuntionalParser.swift */; };
+		D6C30FBB1CD9ADBF00CA22CB /* CharacterParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C30FBA1CD9ADBF00CA22CB /* CharacterParser.swift */; };
+		D6C30FBC1CD9ADBF00CA22CB /* CharacterParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C30FBA1CD9ADBF00CA22CB /* CharacterParser.swift */; };
 		D6C592DF1CE18C2E008BFB76 /* SGFPropertiesFF4.txt in Resources */ = {isa = PBXBuildFile; fileRef = D6C592DE1CE18C2E008BFB76 /* SGFPropertiesFF4.txt */; };
 		D6C592E41CE2D1A9008BFB76 /* SGFProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */; };
 		D6C592E51CE2D1A9008BFB76 /* SGFProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */; };
 		D6C592EA1CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */; };
 		D6C592EB1CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */; };
-		D6C592EC1CE2D8A6008BFB76 /* SGFProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E61CE2D5DD008BFB76 /* SGFProtocols.swift */; };
-		D6C592ED1CE2D8A7008BFB76 /* SGFProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E61CE2D5DD008BFB76 /* SGFProtocols.swift */; };
+		D6F6106A1D2395D700451B41 /* SGFPValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F610691D2395D700451B41 /* SGFPValueType.swift */; };
+		D6F6106B1D2395D700451B41 /* SGFPValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F610691D2395D700451B41 /* SGFPValueType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,7 @@
 		3A35C5471CDBBEA80068F8B3 /* SGFValueTypeParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFValueTypeParserTests.swift; sourceTree = "<group>"; };
 		3A35C5491CDBBEE30068F8B3 /* XCParserTestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCParserTestBase.swift; sourceTree = "<group>"; };
 		3A35C54B1CDBE4620068F8B3 /* SGFParserCombinatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFParserCombinatorTests.swift; sourceTree = "<group>"; };
+		A1426F371D2448D600AEEE67 /* AB-AE-Tests.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "AB-AE-Tests.sgf"; sourceTree = "<group>"; };
 		C31B552A1C9DD10500B060D8 /* GobanSampleProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GobanSampleProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C31B552D1C9DD10500B060D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C31B552F1C9DD10500B060D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -80,7 +83,7 @@
 		C3DE82271D0CA6EC00FF0289 /* Problem.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Problem.sgf; sourceTree = "<group>"; };
 		C3DE82291D0CE1A700FF0289 /* Lee-Sedol-vs-AlphaGo-Simplified.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Lee-Sedol-vs-AlphaGo-Simplified.sgf"; sourceTree = "<group>"; };
 		D60082821CDAECCE00C86687 /* SGFParserCombinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFParserCombinator.swift; sourceTree = "<group>"; };
-		D60082851CDBB2E800C86687 /* SGFPValueParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFPValueParser.swift; sourceTree = "<group>"; };
+		D60082851CDBB2E800C86687 /* SGFPValueTypeParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFPValueTypeParser.swift; sourceTree = "<group>"; };
 		D6614B211CDD177300DEDD9D /* SGFPStructs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFPStructs.swift; sourceTree = "<group>"; };
 		D6614B251CDEDF0E00DEDD9D /* SGFFilesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFFilesTests.swift; sourceTree = "<group>"; };
 		D6614B281CDEE3A300DEDD9D /* LeeSedolHeader.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LeeSedolHeader.sgf; sourceTree = "<group>"; };
@@ -88,11 +91,11 @@
 		D6614B2C1CDEF14F00DEDD9D /* ff4_ex_simplified.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ff4_ex_simplified.sgf; sourceTree = "<group>"; };
 		D6C30FB51CD9A9CC00CA22CB /* FunctionalParserHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalParserHelpers.swift; sourceTree = "<group>"; };
 		D6C30FB81CD9A9E600CA22CB /* ParserCombinatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserCombinatorTests.swift; sourceTree = "<group>"; };
-		D6C30FBA1CD9ADBF00CA22CB /* FuntionalParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuntionalParser.swift; sourceTree = "<group>"; };
+		D6C30FBA1CD9ADBF00CA22CB /* CharacterParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterParser.swift; sourceTree = "<group>"; };
 		D6C592DE1CE18C2E008BFB76 /* SGFPropertiesFF4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SGFPropertiesFF4.txt; sourceTree = "<group>"; };
 		D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFProperties.swift; sourceTree = "<group>"; };
-		D6C592E61CE2D5DD008BFB76 /* SGFProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SGFProtocols.swift; path = "SGF Parser/SGFProtocols.swift"; sourceTree = "<group>"; };
 		D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SGFPGameTree+GameProtocol.swift"; sourceTree = "<group>"; };
+		D6F610691D2395D700451B41 /* SGFPValueType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFPValueType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +177,7 @@
 		D6614B241CDEDEAB00DEDD9D /* ParserCombinator */ = {
 			isa = PBXGroup;
 			children = (
+				A1426F371D2448D600AEEE67 /* AB-AE-Tests.sgf */,
 				C3DE82291D0CE1A700FF0289 /* Lee-Sedol-vs-AlphaGo-Simplified.sgf */,
 				D6614B2C1CDEF14F00DEDD9D /* ff4_ex_simplified.sgf */,
 				D6614B2A1CDEEF4B00DEDD9D /* ff4_ex.sgf */,
@@ -191,11 +195,11 @@
 			isa = PBXGroup;
 			children = (
 				D6C30FB51CD9A9CC00CA22CB /* FunctionalParserHelpers.swift */,
-				D6C30FBA1CD9ADBF00CA22CB /* FuntionalParser.swift */,
+				D6C30FBA1CD9ADBF00CA22CB /* CharacterParser.swift */,
 				D60082821CDAECCE00C86687 /* SGFParserCombinator.swift */,
 				D6614B211CDD177300DEDD9D /* SGFPStructs.swift */,
-				D60082851CDBB2E800C86687 /* SGFPValueParser.swift */,
-				D6C592E61CE2D5DD008BFB76 /* SGFProtocols.swift */,
+				D6F610691D2395D700451B41 /* SGFPValueType.swift */,
+				D60082851CDBB2E800C86687 /* SGFPValueTypeParser.swift */,
 				D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */,
 				D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */,
 			);
@@ -284,6 +288,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1426F391D244A1800AEEE67 /* AB-AE-Tests.sgf in Resources */,
 				C31B55381C9DD10500B060D8 /* LaunchScreen.storyboard in Resources */,
 				C31B55351C9DD10500B060D8 /* Assets.xcassets in Resources */,
 				C3B5211F1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf in Resources */,
@@ -300,6 +305,7 @@
 				C3DE822A1D0CE1A700FF0289 /* Lee-Sedol-vs-AlphaGo-Simplified.sgf in Resources */,
 				D6614B2D1CDEF14F00DEDD9D /* ff4_ex_simplified.sgf in Resources */,
 				D6614B2B1CDEEF4B00DEDD9D /* ff4_ex.sgf in Resources */,
+				A1426F381D2448D600AEEE67 /* AB-AE-Tests.sgf in Resources */,
 				D6614B291CDEE3A300DEDD9D /* LeeSedolHeader.sgf in Resources */,
 				D6614B271CDEE23100DEDD9D /* Lee-Sedol-vs-AlphaGo-20160309.sgf in Resources */,
 			);
@@ -314,15 +320,15 @@
 			files = (
 				C31B55301C9DD10500B060D8 /* ViewController.swift in Sources */,
 				D60082831CDAECCE00C86687 /* SGFParserCombinator.swift in Sources */,
-				D60082861CDBB2E800C86687 /* SGFPValueParser.swift in Sources */,
+				D60082861CDBB2E800C86687 /* SGFPValueTypeParser.swift in Sources */,
 				D6C30FB61CD9A9CC00CA22CB /* FunctionalParserHelpers.swift in Sources */,
 				C3D286341CB044D400DFC062 /* GobanManager.swift in Sources */,
+				D6F6106A1D2395D700451B41 /* SGFPValueType.swift in Sources */,
 				D6614B221CDD177300DEDD9D /* SGFPStructs.swift in Sources */,
 				C31B552E1C9DD10500B060D8 /* AppDelegate.swift in Sources */,
 				C31B55411C9DD1B000B060D8 /* GobanView.swift in Sources */,
-				D6C30FBB1CD9ADBF00CA22CB /* FuntionalParser.swift in Sources */,
+				D6C30FBB1CD9ADBF00CA22CB /* CharacterParser.swift in Sources */,
 				D6C592E41CE2D1A9008BFB76 /* SGFProperties.swift in Sources */,
-				D6C592EC1CE2D8A6008BFB76 /* SGFProtocols.swift in Sources */,
 				C3D286321CB0341200DFC062 /* Stone.swift in Sources */,
 				D6C592EA1CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift in Sources */,
 			);
@@ -338,14 +344,14 @@
 				D6C30FB91CD9A9E600CA22CB /* ParserCombinatorTests.swift in Sources */,
 				3A35C54D1CDBE4CA0068F8B3 /* SGFParserCombinator.swift in Sources */,
 				D6614B261CDEDF0E00DEDD9D /* SGFFilesTests.swift in Sources */,
-				D6C30FBC1CD9ADBF00CA22CB /* FuntionalParser.swift in Sources */,
+				D6C30FBC1CD9ADBF00CA22CB /* CharacterParser.swift in Sources */,
 				D6614B231CDD17F100DEDD9D /* SGFPStructs.swift in Sources */,
 				3A35C5481CDBBEA80068F8B3 /* SGFValueTypeParserTests.swift in Sources */,
 				C3B2A19E1CC2A64A0066C401 /* GobanManagerTests.swift in Sources */,
 				D6C592E51CE2D1A9008BFB76 /* SGFProperties.swift in Sources */,
-				D6C592ED1CE2D8A7008BFB76 /* SGFProtocols.swift in Sources */,
 				D6C30FB71CD9A9CC00CA22CB /* FunctionalParserHelpers.swift in Sources */,
-				D60082871CDBB2E800C86687 /* SGFPValueParser.swift in Sources */,
+				D6F6106B1D2395D700451B41 /* SGFPValueType.swift in Sources */,
+				D60082871CDBB2E800C86687 /* SGFPValueTypeParser.swift in Sources */,
 				3A35C54A1CDBBEE30068F8B3 /* XCParserTestBase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

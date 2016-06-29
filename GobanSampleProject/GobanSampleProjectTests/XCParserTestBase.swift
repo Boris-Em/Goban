@@ -10,11 +10,11 @@ import XCTest
 
 class XCParserTestBase: XCTestCase {
     
-    func testParseString<Result>(parser: Parser<Character, Result>, _ testString: String) -> [(Result, ArraySlice<Character>)] {
+    func testParseString<Result>(parser: CharacterParser<Result>, _ testString: String) -> [(Result, ArraySlice<Character>)] {
         return Array(parser.parse(testString.slice))
     }
 
-    func testParseStringResultsOnly<Result>(parser: Parser<Character, Result>, _ testString: String) -> [Result] {
+    func testParseStringResultsOnly<Result>(parser: CharacterParser<Result>, _ testString: String) -> [Result] {
         return dropRemainders(testParseString(parser, testString))
     }
 

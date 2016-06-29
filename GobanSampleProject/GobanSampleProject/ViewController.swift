@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         gobanView.gobanSize = GobanSize(width: 13, height: 13)
         
-        let path = NSBundle.mainBundle().URLForResource("Lee-Sedol-vs-AlphaGo-20160309", withExtension:"sgf")
+        let path = NSBundle.mainBundle().URLForResource("AB-AE-Tests", withExtension:"sgf")
         gobanManager?.loadSGFFileAtURL(path!)
     }
     

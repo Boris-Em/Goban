@@ -27,24 +27,53 @@ struct GobanPoint: Hashable {
         self.y = y
     }
     
+    init?(col: Character, row: Character) {
+        if let colIndex = GobanPoint.indexForCharacter(col),
+            let rowIndex = GobanPoint.indexForCharacter(row) {
+            x = colIndex
+            y = rowIndex
+        } else {
+            return nil
+        }
+    }
+    
     init?(SGFString: String) {
         guard SGFString.characters.count == 2 else {
             return nil
         }
         
+        self.init(col: SGFString.characters.first!, row: SGFString.characters.last!)
+    }
+    
+    // MARK: Helpers
+    
+    static func indexForCharacter(character: Character) -> Int? {
         let alphabet = "abcdefghijklmnopqrstuvwxyz"
-        if let indexForCharacterInString = alphabet.characters.indexOf(SGFString.characters.first!) {
-            x = alphabet.startIndex.distanceTo(indexForCharacterInString) + 1
-        } else {
+        if let indexForCharacterInString = alphabet.characters.indexOf(character) {
+            return alphabet.startIndex.distanceTo(indexForCharacterInString) + 1
+        }
+        
+        return nil
+    }
+    
+    static func pointsFromCompressPoints(compressPoints: (upperLeftCol: Character, upperLeftRow: Character, lowerRightCol: Character, lowerRightRow: Character)) -> Set<GobanPoint>? {
+        let indices = [compressPoints.upperLeftCol, compressPoints.upperLeftRow, compressPoints.lowerRightCol, compressPoints.lowerRightRow].map(GobanPoint.indexForCharacter)
+        
+        guard indices.filter({$0 != nil}).count == 4 else {
             return nil
         }
         
-        if let indexForCharacterInString = alphabet.characters.indexOf(SGFString.characters.last!) {
-            y = alphabet.startIndex.distanceTo(indexForCharacterInString) + 1
-        } else {
-            return nil
+        var points = Set<GobanPoint>()
+        
+        for col in indices[0]! ... indices[2]! {
+            for row in indices[1]! ... indices[3]! {
+                points.insert(GobanPoint(x: col, y: row))
+            }
         }
+        
+        return points
     }
+    
 }
 
 struct GobanSize {

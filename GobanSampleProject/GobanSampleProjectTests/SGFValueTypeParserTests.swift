@@ -9,7 +9,7 @@
 import XCTest
 
 class SGFPValueTypeParserTests: XCParserTestBase {
-    typealias ValueParser = SGFPValueParser
+    typealias ValueParser = SGFPValueTypeParser
     
     override func setUp() {
         super.setUp()

@@ -182,4 +182,16 @@ class GobanViewTests: XCTestCase {
         XCTAssert(point?.x == 2)
         XCTAssert(point?.y == 6)
     }
+    
+    func testPointsFromCompressPoints() {
+        var compressPoints = (Character("a"), Character("c"), Character("b"), Character("d"))
+        var points = GobanPoint.pointsFromCompressPoints(compressPoints)
+        var expectedPoints: Set<GobanPoint> = Set([(1, 3), (1, 4), (2, 3), (2, 4)].map({GobanPoint(x: $0.0, y: $0.1)}))
+        XCTAssert(points! == expectedPoints, "")
+        
+        compressPoints = (Character("a"), Character("c"), Character("i"), Character("c"))
+        points = GobanPoint.pointsFromCompressPoints(compressPoints)
+        expectedPoints = Set((1...9).map{GobanPoint(x: $0, y: 3)})
+        XCTAssert(points! == expectedPoints, "")
+    }
 }
