@@ -192,7 +192,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
         game = collection.games.first
         
         removeAllStonesAnimated(false)
-        gobanView.gobanSize = GobanSize(width: game!.boardSize!, height: game!.boardSize!)
+        gobanView.gobanSize = GobanSize(width: game?.boardSize ?? 19, height: game?.boardSize ?? 19)
     }
         
     func unloadSGF() {
