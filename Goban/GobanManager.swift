@@ -114,12 +114,12 @@ class GobanManager: NSObject, GobanTouchProtocol {
     }
     
     func didEndTouchGobanWithClosestGobanPoint(goban: GobanView, atGobanPoint gobanPoint: GobanPoint?) {
-        guard gobanPoint != nil else {
+        guard let gobanPoint = gobanPoint else {
             removeTemporaryStoneAnimated(false)
             return
         }
         
-        addNewStoneAtGobanPoint(gobanPoint!)
+        addNewStoneAtGobanPoint(gobanPoint)
     }
     
     // MARK: Helper Methods
