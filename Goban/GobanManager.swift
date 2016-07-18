@@ -277,7 +277,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
             if property.values.count != 1 {
                 NSLog("unhandled: Move has \(property.values.count) values")
             }
-            if let (col,row) = property.values.first?.toPoint(), let gobanPoint = GobanPoint(SGFString: "\(col)\(row))") {
+            if let (col,row) = property.values.first?.toPoint(), let gobanPoint = GobanPoint(SGFString: "\(col)\(row)") {
                 let stone = Stone(stoneColor: .Black, disabled: false)
                 addStone(stone, atGobanPoint: gobanPoint, isTemporary: false)
             }
@@ -286,7 +286,7 @@ class GobanManager: NSObject, GobanTouchProtocol {
             if property.values.count != 1 {
                 NSLog("unhandled: Move has \(property.values.count) values")
             }
-            if let (col,row) = property.values.first?.toPoint(), let gobanPoint = GobanPoint(SGFString: "\(col)\(row))") {
+            if let (col,row) = property.values.first?.toPoint(), let gobanPoint = GobanPoint(SGFString: "\(col)\(row)") {
                 let stone = Stone(stoneColor: .White, disabled: false)
                 addStone(stone, atGobanPoint: gobanPoint, isTemporary: false)
             }
