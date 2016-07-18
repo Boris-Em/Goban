@@ -202,13 +202,17 @@ class GobanManager: NSObject, GobanTouchProtocol {
 
     private var gameNodeGenerator: AnyGenerator<SGFP.Node>!
     
-    func handleNextNode() {
+    func nextNode() -> SGFP.Node? {
         if gameNodeGenerator == nil,
             let generator = game?.sequence.nodes.generate()  {
             gameNodeGenerator = AnyGenerator(generator)
         }
         
-        if let node = gameNodeGenerator.next() {
+        return gameNodeGenerator.next()
+    }
+    
+    func handleNextNode() {
+        if let node = nextNode() {
             handleNode(node)
         } else {
             if let firstVarition = game?.sequence.games.first {
