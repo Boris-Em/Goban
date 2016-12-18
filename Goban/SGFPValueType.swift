@@ -12,31 +12,31 @@ import Foundation
 extension SGFP {
     
     enum ValueType: Equatable, CustomStringConvertible {
-        case None
-        case Number(value: Int)
-        case Real(value: Float)
-        case Double(value: Character)
-        case Color(colorName: String)
-        case SimpleText(text: String)
-        case Text(text: String)
-        case Point(column: Character, row: Character)
-        case Move(column: Character, row: Character)
-        case Stone(column: Character, row: Character)
-        indirect case CompressedPoints(upperLeft: ValueType, lowerRight: ValueType)
+        case none
+        case number(value: Int)
+        case real(value: Float)
+        case double(value: Character)
+        case color(colorName: String)
+        case simpleText(text: String)
+        case text(text: String)
+        case point(column: Character, row: Character)
+        case move(column: Character, row: Character)
+        case stone(column: Character, row: Character)
+        indirect case compressedPoints(upperLeft: ValueType, lowerRight: ValueType)
         
         var description: String {
             switch self {
-            case .None: return "None"
-            case .Number(let v): return "Number:\(v)"
-            case .Real(let v): return "Real:\(v)"
-            case .Double(let v): return "Double:\(v)"
-            case .Color(let v): return "Color:\(v)"
-            case .SimpleText(let v): return "SimpleText:\(v)"
-            case .Text(let v): return "Text:\(v)"
-            case .Point(let c, let r): return "Point:\(c)\(r)"
-            case .Move(let c, let r): return "Move:\(c)\(r)"
-            case .Stone(let c, let r): return "Stone:\(c)\(r)"
-            case .CompressedPoints(let upperLeft, let lowerRight): return "CompressedPoints:\(upperLeft):\(lowerRight)"
+            case .none: return "None"
+            case .number(let v): return "Number:\(v)"
+            case .real(let v): return "Real:\(v)"
+            case .double(let v): return "Double:\(v)"
+            case .color(let v): return "Color:\(v)"
+            case .simpleText(let v): return "SimpleText:\(v)"
+            case .text(let v): return "Text:\(v)"
+            case .point(let c, let r): return "Point:\(c)\(r)"
+            case .move(let c, let r): return "Move:\(c)\(r)"
+            case .stone(let c, let r): return "Stone:\(c)\(r)"
+            case .compressedPoints(let upperLeft, let lowerRight): return "CompressedPoints:\(upperLeft):\(lowerRight)"
             }
         }
     }
@@ -44,17 +44,17 @@ extension SGFP {
 
 func ==(l: SGFP.ValueType, r: SGFP.ValueType) -> Bool {
     switch l {
-    case .None:                 if case .None = r { return true }
-    case .Number(let vl):       if case .Number(let vr) = r where vl == vr { return true }
-    case .Real(let vl):         if case .Real(let vr) = r where vl == vr { return true }
-    case .Double(let vl):       if case .Double(let vr) = r where vl == vr { return true }
-    case .Color(let vl):        if case .Color(let vr) = r where vl == vr { return true }
-    case .SimpleText(let vl):   if case .SimpleText(let vr) = r where vl == vr { return true }
-    case .Text(let vl):         if case .Text(let vr) = r where vl == vr { return true }
-    case .Point(let cl, let rl):if case .Point(let cr, let rr) = r where cl == cr && rl == rr { return true }
-    case .Move(let cl, let rl): if case .Move(let cr, let rr) = r where cl == cr && rl == rr { return true }
-    case .Stone(let cl, let rl):if case .Stone(let cr, let rr) = r where cl == cr && rl == rr { return true }
-    case .CompressedPoints(let upperLeft, let lowerRight): if upperLeft == lowerRight { return true }
+    case .none:                 if case .none = r { return true }
+    case .number(let vl):       if case .number(let vr) = r, vl == vr { return true }
+    case .real(let vl):         if case .real(let vr) = r, vl == vr { return true }
+    case .double(let vl):       if case .double(let vr) = r, vl == vr { return true }
+    case .color(let vl):        if case .color(let vr) = r, vl == vr { return true }
+    case .simpleText(let vl):   if case .simpleText(let vr) = r, vl == vr { return true }
+    case .text(let vl):         if case .text(let vr) = r, vl == vr { return true }
+    case .point(let cl, let rl):if case .point(let cr, let rr) = r, cl == cr && rl == rr { return true }
+    case .move(let cl, let rl): if case .move(let cr, let rr) = r, cl == cr && rl == rr { return true }
+    case .stone(let cl, let rl):if case .stone(let cr, let rr) = r, cl == cr && rl == rr { return true }
+    case .compressedPoints(let upperLeft, let lowerRight): if upperLeft == lowerRight { return true }
     }
     return false
 }

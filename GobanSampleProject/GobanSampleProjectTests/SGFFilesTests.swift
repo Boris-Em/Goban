@@ -9,9 +9,9 @@
 import XCTest
 
 class SGFFilesTests: XCParserTestBase {
-    func contentsOfFileWithName(name: String) -> String?  {
-        let bundle = NSBundle(forClass: self.dynamicType)
-        guard let path = bundle.pathForResource(name, ofType: nil) else {
+    func contentsOfFileWithName(_ name: String) -> String?  {
+        let bundle = Bundle(for: type(of: self))
+        guard let path = bundle.path(forResource: name, ofType: nil) else {
             return nil
         }
         return try! String(contentsOfFile: path)
@@ -68,23 +68,24 @@ class SGFFilesTests: XCParserTestBase {
         XCTAssertEqual(game?.result, "W+Resign")
         XCTAssertEqual(game?.nodes.count, 9)
         
-        let expectations = [[21],
-                            [1, "B", "qd"],
-                            [1, "W", "dd"],
-                            [1, "B", "pq"],
-                            [1, "W", "dp"],
-                            [1, "B", "fc"],
-                            [1, "W", "cf"],
-                            [1, "B", "gh"],
-                            [2, "W", "fh"]]
-        
-        for (index, node) in game!.nodes.enumerate() {
-            XCTAssertEqual(node.properties.count, expectations[index][0])
-            if index != 0 {
-                let property = node.properties.first!
-                XCTAssertEqual(property.identifier, expectations[index][1])
-                XCTAssertEqual(property.values.first!.asString, expectations[index][2])
-            }
+        XCTAssertEqual(game!.nodes.first!.properties.count, 21)
+
+        let expectations: [(count: Int, identifier: String, value: String)] = [
+            (1, "B", "qd"),
+            (1, "W", "dd"),
+            (1, "B", "pq"),
+            (1, "W", "dp"),
+            (1, "B", "fc"),
+            (1, "W", "cf"),
+            (1, "B", "gh"),
+            (2, "W", "fh")
+        ]
+
+        for (index, node) in game!.nodes.dropFirst().enumerated() {
+            XCTAssertEqual(node.properties.count, expectations[index].count)
+            let property = node.properties.first!
+            XCTAssertEqual(property.identifier, expectations[index].identifier)
+            XCTAssertEqual(property.values.first!.asString, expectations[index].value)
         }
     }
     
