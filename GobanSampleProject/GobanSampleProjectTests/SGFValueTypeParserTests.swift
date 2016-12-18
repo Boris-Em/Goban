@@ -27,7 +27,7 @@ class SGFPValueTypeParserTests: XCParserTestBase {
     
     func testParseNumber() {
         let results = testParseString(ValueParser.numberParser(), "123abc")
-        guard case SGFP.ValueType.Number(123) = firstResult(results) else {
+        guard case SGFP.ValueType.number(123) = firstResult(results) else {
             return  XCTAssertTrue(false)
         }
     }
@@ -35,7 +35,7 @@ class SGFPValueTypeParserTests: XCParserTestBase {
     func testParseColor() {
         for color in ["B","W"] {
             let results = testParseString(ValueParser.colorParser(), color)
-            guard case SGFP.ValueType.Color(color) = firstResult(results) else {
+            guard case SGFP.ValueType.color(color) = firstResult(results) else {
                 return  XCTAssertTrue(false)
             }
         }
@@ -48,7 +48,7 @@ class SGFPValueTypeParserTests: XCParserTestBase {
 
     func testParseReal() {
         let results = testParseString(ValueParser.realParser(), "123.456")
-        guard case SGFP.ValueType.Real(123.456) = firstResult(results) else {
+        guard case SGFP.ValueType.real(123.456) = firstResult(results) else {
             return  XCTAssertTrue(false)
         }
     }
@@ -56,7 +56,7 @@ class SGFPValueTypeParserTests: XCParserTestBase {
     func testParseSimpleText() {
         let newLineText = "New\nLine"
         let results = testParseString(ValueParser.simpleTextParser(), newLineText)
-        guard case SGFP.ValueType.SimpleText(let text) = firstResult(results) where text == newLineText else {
+        guard case SGFP.ValueType.simpleText(let text) = firstResult(results), text == newLineText else {
             return  XCTAssertTrue(false)
         }
     }

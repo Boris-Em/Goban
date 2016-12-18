@@ -47,16 +47,16 @@ struct GobanPoint: Hashable {
     
     // MARK: Helpers
     
-    static func indexForCharacter(character: Character) -> Int? {
+    static func indexForCharacter(_ character: Character) -> Int? {
         let alphabet = "abcdefghijklmnopqrstuvwxyz"
-        if let indexForCharacterInString = alphabet.characters.indexOf(character) {
-            return alphabet.startIndex.distanceTo(indexForCharacterInString) + 1
+        if let indexForCharacterInString = alphabet.characters.index(of: character) {
+            return alphabet.characters.distance(from: alphabet.startIndex, to: indexForCharacterInString) + 1
         }
         
         return nil
     }
     
-    static func pointsFromCompressPoints(compressPoints: (upperLeftCol: Character, upperLeftRow: Character, lowerRightCol: Character, lowerRightRow: Character)) -> Set<GobanPoint>? {
+    static func pointsFromCompressPoints(_ compressPoints: (upperLeftCol: Character, upperLeftRow: Character, lowerRightCol: Character, lowerRightRow: Character)) -> Set<GobanPoint>? {
         let indices = [compressPoints.upperLeftCol, compressPoints.upperLeftRow, compressPoints.lowerRightCol, compressPoints.lowerRightRow].map(GobanPoint.indexForCharacter)
         
         guard indices.filter({$0 != nil}).count == 4 else {
@@ -82,15 +82,15 @@ struct GobanSize {
 }
 
 protocol GobanTouchProtocol: class {
-    func didTouchGobanWithClosestGobanPoint(goban: GobanView, atGobanPoint gobanPoint: GobanPoint)
-    func didEndTouchGobanWithClosestGobanPoint(goban: GobanView, atGobanPoint gobanPoint: GobanPoint?)
+    func didTouchGobanWithClosestGobanPoint(_ goban: GobanView, atGobanPoint gobanPoint: GobanPoint)
+    func didEndTouchGobanWithClosestGobanPoint(_ goban: GobanView, atGobanPoint gobanPoint: GobanPoint?)
 }
 
 /** The delegate of a `GobanView` must adopt the `GobanTouchProtocol`.
 The protocol allows the delegate to get information about when a stone gets set.
  */
 protocol GobanProtocol: class {
-    func gobanView(gobanView: GobanView, didSetStone stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint)
+    func gobanView(_ gobanView: GobanView, didSetStone stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint)
 }
 
 /** `GobanView` is used to create highly custmizable Goban representations.
@@ -140,11 +140,11 @@ class GobanView: UIView {
     
     /** The color of the white stones. Defaults to white.
      */
-    let whiteStoneColor = UIColor.whiteColor()
+    let whiteStoneColor = UIColor.white
     
     /** The color of the black stones. Defaults to black.
      */
-    let blackStoneColor = UIColor.blackColor()
+    let blackStoneColor = UIColor.black
     
     /** The empty space between the grid and the actual goban limits as a percentage of the goban size. Defaults to 0.07.
      */
@@ -162,9 +162,9 @@ class GobanView: UIView {
     
     /** The frame of the grid on the goban.
      */
-    private var gridFrame: CGRect {
+    fileprivate var gridFrame: CGRect {
         get {
-            return CGRectMake(frame.size.width * padding, frame.size.height * padding, frame.size.width - 2 * padding * frame.size.width, frame.size.height - 2 * padding * frame.size.height)
+            return CGRect(x: frame.size.width * padding, y: frame.size.height * padding, width: frame.size.width - 2 * padding * frame.size.width, height: frame.size.height - 2 * padding * frame.size.height)
         }
         set { }
     }
@@ -172,7 +172,7 @@ class GobanView: UIView {
     /** Gesture recognizer used to track user inputs on the goban.
     - SeeAlso: `gobanTouchDelegate`
      */
-    private var longPressGestureRecognizer: UILongPressGestureRecognizer?
+    fileprivate var longPressGestureRecognizer: UILongPressGestureRecognizer?
     
     /** The object that acts as the delegate for touch inputs on `GobanView`.
     - SeeAlso: `GobanTouchProtocol`
@@ -210,21 +210,21 @@ class GobanView: UIView {
         commonInit()
     }
     
-    private func commonInit() {
+    fileprivate func commonInit() {
         backgroundColor = gobanBackgroundColor
         layer.masksToBounds = true
     }
     
     // MARK: Drawings
     
-    private var gridLayer = CAShapeLayer()
-    private var starPointsLayer = CAShapeLayer()
+    fileprivate var gridLayer = CAShapeLayer()
+    fileprivate var starPointsLayer = CAShapeLayer()
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         drawGoban()
     }
     
-    private func drawGoban() {
+    fileprivate func drawGoban() {
         removeSubLayers()
 
         drawGrid()
@@ -234,27 +234,27 @@ class GobanView: UIView {
         }
     }
     
-    private func drawGrid() {
+    fileprivate func drawGrid() {
         gridLayer.removeFromSuperlayer()
         gridLayer = layerForGridWithFrame(self.bounds, withGobanSize: gobanSize, padding: padding)
         layer.addSublayer(gridLayer)
     }
     
-    private func drawStarPoints() {
+    fileprivate func drawStarPoints() {
         starPointsLayer.removeFromSuperlayer()
         starPointsLayer = layerForStartPointsWithFrame(self.bounds, withGobanSize: gobanSize, padding: padding, starPoints: starPoints)
         layer.addSublayer(starPointsLayer)
     }
     
-    private func drawBorder() {
+    fileprivate func drawBorder() {
         layer.borderWidth = lineWidth
-        layer.borderColor = lineColor.CGColor
+        layer.borderColor = lineColor.cgColor
     }
     
-    private func drawStone(stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint) -> StoneModel {
+    fileprivate func drawStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint) -> StoneModel {
         let stoneSize = sizeForStoneWithGobanSize(gobanSize, inFrame: gridFrame)
         let stoneCenter = centerForStoneAtGobanPoint(gobanPoint, gobanSize: gobanSize, inFrame: gridFrame)
-        let stoneFrame = CGRectMake(stoneCenter.x - stoneSize / 2.0, stoneCenter.y - stoneSize / 2.0, stoneSize, stoneSize)
+        let stoneFrame = CGRect(x: stoneCenter.x - stoneSize / 2.0, y: stoneCenter.y - stoneSize / 2.0, width: stoneSize, height: stoneSize)
         
         let stoneLayer = layerForStoneWithFrame(stoneFrame, color: colorForStone(stone))
         
@@ -271,77 +271,77 @@ class GobanView: UIView {
     
     // MARK: Layers
     
-    private func layerForGridWithFrame(frame: CGRect, withGobanSize size: GobanSize, padding: CGFloat) -> CAShapeLayer {
+    fileprivate func layerForGridWithFrame(_ frame: CGRect, withGobanSize size: GobanSize, padding: CGFloat) -> CAShapeLayer {
         let gridLayer = CAShapeLayer()
         gridLayer.frame = frame
-        gridLayer.path = pathForGridInRect(gridFrame, withGobanSize: size).CGPath
-        gridLayer.fillColor = UIColor.clearColor().CGColor
-        gridLayer.strokeColor = lineColor.CGColor
+        gridLayer.path = pathForGridInRect(gridFrame, withGobanSize: size).cgPath
+        gridLayer.fillColor = UIColor.clear.cgColor
+        gridLayer.strokeColor = lineColor.cgColor
         gridLayer.lineWidth = lineWidth
         
         return gridLayer
     }
     
-    private func layerForStartPointsWithFrame(frame: CGRect, withGobanSize size: GobanSize, padding: CGFloat, starPoints: [GobanPoint]) -> CAShapeLayer {
+    fileprivate func layerForStartPointsWithFrame(_ frame: CGRect, withGobanSize size: GobanSize, padding: CGFloat, starPoints: [GobanPoint]) -> CAShapeLayer {
         let starPointsLayer = CAShapeLayer()
         starPointsLayer.frame = frame
-        starPointsLayer.path = pathForStarPointsInRect(gridFrame, withGobanSize: gobanSize, starPoints: starPoints).CGPath
-        starPointsLayer.fillColor = lineColor.CGColor
+        starPointsLayer.path = pathForStarPointsInRect(gridFrame, withGobanSize: gobanSize, starPoints: starPoints).cgPath
+        starPointsLayer.fillColor = lineColor.cgColor
         
         return starPointsLayer
     }
     
-    private func layerForStoneWithFrame(frame: CGRect, color: UIColor) -> CAShapeLayer {
+    fileprivate func layerForStoneWithFrame(_ frame: CGRect, color: UIColor) -> CAShapeLayer {
         let stoneLayer = CAShapeLayer()
         stoneLayer.frame = frame
-        stoneLayer.path = pathForStoneInRect(stoneLayer.bounds).CGPath
-        stoneLayer.fillColor = color.CGColor
-        stoneLayer.strokeColor = UIColor.clearColor().CGColor
+        stoneLayer.path = pathForStoneInRect(stoneLayer.bounds).cgPath
+        stoneLayer.fillColor = color.cgColor
+        stoneLayer.strokeColor = UIColor.clear.cgColor
         
         return stoneLayer
     }
     
     // MARK: Paths
     
-    private func pathForGridInRect(rect: CGRect, withGobanSize gobanSize: GobanSize) -> UIBezierPath {
+    fileprivate func pathForGridInRect(_ rect: CGRect, withGobanSize gobanSize: GobanSize) -> UIBezierPath {
         let gridPath = UIBezierPath()
         
         let heightLineInterval = rect.size.height / CGFloat(gobanSize.height - 1)
         let widthLineInterval = rect.size.width / CGFloat(gobanSize.width - 1)
 
         for i in 0 ..< Int(gobanSize.height) {
-            gridPath.moveToPoint(CGPointMake(rect.origin.x, CGFloat(i) * heightLineInterval + rect.origin.y))
-            gridPath.addLineToPoint(CGPointMake(rect.size.width + rect.origin.x, CGFloat(i) * heightLineInterval + rect.origin.y))
+            gridPath.move(to: CGPoint(x: rect.origin.x, y: CGFloat(i) * heightLineInterval + rect.origin.y))
+            gridPath.addLine(to: CGPoint(x: rect.size.width + rect.origin.x, y: CGFloat(i) * heightLineInterval + rect.origin.y))
         }
 
         for i in 0 ..< Int(gobanSize.width) {
-            gridPath.moveToPoint(CGPointMake(CGFloat(i) * widthLineInterval + rect.origin.x, rect.origin.y))
-            gridPath.addLineToPoint(CGPointMake(CGFloat(i) * widthLineInterval + rect.origin.x, rect.size.height + rect.origin.y))
+            gridPath.move(to: CGPoint(x: CGFloat(i) * widthLineInterval + rect.origin.x, y: rect.origin.y))
+            gridPath.addLine(to: CGPoint(x: CGFloat(i) * widthLineInterval + rect.origin.x, y: rect.size.height + rect.origin.y))
         }
         
         return gridPath
     }
     
-    private func pathForStarPointsInRect(rect: CGRect, withGobanSize gobanSize: GobanSize, starPoints: [GobanPoint]) -> UIBezierPath {
+    fileprivate func pathForStarPointsInRect(_ rect: CGRect, withGobanSize gobanSize: GobanSize, starPoints: [GobanPoint]) -> UIBezierPath {
         let starPointsPath = UIBezierPath()
         let starSize = sizeForStarPointWithGobanSize(gobanSize, inFrame: rect)
         for gobanPoint in starPoints {
             let point = centerForStoneAtGobanPoint(gobanPoint, gobanSize: gobanSize, inFrame: rect)
-            starPointsPath.appendPath(UIBezierPath(ovalInRect: CGRectMake(point.x - starSize / 2.0, point.y - starSize / 2.0, starSize, starSize)))
+            starPointsPath.append(UIBezierPath(ovalIn: CGRect(x: point.x - starSize / 2.0, y: point.y - starSize / 2.0, width: starSize, height: starSize)))
         }
         
         return starPointsPath
     }
     
-    private func pathForStoneInRect(rect: CGRect) -> UIBezierPath {
-        let stonePath = UIBezierPath(ovalInRect: rect)
+    fileprivate func pathForStoneInRect(_ rect: CGRect) -> UIBezierPath {
+        let stonePath = UIBezierPath(ovalIn: rect)
         
         return stonePath
     }
     
     // MARK: Stones
     
-    func setStone(stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint) -> StoneModel? {
+    func setStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint) -> StoneModel? {
         guard gobanPoint.x >= 1 && gobanPoint.x <= gobanSize.width
             && gobanPoint.y >= 1 && gobanPoint.y <= gobanSize.height
             else {
@@ -358,24 +358,24 @@ class GobanView: UIView {
     
     var longPressGestureRecognizerDidChange = false
     
-    func didLongPressGoban(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+    func didLongPressGoban(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if self.gobanTouchDelegate != nil {
             switch longPressGestureRecognizer.state {
-            case .Began:
+            case .began:
                 longPressGestureRecognizerDidChange = false
                 break
-            case .Changed:
+            case .changed:
                 longPressGestureRecognizerDidChange = true
-                var tapLocation = longPressGestureRecognizer.locationInView(longPressGestureRecognizer.view)
-                tapLocation = CGPointMake(tapLocation.x, tapLocation.y - 30.0)
+                var tapLocation = longPressGestureRecognizer.location(in: longPressGestureRecognizer.view)
+                tapLocation = CGPoint(x: tapLocation.x, y: tapLocation.y - 30.0)
                 if let closestGobanPoint = closestGobanPointFromPoint(tapLocation) {
                     gobanTouchDelegate?.didTouchGobanWithClosestGobanPoint(self, atGobanPoint: closestGobanPoint)
                 }
                 break
-            case .Ended:
-                var tapLocation = longPressGestureRecognizer.locationInView(longPressGestureRecognizer.view)
+            case .ended:
+                var tapLocation = longPressGestureRecognizer.location(in: longPressGestureRecognizer.view)
                 if longPressGestureRecognizerDidChange == true {
-                    tapLocation = CGPointMake(tapLocation.x, tapLocation.y - 30.0)
+                    tapLocation = CGPoint(x: tapLocation.x, y: tapLocation.y - 30.0)
                 }
                 let closestGobanPoint = closestGobanPointFromPoint(tapLocation)
                 gobanTouchDelegate?.didEndTouchGobanWithClosestGobanPoint(self, atGobanPoint: closestGobanPoint)
@@ -389,7 +389,7 @@ class GobanView: UIView {
     
     // MARK: Helper Methods
     
-    private func removeSubLayers() {
+    fileprivate func removeSubLayers() {
         guard layer.sublayers != nil
             else {
                 return
@@ -400,8 +400,8 @@ class GobanView: UIView {
         }
     }
     
-    func closestGobanPointFromPoint(point: CGPoint) -> GobanPoint? {
-        guard CGRectContainsPoint(bounds, point) else {
+    func closestGobanPointFromPoint(_ point: CGPoint) -> GobanPoint? {
+        guard bounds.contains(point) else {
             return nil
         }
         
@@ -414,16 +414,16 @@ class GobanView: UIView {
         return GobanPoint(x: Int(round(closestGobanX)), y: Int(round(closestGobanY)))
     }
     
-    private func colorForStone(stone: StoneProtocol) -> UIColor {
+    fileprivate func colorForStone(_ stone: StoneProtocol) -> UIColor {
         let alpha: CGFloat = stone.disabled == true ? 0.7 : 1.0
-        let color = stone.stoneColor == GobanStoneColor.White ? whiteStoneColor : blackStoneColor
+        let color = stone.stoneColor == GobanStoneColor.white ? whiteStoneColor : blackStoneColor
         
-        return color.colorWithAlphaComponent(alpha)
+        return color.withAlphaComponent(alpha)
     }
     
     // MARK: Calculations
     
-    private func sizeForStoneWithGobanSize(gobanSize: GobanSize, inFrame frame: CGRect) -> CGFloat {
+    fileprivate func sizeForStoneWithGobanSize(_ gobanSize: GobanSize, inFrame frame: CGRect) -> CGFloat {
         let smallestGobanFrameSize = max(frame.size.width, frame.size.height)
         let smallestGobanSize = max(gobanSize.width, gobanSize.height)
         
@@ -432,17 +432,17 @@ class GobanView: UIView {
         return stoneSize
     }
     
-    private func sizeForStarPointWithGobanSize(gobanSize: GobanSize, inFrame frame: CGRect) -> CGFloat {
+    fileprivate func sizeForStarPointWithGobanSize(_ gobanSize: GobanSize, inFrame frame: CGRect) -> CGFloat {
         return sizeForStoneWithGobanSize(gobanSize, inFrame: frame) / 2.0
     }
     
-    private func centerForStoneAtGobanPoint(gobanPoint: GobanPoint, gobanSize: GobanSize, inFrame frame: CGRect) -> CGPoint {
+    fileprivate func centerForStoneAtGobanPoint(_ gobanPoint: GobanPoint, gobanSize: GobanSize, inFrame frame: CGRect) -> CGPoint {
         let heightLineInterval = frame.size.height / CGFloat(gobanSize.height - 1)
         let widthLineInterval = frame.size.width / CGFloat(gobanSize.width - 1)
 
         let y = heightLineInterval * CGFloat((gobanPoint.y - 1)) + frame.origin.x
         let x = widthLineInterval * CGFloat((gobanPoint.x - 1)) + frame.origin.y
         
-        return CGPointMake(x, y)
+        return CGPoint(x: x, y: y)
     }
 }

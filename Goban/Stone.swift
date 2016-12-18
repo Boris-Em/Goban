@@ -9,8 +9,8 @@
 import UIKit
 
 enum GobanStoneColor {
-    case White
-    case Black
+    case white
+    case black
 }
 
 protocol StoneProtocol {
@@ -19,7 +19,7 @@ protocol StoneProtocol {
 }
 
 struct Stone: StoneProtocol {
-    var stoneColor = GobanStoneColor.White
+    var stoneColor = GobanStoneColor.white
     var disabled = false
 }
 
@@ -31,12 +31,12 @@ func ==(lhs: StoneModel, rhs: StoneModel) -> Bool {
 }
 
 internal struct StoneModel: StoneProtocol, Hashable {
-    var stoneColor = GobanStoneColor.White
+    var stoneColor = GobanStoneColor.white
     var disabled = false
     var layer: CAShapeLayer
     var gobanPoint: GobanPoint
     var hashValue: Int {
-        get { return "\(gobanPoint.x) \(gobanPoint.y) \(unsafeAddressOf(layer))".hashValue }
+        get { return "\(gobanPoint.x) \(gobanPoint.y) \(Unmanaged.passUnretained(layer).toOpaque())".hashValue }
         set { }
     }
 }

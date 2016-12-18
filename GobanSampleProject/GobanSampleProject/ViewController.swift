@@ -23,15 +23,15 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         gobanView.gobanSize = GobanSize(width: 13, height: 13)
         
-        let path = NSBundle.mainBundle().URLForResource("AB-AE-Tests", withExtension:"sgf")
+        let path = Bundle.main.url(forResource: "AB-AE-Tests", withExtension:"sgf")
         gobanManager?.loadSGFFileAtURL(path!)
     }
     
-    @IBAction func didTapClearGobanButton(sender: AnyObject) {
+    @IBAction func didTapClearGobanButton(_ sender: AnyObject) {
         gobanManager?.removeAllStonesAnimated(true)
     }
     
-    @IBAction func didTapNextButton(sender: AnyObject) {
+    @IBAction func didTapNextButton(_ sender: AnyObject) {
         gobanManager?.handleNextNode()
     }
 

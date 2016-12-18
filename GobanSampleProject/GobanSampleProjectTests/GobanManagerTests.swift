@@ -22,7 +22,7 @@ class GobanManagerTests: XCTestCase {
     let initialNumberOfSublayers = 2
     
     func testAddNewStoneAtGobanPoint() {
-        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRectZero)
+        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRect.zero)
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
         
@@ -45,7 +45,7 @@ class GobanManagerTests: XCTestCase {
         XCTAssertEqual(gobanView.layer.sublayers?.count, initialNumberOfSublayers + gobanManager.stoneHistory.count)
         
         var lastStone = gobanManager.stoneHistory.last
-        XCTAssertEqual(lastStone?.stoneColor, .Black)
+        XCTAssertEqual(lastStone?.stoneColor, .black)
         
         // Stone already exists at goban point
         gobanPoint = GobanPoint(x: 2, y: 7)
@@ -54,7 +54,7 @@ class GobanManagerTests: XCTestCase {
         XCTAssertEqual(gobanView.layer.sublayers?.count, initialNumberOfSublayers + gobanManager.stoneHistory.count)
         
         lastStone = gobanManager.stoneHistory.last
-        XCTAssertEqual(lastStone?.stoneColor, .Black)
+        XCTAssertEqual(lastStone?.stoneColor, .black)
         
         // Correct test - Second stone is white
         gobanPoint = GobanPoint(x: 3, y: 7)
@@ -63,7 +63,7 @@ class GobanManagerTests: XCTestCase {
         XCTAssertEqual(gobanView.layer.sublayers?.count, initialNumberOfSublayers + gobanManager.stoneHistory.count)
         
         lastStone = gobanManager.stoneHistory.last
-        XCTAssertEqual(lastStone?.stoneColor, .White)
+        XCTAssertEqual(lastStone?.stoneColor, .white)
         
         // Correct test - Third stone is black
         gobanPoint = GobanPoint(x: 19, y: 19)
@@ -72,7 +72,7 @@ class GobanManagerTests: XCTestCase {
         XCTAssertEqual(gobanView.layer.sublayers?.count, initialNumberOfSublayers + gobanManager.stoneHistory.count)
         
         lastStone = gobanManager.stoneHistory.last
-        XCTAssertEqual(lastStone?.stoneColor, .Black)
+        XCTAssertEqual(lastStone?.stoneColor, .black)
         
         // Stone outside of goban
         gobanPoint = GobanPoint(x: 20, y: 19)
@@ -81,11 +81,11 @@ class GobanManagerTests: XCTestCase {
         XCTAssertEqual(gobanView.layer.sublayers?.count, initialNumberOfSublayers + gobanManager.stoneHistory.count)
         
         lastStone = gobanManager.stoneHistory.last
-        XCTAssertEqual(lastStone?.stoneColor, .Black)
+        XCTAssertEqual(lastStone?.stoneColor, .black)
     }
     
     func testAddTemporaryStoneAtGobanPoint() {
-        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRectZero)
+        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRect.zero)
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
         
@@ -98,7 +98,7 @@ class GobanManagerTests: XCTestCase {
     }
     
     func testRemoveStone() {
-        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRectZero)
+        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRect.zero)
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
         
@@ -153,14 +153,14 @@ class GobanManagerTests: XCTestCase {
         gobanManager.addNewStoneAtGobanPoint(gobanPoint)
         XCTAssertEqual(gobanManager.stoneHistory.count, 1)
         XCTAssertEqual(gobanView.layer.sublayers?.count, initialNumberOfSublayers + gobanManager.stoneHistory.count)
-        let nonExistingStone = StoneModel(stoneColor: .Black, disabled: true, layer: CAShapeLayer(), gobanPoint: GobanPoint(x: 2, y: 7))
+        let nonExistingStone = StoneModel(stoneColor: .black, disabled: true, layer: CAShapeLayer(), gobanPoint: GobanPoint(x: 2, y: 7))
         gobanManager.removeStone(nonExistingStone, removeFromHistory: true, animated: false)
         XCTAssertEqual(gobanManager.stoneHistory.count, 1)
         XCTAssertEqual(gobanView.layer.sublayers?.count, initialNumberOfSublayers + gobanManager.stoneHistory.count)
     }
     
     func testRemoveStoneAtGobanPoint() {
-        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRectZero)
+        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRect.zero)
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
         
@@ -220,7 +220,7 @@ class GobanManagerTests: XCTestCase {
     }
     
     func testRemoveLastStoneAnimated() {
-        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRectZero)
+        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRect.zero)
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
         
@@ -235,7 +235,7 @@ class GobanManagerTests: XCTestCase {
     }
     
     func testRemoveAllStonesAnimated() {
-        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRectZero)
+        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRect.zero)
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
         
@@ -253,7 +253,7 @@ class GobanManagerTests: XCTestCase {
     }
     
     func testStoneAtGobanPoint() {
-        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRectZero)
+        let gobanView = GobanView(size: GobanSize(width: 19, height: 19), frame: CGRect.zero)
         gobanView.reload()
         let gobanManager = GobanManager(gobanView: gobanView)
         
@@ -264,7 +264,7 @@ class GobanManagerTests: XCTestCase {
         XCTAssertEqual(gobanView.layer.sublayers?.count, initialNumberOfSublayers + gobanManager.stoneHistory.count)
         
         let stone = gobanManager.stoneAtGobanPoint(gobanPoint)
-        XCTAssertEqual(stone?.stoneColor, .Black)
+        XCTAssertEqual(stone?.stoneColor, .black)
         XCTAssertFalse(stone!.disabled)
         XCTAssertNotNil(stone?.layer)
         XCTAssertEqual(stone?.gobanPoint, gobanPoint)

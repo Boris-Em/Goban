@@ -94,7 +94,7 @@ class ParserCombinatorTests: XCParserTestBase {
     }
     
     func testCombinatorOperator() {
-        let toInteger2 = { (a:Character) -> Character -> Int in
+        let toInteger2 = { (a:Character) -> (Character) -> Int in
             return { b in
                 let combinedString = String(a) + String(b)
                 return Int(combinedString)!
@@ -121,14 +121,14 @@ class ParserCombinatorTests: XCParserTestBase {
         XCTAssertEmptyResult(testParseString(parser, "cbc"))
     }
     
-    let isDecimalDigit = parseCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet())
+    let isDecimalDigit = parseCharacterFromSet(CharacterSet.decimalDigits)
     
     func testParseCharacterFromSet() {
         XCTAssertOnlyResult(testParseString(isDecimalDigit, "3"), equals: "3")
     }
 
     func testParseGreedyCharacterFromSet() {
-        let greedyParser = parseGreedyCharactersFromSet(NSCharacterSet.decimalDigitCharacterSet())
+        let greedyParser = parseGreedyCharactersFromSet(CharacterSet.decimalDigits)
         let results = testParseString(greedyParser, "123abc")
         XCTAssertEqual(results.count, 1)
         XCTAssertEqual(results.first!.0, ["1","2","3"])
@@ -136,7 +136,7 @@ class ParserCombinatorTests: XCParserTestBase {
     }
 
     func testParseGreedyCharacterFromSetWithEscapes() {
-        let notEndBracket = NSCharacterSet(charactersInString: "]").invertedSet
+        let notEndBracket = CharacterSet(charactersIn: "]").inverted
         let greedyParser = parseGreedyCharactersFromSet(notEndBracket)
         let results = testParseString(greedyParser, "foo\\]]")
         XCTAssertEqual(results.count, 1)

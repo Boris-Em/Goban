@@ -10,13 +10,13 @@ import Foundation
 
 // helpers for the AnySequence.flatMap
 
-struct JoinedGenerator<Element>: GeneratorType {
-    var generator: AnyGenerator<AnyGenerator<Element>>
-    var current: AnyGenerator<Element>?
+struct JoinedGenerator<Element>: IteratorProtocol {
+    var generator: AnyIterator<AnyIterator<Element>>
+    var current: AnyIterator<Element>?
     
-    init<G: GeneratorType where G.Element: GeneratorType, G.Element.Element == Element>(_ g: G) {
+    init<G: IteratorProtocol>(_ g: G) where G.Element: IteratorProtocol, G.Element.Element == Element {
         var varg = g
-        generator = varg.mapOnce { AnyGenerator($0) }
+        generator = varg.mapOnce { AnyIterator($0) }
         current = generator.next()
     }
     
@@ -32,59 +32,60 @@ struct JoinedGenerator<Element>: GeneratorType {
     }
 }
 
-extension SequenceType where Generator.Element: SequenceType {
-    typealias NestedElement = Generator.Element.Generator.Element
+extension Sequence where Iterator.Element: Sequence {
+    typealias NestedElement = Iterator.Element.Iterator.Element
     
     func join() -> AnySequence<NestedElement> {
         return AnySequence { () -> JoinedGenerator<NestedElement> in
-            var generator = self.generate()
-            return JoinedGenerator(generator.mapOnce { $0.generate() } )
+            var generator = self.makeIterator()
+            return JoinedGenerator(generator.mapOnce { $0.makeIterator() } )
         }
     }
 }
 
 
 // Combine Generators
-func +<A>(l: AnyGenerator<A>, r: AnyGenerator<A>) -> AnyGenerator<A> {
-    return AnyGenerator { l.next() ?? r.next() }
+func +<A>(l: AnyIterator<A>, r: AnyIterator<A>) -> AnyIterator<A> {
+    return AnyIterator { l.next() ?? r.next() }
 }
 
 // Combine Sequences
 func +<A>(l: AnySequence<A>, r: AnySequence<A>) -> AnySequence<A> {
-    return AnySequence {l.generate() + r.generate()}
+    return AnySequence {l.makeIterator() + r.makeIterator()}
 }
 
 // GeneratorType map was removed - perhaps because it might unexpectedly exhaust the generator
 // still it's convenient to have it
-extension GeneratorType {
-    mutating func mapOnce<U>(transform: (Self.Element) -> U) -> AnyGenerator<U> {
-        return AnyGenerator { self.next().map(transform) }
+extension IteratorProtocol {
+    mutating func mapOnce<U>(_ transform: @escaping (Self.Element) -> U) -> AnyIterator<U> {
+        var copy = self
+        return AnyIterator { copy.next().map(transform) }
     }
 }
 
-struct TakeWhileGenerator<G: GeneratorType>: GeneratorType {
+struct TakeWhileGenerator<G: IteratorProtocol>: IteratorProtocol {
     var base: G
-    let predicate: G.Element -> Bool
+    let predicate: (G.Element) -> Bool
     
     mutating func next() -> G.Element? {
-        guard let n = base.next() where predicate(n) else {
+        guard let n = base.next(), predicate(n) else {
             return nil
         }
         return n
     }
 }
 
-struct LazyTakeWhileSequence<S: SequenceType>: LazySequenceType {
+struct LazyTakeWhileSequence<S: Sequence>: LazySequenceProtocol {
     let base: S
-    let predicate: S.Generator.Element -> Bool
+    let predicate: (S.Iterator.Element) -> Bool
     
-    func generate() -> TakeWhileGenerator<S.Generator> {
-        return TakeWhileGenerator(base: base.generate(), predicate: predicate)
+    func makeIterator() -> TakeWhileGenerator<S.Iterator> {
+        return TakeWhileGenerator(base: base.makeIterator(), predicate: predicate)
     }
 }
 
-extension LazySequenceType {
-    func takeWhile(predicate: Generator.Element -> Bool) -> LazyTakeWhileSequence<Self> {
+extension LazySequenceProtocol {
+    func takeWhile(_ predicate: @escaping (Iterator.Element) -> Bool) -> LazyTakeWhileSequence<Self> {
         return LazyTakeWhileSequence(base: self, predicate: predicate)
     }
 }
@@ -92,14 +93,14 @@ extension LazySequenceType {
 
 // Add flatmap for AnySequence
 extension AnySequence {
-    func flatMap<T, Seq: SequenceType where Seq.Generator.Element == T>(f: Element -> Seq) -> AnySequence<T> {
+    func flatMap<T, Seq: Sequence>(_ f: (Element) -> Seq) -> AnySequence<T> where Seq.Iterator.Element == T {
         return AnySequence<Seq>(self.map(f)).join()
     }
 }
 
 // convenience was of creating an AnySequence from a single Token.
-func anySequenceOfOne<A>(x: A) -> AnySequence<A> {
-    return AnySequence(GeneratorOfOne(x))
+func anySequenceOfOne<A>(_ x: A) -> AnySequence<A> {
+    return AnySequence(IteratorOverOne(_elements: x))
 }
 
 // empty sequence
@@ -127,27 +128,27 @@ extension String {
     }
 }
 
-func curry<A,B,C>(f: (A,B) -> C) -> A -> B -> C  {
+func curry<A,B,C>(_ f: @escaping (A,B) -> C) -> (A) -> (B) -> C  {
     return { a in { b in f(a,b) } }
 }
 
-func curry<A,B,C,D>(f: (A,B,C) -> D) -> A -> B -> C -> D  {
+func curry<A,B,C,D>(_ f: @escaping (A,B,C) -> D) -> (A) -> (B) -> (C) -> D  {
     return { a in { b in { c in f(a,b,c) } } }
 }
 
-func prepend<A>(l: A) -> [A] -> [A] {
+func prepend<A>(_ l: A) -> ([A]) -> [A] {
     return { r in return [l] + r }
 }
 
-func concat<A>(l: [A]) -> [A] -> [A] {
+func concat<A>(_ l: [A]) -> ([A]) -> [A] {
     return { r in return l + r }
 }
 
-func stringFromChars(chars: [Character]) -> String {
+func stringFromChars(_ chars: [Character]) -> String {
     return String(chars)
 }
 
-func intFromChars(chars: [Character]) -> Int {
+func intFromChars(_ chars: [Character]) -> Int {
     return Int(String(chars))!
 }
 

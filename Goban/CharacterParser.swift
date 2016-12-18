@@ -19,7 +19,7 @@ import Foundation
 //
 
 struct CharacterParser<Result> {
-    let parse: ArraySlice<Character> -> AnySequence<(Result, ArraySlice<Character>)>
+    let parse: (ArraySlice<Character>) -> AnySequence<(Result, ArraySlice<Character>)>
 }
 
 //
@@ -27,14 +27,14 @@ struct CharacterParser<Result> {
 //
 
 // consumes no Tokens and returns contained T
-func pure<T>(value: T) -> CharacterParser<T> {
+func pure<T>(_ value: T) -> CharacterParser<T> {
     return CharacterParser { anySequenceOfOne((value, $0)) }
 }
 
 // parse tokens equal to token
-func parseSatisfying(condition: Character -> Bool) -> CharacterParser<Character> {
+func parseSatisfying(_ condition: @escaping (Character) -> Bool) -> CharacterParser<Character> {
     return CharacterParser { x in
-        guard let (head, tail) = x.decompose where condition(head) else {
+        guard let (head, tail) = x.decompose, condition(head) else {
             return AnySequence([])
         }
         
@@ -43,21 +43,21 @@ func parseSatisfying(condition: Character -> Bool) -> CharacterParser<Character>
 }
 
 // parse only the given character
-func parseCharacter(c: Character) -> CharacterParser<Character> {
+func parseCharacter(_ c: Character) -> CharacterParser<Character> {
     return parseSatisfying { $0 == c }
 }
 
 // parse any character in set
-func parseCharacterFromSet(set: NSCharacterSet) -> CharacterParser<Character> {
+func parseCharacterFromSet(_ set: CharacterSet) -> CharacterParser<Character> {
     return parseSatisfying { (ch: Character) in
-        let uniChar = (String(ch) as NSString).characterAtIndex(0)
-        return set.characterIsMember(uniChar)
+        let uniChar = (String(ch) as NSString).character(at: 0)
+        return set.contains(UnicodeScalar(uniChar)!)
     }
 }
 
 // take as many characters from the set as possible, don't provide alternatives
-func parseGreedyCharactersFromSet(set: NSCharacterSet) -> CharacterParser<[Character]> {
-    func uniChar(ch: Character) -> UniChar {
+func parseGreedyCharactersFromSet(_ set: CharacterSet) -> CharacterParser<[Character]> {
+    func uniChar(_ ch: Character) -> UniChar {
         return String(ch).utf16.first!
     }
     
@@ -66,8 +66,8 @@ func parseGreedyCharactersFromSet(set: NSCharacterSet) -> CharacterParser<[Chara
         var escapeNext = false
         var lastCharInSet: Int?
 
-        for (i,ch) in input.enumerate() {
-            if !(set.characterIsMember(uniChar(ch)) || escapeNext) {
+        for (i,ch) in input.enumerated() {
+            if !(set.contains(UnicodeScalar(uniChar(ch))!) || escapeNext) {
                 break
             }
             lastCharInSet = i
@@ -85,21 +85,38 @@ func parseGreedyCharactersFromSet(set: NSCharacterSet) -> CharacterParser<[Chara
 
 // eat up whitespace from input and return none of them
 func eatWS() -> CharacterParser<[Character]> {
-    return (parseGreedyCharactersFromSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) <|> pure([]))
+    return (parseGreedyCharactersFromSet(CharacterSet.whitespacesAndNewlines) <|> pure([]))
 }
 
 //
 // MARK: - combinator operators
 //
 
+
+precedencegroup Choice {
+    associativity: right
+}
+
+precedencegroup Combinator {
+    associativity: left
+    higherThan: Choice
+}
+
+precedencegroup Apply {
+    associativity: left
+    higherThan: Combinator
+    lowerThan: FunctionArrowPrecedence
+}
+
 // choice operator
-infix operator <|> { associativity right precedence 130 }
+infix operator <|>: Choice
+//{ associativity right precedence 130 }
 func <|> <Result>(l: CharacterParser<Result>, r: CharacterParser<Result>) -> CharacterParser<Result> {
     return CharacterParser { l.parse($0) + r.parse($0) }
 }
 
 // sequence operator
-func sequence<A, B>(l: CharacterParser<A>, _ r: CharacterParser<B>) -> CharacterParser<(A,B) > {
+func sequence<A, B>(_ l: CharacterParser<A>, _ r: CharacterParser<B>) -> CharacterParser<(A,B) > {
     return CharacterParser { input in
         let leftResults = l.parse(input)
         return leftResults.flatMap { (a, leftRest) -> [((A,B), ArraySlice<Character>)]  in
@@ -112,8 +129,9 @@ func sequence<A, B>(l: CharacterParser<A>, _ r: CharacterParser<B>) -> Character
 }
 
 // combinator operator
-infix operator <*> { associativity left precedence 150 }
-func <*><A, B>(l: CharacterParser<A -> B>, r: CharacterParser<A>) -> CharacterParser<B> {
+infix operator <*>: Combinator
+//{ associativity left precedence 150 }
+func <*><A, B>(l: CharacterParser<(A) -> B>, r: CharacterParser<A>) -> CharacterParser<B> {
     typealias Result = (B, ArraySlice<Character>)
     typealias Results = [Result]
 
@@ -129,20 +147,23 @@ func <*><A, B>(l: CharacterParser<A -> B>, r: CharacterParser<A>) -> CharacterPa
 }
 
 // combinator, but throw away the result on right
-infix operator <* { associativity left precedence 150 }
+infix operator <*: Combinator
+//{ associativity left precedence 150 }
 func <* <A,B>(p: CharacterParser<A>, q: CharacterParser<B>) -> CharacterParser<A> {
     return { x in { _ in x } } </> p <*> q
 }
 
 // combinator, but throw away the result on left
-infix operator *> { associativity left precedence 150 }
+infix operator *>: Combinator
+//{ associativity left precedence 150 }
 func *> <A,B>(p: CharacterParser<A>, q: CharacterParser<B>) -> CharacterParser<B> {
     return { _ in { y in y } } </> p <*> q
 }
 
 // apply combinator operator
-infix operator </> { associativity left precedence 170 }
-func </><A,B>(f: A -> B, r: CharacterParser<A>) -> CharacterParser<B> {
+infix operator </>: Apply
+//{ associativity left precedence 170 }
+func </><A,B>(f: @escaping (A) -> B, r: CharacterParser<A>) -> CharacterParser<B> {
     return pure(f) <*> r
 }
 
@@ -151,53 +172,53 @@ func </><A,B>(f: A -> B, r: CharacterParser<A>) -> CharacterParser<B> {
 //
 
 // f() returns a parser. f() not evaluate evaluated parse time
-func lazy<A>(f: () -> CharacterParser<A>) -> CharacterParser<A> {
+func lazy<A>(_ f: @escaping () -> CharacterParser<A>) -> CharacterParser<A> {
     return CharacterParser { f().parse($0) }
 }
 
 // return [A]{0,1}
-func optional<A>(p: CharacterParser<A>) -> CharacterParser<A?> {
+func optional<A>(_ p: CharacterParser<A>) -> CharacterParser<A?> {
     return (pure { $0 } <*> p ) <|> pure(nil)
 }
 
 // return [A]{0,*}
-func zeroOrMore<A>(p: CharacterParser<A>) -> CharacterParser<[A]> {
+func zeroOrMore<A>(_ p: CharacterParser<A>) -> CharacterParser<[A]> {
     return (prepend </> p <*> lazy { zeroOrMore(p) }) <|> pure([])
 }
 
 // return [A]{1,*}
-func oneOrMore<A>(p: CharacterParser<A>) -> CharacterParser<[A]> {
+func oneOrMore<A>(_ p: CharacterParser<A>) -> CharacterParser<[A]> {
     return prepend </> p <*> zeroOrMore(p)
 }
 
 // return [A]{1,*}
-func greedy<A>(p: CharacterParser<A>) -> CharacterParser<A> {
+func greedy<A>(_ p: CharacterParser<A>) -> CharacterParser<A> {
     return CharacterParser { input in
         return greediestResults(p.parse(input))
     }
 }
 
 // return only the results that consume the most tokens
-func greediestResults<Token, A>(results: AnySequence<(A, ArraySlice<Token>)>) -> AnySequence<(A, ArraySlice<Token>)> {
-    guard let shortestTail = (results.map { $0.1.count }.minElement()) else {
+func greediestResults<Token, A>(_ results: AnySequence<(A, ArraySlice<Token>)>) -> AnySequence<(A, ArraySlice<Token>)> {
+    guard let shortestTail = (results.map { $0.1.count }.min()) else {
         return results
     }
     return AnySequence(results.filter { $0.1.count == shortestTail })
 }
 
 // no matter what you pass, it returs A
-func const<A,B>(x: A) -> (B) -> A {
+func const<A,B>(_ x: A) -> (B) -> A {
     return { _ in x }
 }
 
 // parse a sequence of tokens
-func parseCharacters(input: [Character]) -> CharacterParser<[Character]> {
+func parseCharacters(_ input: [Character]) -> CharacterParser<[Character]> {
     guard let (head, tail) = input.decompose else { return pure([]) }
     return prepend </> parseCharacter(head) <*> parseCharacters(tail)
 }
 
 // parse a sequence of characters matching string (and return string)
-func parseString(string: String) -> CharacterParser<String> {
+func parseString(_ string: String) -> CharacterParser<String> {
     return const(string) </> parseCharacters(Array(string.characters))
 }
 
@@ -207,17 +228,17 @@ func parseFail<A>() -> CharacterParser<A> {
 }
 
 // choose one of parsers from array
-func oneOf<A>(parsers: [CharacterParser<A>]) -> CharacterParser<A> {
-    return parsers.reduce(parseFail(), combine: <|>)
+func oneOf<A>(_ parsers: [CharacterParser<A>]) -> CharacterParser<A> {
+    return parsers.reduce(parseFail(), <|>)
 }
 
-func just<A>(p: CharacterParser<A>) -> CharacterParser<A> {
+func just<A>(_ p: CharacterParser<A>) -> CharacterParser<A> {
     return CharacterParser { input in
         let results = p.parse(input)
         return AnySequence(results.filter { $0.1.isEmpty })
     }
 }
-func pack<A>(p: CharacterParser<A>, start: Character, end: Character) -> CharacterParser<A> {
+func pack<A>(_ p: CharacterParser<A>, start: Character, end: Character) -> CharacterParser<A> {
     return parseCharacter(start) *> p <* parseCharacter(end)
 }
 

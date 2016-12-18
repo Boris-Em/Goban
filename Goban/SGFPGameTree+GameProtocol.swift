@@ -31,15 +31,15 @@ extension SGFP.GameTree {
     }
     
     // The date of the game.
-    var date: NSDate? {
+    var date: Date? {
         guard let dateString = gameInfoProperty(.DT)?.values.first?.toText() else {
             return nil
         }
 
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-DD"
         
-        return dateFormatter.dateFromString(dateString)
+        return dateFormatter.date(from: dateString)
     }
     
     // The name of the event.
@@ -154,11 +154,11 @@ extension SGFP.GameTree {
         return sequence.nodes
     }
    
-    func rootProperty(property: SGFRootProperties) -> SGFP.Property? {
+    func rootProperty(_ property: SGFRootProperties) -> SGFP.Property? {
         return rootNode?.propertyWithName(property.rawValue)
     }
     
-    func gameInfoProperty(property: SGFGameInfoProperties) -> SGFP.Property? {
+    func gameInfoProperty(_ property: SGFGameInfoProperties) -> SGFP.Property? {
         return rootNode?.propertyWithName(property.rawValue)
     }
     
