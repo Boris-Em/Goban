@@ -1,5 +1,5 @@
 //
-//  SGFGame2.swift
+//  SGFPStructsHelpers.swift
 //  GobanSampleProject
 //
 //  Created by John on 5/10/16.
@@ -161,5 +161,12 @@ extension SGFP.GameTree {
     func gameInfoProperty(_ property: SGFGameInfoProperties) -> SGFP.Property? {
         return rootNode?.propertyWithName(property.rawValue)
     }
+}
+
+extension SGFP.Node {
     
+    // First comment on the node
+    var comment: String? {
+        return self.propertyWithName(SGFNodeAnnotationProperties.C.rawValue)?.values.first?.toText()
+    }    
 }

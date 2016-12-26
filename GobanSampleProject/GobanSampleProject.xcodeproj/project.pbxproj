@@ -44,8 +44,8 @@
 		D6C592DF1CE18C2E008BFB76 /* SGFPropertiesFF4.txt in Resources */ = {isa = PBXBuildFile; fileRef = D6C592DE1CE18C2E008BFB76 /* SGFPropertiesFF4.txt */; };
 		D6C592E41CE2D1A9008BFB76 /* SGFProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */; };
 		D6C592E51CE2D1A9008BFB76 /* SGFProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */; };
-		D6C592EA1CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */; };
-		D6C592EB1CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */; };
+		D6C592EA1CE2D876008BFB76 /* SGFPStructsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E91CE2D876008BFB76 /* SGFPStructsHelpers.swift */; };
+		D6C592EB1CE2D876008BFB76 /* SGFPStructsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C592E91CE2D876008BFB76 /* SGFPStructsHelpers.swift */; };
 		D6F6106A1D2395D700451B41 /* SGFPValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F610691D2395D700451B41 /* SGFPValueType.swift */; };
 		D6F6106B1D2395D700451B41 /* SGFPValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F610691D2395D700451B41 /* SGFPValueType.swift */; };
 /* End PBXBuildFile section */
@@ -94,7 +94,7 @@
 		D6C30FBA1CD9ADBF00CA22CB /* CharacterParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterParser.swift; sourceTree = "<group>"; };
 		D6C592DE1CE18C2E008BFB76 /* SGFPropertiesFF4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SGFPropertiesFF4.txt; sourceTree = "<group>"; };
 		D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFProperties.swift; sourceTree = "<group>"; };
-		D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SGFPGameTree+GameProtocol.swift"; sourceTree = "<group>"; };
+		D6C592E91CE2D876008BFB76 /* SGFPStructsHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFPStructsHelpers.swift; sourceTree = "<group>"; };
 		D6F610691D2395D700451B41 /* SGFPValueType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFPValueType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -200,7 +200,7 @@
 				D6614B211CDD177300DEDD9D /* SGFPStructs.swift */,
 				D6F610691D2395D700451B41 /* SGFPValueType.swift */,
 				D60082851CDBB2E800C86687 /* SGFPValueTypeParser.swift */,
-				D6C592E91CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift */,
+				D6C592E91CE2D876008BFB76 /* SGFPStructsHelpers.swift */,
 				D6C592E31CE2D1A9008BFB76 /* SGFProperties.swift */,
 			);
 			name = "SGFP ParserCombinator";
@@ -332,7 +332,7 @@
 				D6C30FBB1CD9ADBF00CA22CB /* CharacterParser.swift in Sources */,
 				D6C592E41CE2D1A9008BFB76 /* SGFProperties.swift in Sources */,
 				C3D286321CB0341200DFC062 /* Stone.swift in Sources */,
-				D6C592EA1CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift in Sources */,
+				D6C592EA1CE2D876008BFB76 /* SGFPStructsHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,7 +341,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A35C54C1CDBE4620068F8B3 /* SGFParserCombinatorTests.swift in Sources */,
-				D6C592EB1CE2D876008BFB76 /* SGFPGameTree+GameProtocol.swift in Sources */,
+				D6C592EB1CE2D876008BFB76 /* SGFPStructsHelpers.swift in Sources */,
 				C3B2A1A01CC2A6730066C401 /* GobanViewTests.swift in Sources */,
 				D6C30FB91CD9A9E600CA22CB /* ParserCombinatorTests.swift in Sources */,
 				3A35C54D1CDBE4CA0068F8B3 /* SGFParserCombinator.swift in Sources */,
