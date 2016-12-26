@@ -209,7 +209,7 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             gameNodeGenerator = AnyIterator(generator)
         }
         
-        return gameNodeGenerator.next()
+        return gameNodeGenerator?.next()
     }
     
     func handleNextNode() {
