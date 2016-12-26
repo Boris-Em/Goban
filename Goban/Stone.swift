@@ -30,6 +30,37 @@ func ==(lhs: StoneModel, rhs: StoneModel) -> Bool {
         lhs.stoneColor == rhs.stoneColor
 }
 
+func ==(lhs: StoneModel, rhs: SGFP.Node) -> Bool {
+    if lhs.stoneColor == GobanStoneColor.black {
+        guard let property = rhs.propertyWithName(SGFMoveProperties.B.rawValue) else {
+            return false
+        }
+        
+        guard let propertyValue = property.values.first?.toMove() else {
+            return false
+        }
+        
+        if let gobanPoint = GobanPoint(col: propertyValue.col, row: propertyValue.row) {
+            return gobanPoint == lhs.gobanPoint
+        }
+        
+    } else {
+        guard let property = rhs.propertyWithName(SGFMoveProperties.W.rawValue) else {
+            return false
+        }
+        
+        guard let propertyValue = property.values.first?.toMove() else {
+            return false
+        }
+        
+        if let gobanPoint = GobanPoint(col: propertyValue.col, row: propertyValue.row) {
+            return gobanPoint == lhs.gobanPoint
+        }
+    }
+    
+    return false
+}
+
 internal struct StoneModel: StoneProtocol, Hashable {
     var stoneColor = GobanStoneColor.white
     var disabled = false
