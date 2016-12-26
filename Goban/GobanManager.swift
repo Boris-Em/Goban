@@ -29,9 +29,7 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             return
         }
         
-        let lastStone: StoneProtocol = stoneHistory.last ?? Stone(stoneColor: .white, disabled: false)
-        let newStone = Stone(stoneColor: lastStone.stoneColor == .white ? .black : . white, disabled: false)
-        addStone(newStone, atGobanPoint: gobanPoint, isTemporary: false)
+        addStone(newStone(disabled: false), atGobanPoint: gobanPoint, isTemporary: false)
     }
     
     func addTemporaryStoneAtGobanPoint(_ gobanPoint: GobanPoint) {
@@ -41,9 +39,7 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         }
         
         removeTemporaryStoneAnimated(false)
-        let lastStone: StoneProtocol = stoneHistory.last ?? Stone(stoneColor: .white, disabled: false)
-        let newStone = Stone(stoneColor: lastStone.stoneColor == .white ? .black : . white, disabled: true)
-        addStone(newStone, atGobanPoint: gobanPoint, isTemporary: true)
+        addStone(newStone(disabled: true), atGobanPoint: gobanPoint, isTemporary: true)
     }
     
     fileprivate func addStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint, isTemporary: Bool) {
@@ -54,6 +50,7 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             } else {
                 temporaryStone = stoneModel
             }
+            _nextStoneColor = nil
         }
     }
     
@@ -105,6 +102,37 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         
         removeTemporaryStoneAnimated(animated)
         stoneHistory.removeAll()
+    }
+    
+    private var _nextStoneColor: GobanStoneColor?
+    
+    var nextStoneColor: GobanStoneColor {
+        get {
+            guard _nextStoneColor == nil else {
+                return _nextStoneColor!
+            }
+            
+            return stoneColor(after: lastStone)
+        }
+        set (newValue) {
+            _nextStoneColor = newValue
+        }
+    }
+    
+    func stoneColor(after stone:StoneProtocol?) -> GobanStoneColor {
+        guard stone != nil else {
+            return GobanStoneColor.black
+        }
+        
+        return stone!.stoneColor == .white ? .black : .white
+    }
+    
+    var lastStone: StoneModel? {
+        return stoneHistory.last
+    }
+    
+    func newStone(disabled: Bool) -> Stone {
+        return Stone(stoneColor: nextStoneColor, disabled: disabled)
     }
     
     // MARK: GobanTouchProtocol
@@ -268,6 +296,12 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             })
             break
         case .PL:
+            if property.values.count != 1 {
+                NSLog("unhandled: Player To Play has \(property.values.count) values")
+            }
+            if let color = property.values.first?.toColor() {
+                _nextStoneColor = GobanStoneColor(string: color)
+            }
             break
         }
     }

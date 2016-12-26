@@ -11,6 +11,14 @@ import UIKit
 enum GobanStoneColor {
     case white
     case black
+    
+    init?(string: String) {
+        switch string.lowercased() {
+        case "b": self = .black
+        case "w": self = .white
+        default: return nil
+        }
+    }
 }
 
 protocol StoneProtocol {
