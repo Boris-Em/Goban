@@ -90,7 +90,7 @@ protocol GobanTouchProtocol: class {
 The protocol allows the delegate to get information about when a stone gets set.
  */
 protocol GobanProtocol: class {
-    func gobanView(_ gobanView: GobanView, didSetStone stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint)
+    func gobanView(_ gobanView: GobanView, didSetStone stone: StoneModel, atGobanPoint gobanPoint: GobanPoint)
 }
 
 /** `GobanView` is used to create highly custmizable Goban representations.
@@ -350,7 +350,7 @@ class GobanView: UIView {
         }
         
         let stoneModel = drawStone(stone, atGobanPoint: gobanPoint)
-        delegate?.gobanView(self, didSetStone: stone, atGobanPoint: gobanPoint)
+        delegate?.gobanView(self, didSetStone: stoneModel, atGobanPoint: gobanPoint)
         return stoneModel
     }
     
