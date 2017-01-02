@@ -19,6 +19,8 @@
 		C31B55351C9DD10500B060D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C31B55341C9DD10500B060D8 /* Assets.xcassets */; };
 		C31B55381C9DD10500B060D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C31B55361C9DD10500B060D8 /* LaunchScreen.storyboard */; };
 		C31B55411C9DD1B000B060D8 /* GobanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31B55401C9DD1B000B060D8 /* GobanView.swift */; };
+		C3AE4F511E1AD65800A57E57 /* SGFPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AE4F501E1AD65800A57E57 /* SGFPTests.swift */; };
+		C3AE4F531E1AD6E200A57E57 /* Variations-Tests.sgf in Resources */ = {isa = PBXBuildFile; fileRef = C3AE4F521E1AD6E200A57E57 /* Variations-Tests.sgf */; };
 		C3B2A19E1CC2A64A0066C401 /* GobanManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B2A19D1CC2A64A0066C401 /* GobanManagerTests.swift */; };
 		C3B2A1A01CC2A6730066C401 /* GobanViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B2A19F1CC2A6730066C401 /* GobanViewTests.swift */; };
 		C3B5211F1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf in Resources */ = {isa = PBXBuildFile; fileRef = C3B5211E1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf */; };
@@ -75,6 +77,8 @@
 		C31B55401C9DD1B000B060D8 /* GobanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanView.swift; sourceTree = "<group>"; };
 		C3A1A0821C9F93DB00620CEA /* GobanSampleProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GobanSampleProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3A1A0861C9F93DB00620CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3AE4F501E1AD65800A57E57 /* SGFPTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFPTests.swift; sourceTree = "<group>"; };
+		C3AE4F521E1AD6E200A57E57 /* Variations-Tests.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Variations-Tests.sgf"; sourceTree = "<group>"; };
 		C3B2A19D1CC2A64A0066C401 /* GobanManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanManagerTests.swift; sourceTree = "<group>"; };
 		C3B2A19F1CC2A6730066C401 /* GobanViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobanViewTests.swift; sourceTree = "<group>"; };
 		C3B5211E1CD039A400B890B7 /* Lee-Sedol-vs-AlphaGo-20160309.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Lee-Sedol-vs-AlphaGo-20160309.sgf"; sourceTree = "<group>"; };
@@ -177,6 +181,7 @@
 		D6614B241CDEDEAB00DEDD9D /* ParserCombinator */ = {
 			isa = PBXGroup;
 			children = (
+				C3AE4F521E1AD6E200A57E57 /* Variations-Tests.sgf */,
 				A1426F371D2448D600AEEE67 /* AB-AE-Tests.sgf */,
 				C3DE82291D0CE1A700FF0289 /* Lee-Sedol-vs-AlphaGo-Simplified.sgf */,
 				D6614B2C1CDEF14F00DEDD9D /* ff4_ex_simplified.sgf */,
@@ -185,6 +190,7 @@
 				D6C30FB81CD9A9E600CA22CB /* ParserCombinatorTests.swift */,
 				D6614B251CDEDF0E00DEDD9D /* SGFFilesTests.swift */,
 				3A35C54B1CDBE4620068F8B3 /* SGFParserCombinatorTests.swift */,
+				C3AE4F501E1AD65800A57E57 /* SGFPTests.swift */,
 				3A35C5471CDBBEA80068F8B3 /* SGFValueTypeParserTests.swift */,
 				3A35C5491CDBBEE30068F8B3 /* XCParserTestBase.swift */,
 			);
@@ -308,6 +314,7 @@
 				D6614B2D1CDEF14F00DEDD9D /* ff4_ex_simplified.sgf in Resources */,
 				D6614B2B1CDEEF4B00DEDD9D /* ff4_ex.sgf in Resources */,
 				A1426F381D2448D600AEEE67 /* AB-AE-Tests.sgf in Resources */,
+				C3AE4F531E1AD6E200A57E57 /* Variations-Tests.sgf in Resources */,
 				D6614B291CDEE3A300DEDD9D /* LeeSedolHeader.sgf in Resources */,
 				D6614B271CDEE23100DEDD9D /* Lee-Sedol-vs-AlphaGo-20160309.sgf in Resources */,
 			);
@@ -353,6 +360,7 @@
 				D6C592E51CE2D1A9008BFB76 /* SGFProperties.swift in Sources */,
 				D6C30FB71CD9A9CC00CA22CB /* FunctionalParserHelpers.swift in Sources */,
 				D6F6106B1D2395D700451B41 /* SGFPValueType.swift in Sources */,
+				C3AE4F511E1AD65800A57E57 /* SGFPTests.swift in Sources */,
 				D60082871CDBB2E800C86687 /* SGFPValueTypeParser.swift in Sources */,
 				3A35C54A1CDBBEE30068F8B3 /* XCParserTestBase.swift in Sources */,
 			);

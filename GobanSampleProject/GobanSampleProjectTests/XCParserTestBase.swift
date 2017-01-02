@@ -9,6 +9,13 @@
 import XCTest
 
 class XCParserTestBase: XCTestCase {
+    func contentsOfFileWithName(_ name: String) -> String?  {
+        let bundle = Bundle(for: type(of: self))
+        guard let path = bundle.path(forResource: name, ofType: nil) else {
+            return nil
+        }
+        return try! String(contentsOfFile: path)
+    }
     
     func testParseString<Result>(_ parser: CharacterParser<Result>, _ testString: String) -> [(Result, ArraySlice<Character>)] {
         return Array(parser.parse(testString.slice))

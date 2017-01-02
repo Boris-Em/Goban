@@ -9,13 +9,6 @@
 import XCTest
 
 class SGFFilesTests: XCParserTestBase {
-    func contentsOfFileWithName(_ name: String) -> String?  {
-        let bundle = Bundle(for: type(of: self))
-        guard let path = bundle.path(forResource: name, ofType: nil) else {
-            return nil
-        }
-        return try! String(contentsOfFile: path)
-    }
 
     typealias SGFPC = SGFParserCombinator
     

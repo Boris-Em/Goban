@@ -18,12 +18,54 @@ struct SGFP {
     struct GameTree: CustomStringConvertible {
         let sequence: SGFP.Sequence
         var description: String { return "GameTree: \(sequence.description)" }
+        
+        func node(forPath path: [Int]) -> SGFP.Node? {
+            guard let game = self.game(forPath: path) else {
+                return nil
+            }
+            
+            return game.sequence.node(atIndex: path.last)
+        }
+        
+        func game(forPath path: [Int]) -> SGFP.GameTree? {
+            guard path.count > 1 else {
+                return self
+            }
+            
+            return self.sequence.variation(forPath: path)
+        }
     }
     
     struct Sequence: CustomStringConvertible {
         let nodes: [SGFP.Node]
         let games: [SGFP.GameTree]
         var description: String { return "Sequence: \(nodes.map{$0.description}.joined(separator: "\n"))" }
+        
+        func node(atIndex index: Int?) -> SGFP.Node? {
+            guard let index = index, nodes.count > index else {
+                return nil
+            }
+            
+            return nodes[index]
+        }
+        
+        func variation(forPath path: [Int]) -> SGFP.GameTree? {
+            guard path.count > 1 else {
+                return nil
+            }
+            
+            guard let variationIndex = path.first, games.count > variationIndex else {
+                return nil
+            }
+            
+            let game = games[variationIndex]
+            
+            guard path.count != 2 else {
+                return game
+            }
+            
+            return game.sequence.variation(forPath: Array(path.dropFirst()))
+        }
     }
     
     struct Node: CustomStringConvertible {
