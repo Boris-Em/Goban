@@ -232,6 +232,11 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
     private(set) public var currentPath: [Int] = []
     private var nextPath: [Int]? {
         get {
+            return nextPaths?.first
+        }
+    }
+    private var nextPaths: [[Int]]? {
+        get {
             var currentPath = self.currentPath
             
             guard currentPath.count > 0  else {
@@ -239,18 +244,25 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
                     return nil
                 }
                 
-                return [0]
+                return [[0]]
             }
             
             let nodeIndex = currentPath.last!
             if let currentSequence = game?.game(forPath: currentPath)?.sequence {
                 if currentSequence.nodes.count > nodeIndex + 1 {
                     currentPath[currentPath.count - 1] = nodeIndex + 1
-                } else {
-                    currentPath.insert(0, at: currentPath.count - 1)
-                    currentPath[currentPath.count - 1] = 0
+                    return [currentPath]
+                } else if currentSequence.games.count > 0 {
+                    var paths = [[Int]]()
+                    for (index, _) in currentSequence.games.enumerated() {
+                        var path = currentPath
+                        path.insert(index, at: path.count - 1)
+                        path[currentPath.count - 1] = 0
+                        paths.append(path)
+                    }
+                    
+                    return paths
                 }
-                return currentPath
             }
             return nil
         }
@@ -271,13 +283,38 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         return nil
     }
     
-    func peekNextNode() -> SGFP.Node? {
-        return nextNode(tracked: false)
+    var nextNode: SGFP.Node? {
+        get {
+            return nextNode(tracked: false)
+        }
+    }
+    
+    var nextNodes: [SGFP.Node]? {
+        get {
+            guard let nextPaths = self.nextPaths, nextPaths.count > 0 else {
+                return nil
+            }
+            
+            var nodes = Array<SGFP.Node>()
+            for path in nextPaths {
+                if let node = game?.node(forPath: path) {
+                    nodes.append(node)
+                }
+            }
+            
+            return nodes
+        }
     }
     
     func handleNextNode() {
         if let node = nextNode(tracked: true) {
             handleNode(node)
+        }
+    }
+    
+    func skipNextNode() {
+        if let nextPath = self.nextPath {
+            currentPath = nextPath
         }
     }
     
