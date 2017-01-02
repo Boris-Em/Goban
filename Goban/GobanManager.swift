@@ -226,27 +226,58 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         
     func unloadSGF() {
         game = nil
-        gameNodeGenerator = nil
+        currentPath = []
     }
 
-    fileprivate var gameNodeGenerator: AnyIterator<SGFP.Node>!
-    
-    func nextNode() -> SGFP.Node? {
-        if gameNodeGenerator == nil,
-            let generator = game?.sequence.nodes.makeIterator()  {
-            gameNodeGenerator = AnyIterator(generator)
+    private(set) public var currentPath: [Int] = []
+    private var nextPath: [Int]? {
+        get {
+            var currentPath = self.currentPath
+            
+            guard currentPath.count > 0  else {
+                guard let count = game?.sequence.nodes.count, count > 0 else {
+                    return nil
+                }
+                
+                return [0]
+            }
+            
+            let nodeIndex = currentPath.last!
+            if let currentSequence = game?.game(forPath: currentPath)?.sequence {
+                if currentSequence.nodes.count > nodeIndex + 1 {
+                    currentPath[currentPath.count - 1] = nodeIndex + 1
+                } else {
+                    currentPath.insert(0, at: currentPath.count - 1)
+                    currentPath[currentPath.count - 1] = 0
+                }
+                return currentPath
+            }
+            return nil
+        }
+    }
+    private var currentIndex: Int? {
+        get {
+            return currentPath.last
+        }
+    }
+    private func nextNode(tracked: Bool) -> SGFP.Node? {
+        if let nextPath = self.nextPath {
+            if tracked {
+                currentPath = nextPath
+            }
+            return game?.node(forPath: nextPath)
         }
         
-        return gameNodeGenerator?.next()
+        return nil
+    }
+    
+    func peekNextNode() -> SGFP.Node? {
+        return nextNode(tracked: false)
     }
     
     func handleNextNode() {
-        if let node = nextNode() {
+        if let node = nextNode(tracked: true) {
             handleNode(node)
-        } else {
-            if let firstVarition = game?.sequence.games.first {
-                game = firstVarition
-            }
         }
     }
     
