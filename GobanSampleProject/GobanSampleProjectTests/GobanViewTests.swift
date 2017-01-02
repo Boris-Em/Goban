@@ -99,58 +99,58 @@ class GobanViewTests: XCTestCase {
 
         let stone = Stone(stoneColor: .black, disabled: false)
         var gobanPoint = GobanPoint(x: 0, y: 0)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers)
         
         gobanPoint = GobanPoint(x: 20, y: 20)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers)
         
         gobanPoint = GobanPoint(x: 1, y: 1)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 1)
         
         gobanPoint = GobanPoint(x: 19, y: 19)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 2)
         
         gobanPoint = GobanPoint(x: 5, y: 2)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 3)
         
         gobanPoint = GobanPoint(x: 2, y: 15)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 4)
         
         gobanPoint = GobanPoint(x: 7, y: 7)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 5)
         
         goban.reload()
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers)
 
         gobanPoint = GobanPoint(x: 0, y: 15)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers)
         
         gobanPoint = GobanPoint(x: 15, y: 0)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers)
         
         gobanPoint = GobanPoint(x: 1, y: 19)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 1)
 
         gobanPoint = GobanPoint(x: 7, y: 12)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 2)
 
         gobanPoint = GobanPoint(x: 19, y: 10)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 3)
         
         gobanPoint = GobanPoint(x: -100, y: 200)
-        goban.setStone(stone, atGobanPoint: gobanPoint)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 3)
     }
     
