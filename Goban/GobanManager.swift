@@ -249,7 +249,7 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             }
         }
     }
-
+    
     func handleNode(_ node: SGFP.Node) {
         node.properties.forEach { (property) in
             if let _ = SGFSetupProperties(rawValue: property.identifier) {
@@ -278,7 +278,17 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             })
             break
         case .AE:
-            
+            property.values.forEach({ (value) in
+                if let (col, row) = value.toPoint(), let gobanPoint = GobanPoint(SGFString: "\(col)\(row)") {
+                    removeStoneAtGobanPoint(gobanPoint, removeFromHistory: false, animated: true)
+                } else if let compressPoints = value.toCompresedPoints() {
+                    if let points = GobanPoint.pointsFromCompressPoints(compressPoints) {
+                        for point in points {
+                            removeStoneAtGobanPoint(point, removeFromHistory: false, animated: true)
+                        }
+                    }
+                }
+            })
             break
         case .AW:
             property.values.forEach({ (value) in

@@ -168,5 +168,5 @@ extension SGFP.Node {
     // First comment on the node
     var comment: String? {
         return self.propertyWithName(SGFNodeAnnotationProperties.C.rawValue)?.values.first?.toText()
-    }    
+    }
 }
