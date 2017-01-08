@@ -99,58 +99,58 @@ class GobanViewTests: XCTestCase {
 
         let stone = Stone(stoneColor: .black, disabled: false)
         var gobanPoint = GobanPoint(x: 0, y: 0)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers)
         
         gobanPoint = GobanPoint(x: 20, y: 20)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers)
         
         gobanPoint = GobanPoint(x: 1, y: 1)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 1)
         
         gobanPoint = GobanPoint(x: 19, y: 19)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 2)
         
         gobanPoint = GobanPoint(x: 5, y: 2)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 3)
         
         gobanPoint = GobanPoint(x: 2, y: 15)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 4)
         
         gobanPoint = GobanPoint(x: 7, y: 7)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 5)
         
         goban.reload()
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers)
 
         gobanPoint = GobanPoint(x: 0, y: 15)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers)
         
         gobanPoint = GobanPoint(x: 15, y: 0)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers)
         
         gobanPoint = GobanPoint(x: 1, y: 19)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 1)
 
         gobanPoint = GobanPoint(x: 7, y: 12)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 2)
 
         gobanPoint = GobanPoint(x: 19, y: 10)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 3)
         
         gobanPoint = GobanPoint(x: -100, y: 200)
-        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false)
+        _ = goban.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: false, completion: nil)
         XCTAssertEqual(goban.layer.sublayers?.count, initialNumberOfSublayers + 3)
     }
     
