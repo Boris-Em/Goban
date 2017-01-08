@@ -341,17 +341,18 @@ class GobanView: UIView {
     
     // MARK: Stones
     
-    func setStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint, isUserInitiated:Bool) -> StoneModel? {
+    func setStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint, isUserInitiated:Bool, completion:(_ stoneModel: StoneModel?) -> ()) {
         guard gobanPoint.x >= 1 && gobanPoint.x <= gobanSize.width
             && gobanPoint.y >= 1 && gobanPoint.y <= gobanSize.height
             else {
                 print("setStoneAtPoint -- Point outside of Goban")
-                return nil
+                completion(nil)
+                return
         }
         
         let stoneModel = drawStone(stone, atGobanPoint: gobanPoint)
+        completion(stoneModel)
         delegate?.gobanView(self, didSetStone: stoneModel, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated)
-        return stoneModel
     }
     
     // MARK: Gesture Recognizers

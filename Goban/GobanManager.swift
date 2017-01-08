@@ -43,15 +43,17 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
     }
     
     fileprivate func addStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint, isTemporary: Bool, isUserInitiated: Bool) {
-        if let stoneModel = gobanView.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated) {
-            if isTemporary == false {
-                stoneHistory.append(stoneModel)
-                removeTemporaryStoneAnimated(false)
-            } else {
-                temporaryStone = stoneModel
+        gobanView.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated, completion: { stoneModel in
+            if let stoneModel = stoneModel {
+                if isTemporary == false {
+                    stoneHistory.append(stoneModel)
+                    removeTemporaryStoneAnimated(false)
+                } else {
+                    temporaryStone = stoneModel
+                }
+                _nextStoneColor = nil
             }
-            _nextStoneColor = nil
-        }
+        })
     }
     
     func removeStone(_ stone: StoneModel, removeFromHistory: Bool, animated: Bool) {
