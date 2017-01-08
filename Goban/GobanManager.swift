@@ -311,10 +311,16 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             handleNode(node)
         }
     }
-    
-    func skipNextNode() {
-        if let nextPath = self.nextPath {
-            currentPath = nextPath
+        
+    func skipNextStone(at variationIndex: Int?) {
+        guard let nextPaths = nextPaths else {
+            return
+        }
+        
+        let variationIndex = variationIndex ?? 0
+        
+        if nextPaths.count > variationIndex {
+            currentPath = nextPaths[variationIndex]
         }
     }
     
