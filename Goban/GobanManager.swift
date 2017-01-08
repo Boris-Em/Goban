@@ -259,7 +259,7 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
                     for (index, _) in currentSequence.games.enumerated() {
                         var path = currentPath
                         path.insert(index, at: path.count - 1)
-                        path[currentPath.count - 1] = 0
+                        path[currentPath.count] = 0
                         paths.append(path)
                     }
                     
