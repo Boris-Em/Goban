@@ -48,10 +48,10 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
                 if isTemporary == false {
                     self?.stoneHistory.append(stoneModel)
                     self?.removeTemporaryStoneAnimated(false)
+                    self?._nextStoneColor = nil
                 } else {
                     self?.temporaryStone = stoneModel
                 }
-                self?._nextStoneColor = nil
             }
         })
     }
