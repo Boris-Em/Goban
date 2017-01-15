@@ -13,6 +13,7 @@
 		3A35C54D1CDBE4CA0068F8B3 /* SGFParserCombinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60082821CDAECCE00C86687 /* SGFParserCombinator.swift */; };
 		A1426F381D2448D600AEEE67 /* AB-AE-Tests.sgf in Resources */ = {isa = PBXBuildFile; fileRef = A1426F371D2448D600AEEE67 /* AB-AE-Tests.sgf */; };
 		A1426F391D244A1800AEEE67 /* AB-AE-Tests.sgf in Resources */ = {isa = PBXBuildFile; fileRef = A1426F371D2448D600AEEE67 /* AB-AE-Tests.sgf */; };
+		C31160561E29C740003DC8F6 /* Markup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31160551E29C740003DC8F6 /* Markup.swift */; };
 		C31B552E1C9DD10500B060D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31B552D1C9DD10500B060D8 /* AppDelegate.swift */; };
 		C31B55301C9DD10500B060D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31B552F1C9DD10500B060D8 /* ViewController.swift */; };
 		C31B55331C9DD10500B060D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C31B55311C9DD10500B060D8 /* Main.storyboard */; };
@@ -67,6 +68,7 @@
 		3A35C5491CDBBEE30068F8B3 /* XCParserTestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCParserTestBase.swift; sourceTree = "<group>"; };
 		3A35C54B1CDBE4620068F8B3 /* SGFParserCombinatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGFParserCombinatorTests.swift; sourceTree = "<group>"; };
 		A1426F371D2448D600AEEE67 /* AB-AE-Tests.sgf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "AB-AE-Tests.sgf"; sourceTree = "<group>"; };
+		C31160551E29C740003DC8F6 /* Markup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Markup.swift; sourceTree = "<group>"; };
 		C31B552A1C9DD10500B060D8 /* GobanSampleProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GobanSampleProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C31B552D1C9DD10500B060D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C31B552F1C9DD10500B060D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				C31B55401C9DD1B000B060D8 /* GobanView.swift */,
 				C3D286331CB044D400DFC062 /* GobanManager.swift */,
 				C3D286311CB0341200DFC062 /* Stone.swift */,
+				C31160551E29C740003DC8F6 /* Markup.swift */,
 			);
 			name = Goban;
 			path = ../Goban;
@@ -330,6 +333,7 @@
 				C31B55301C9DD10500B060D8 /* ViewController.swift in Sources */,
 				D60082831CDAECCE00C86687 /* SGFParserCombinator.swift in Sources */,
 				D60082861CDBB2E800C86687 /* SGFPValueTypeParser.swift in Sources */,
+				C31160561E29C740003DC8F6 /* Markup.swift in Sources */,
 				D6C30FB61CD9A9CC00CA22CB /* FunctionalParserHelpers.swift in Sources */,
 				C3D286341CB044D400DFC062 /* GobanManager.swift in Sources */,
 				D6F6106A1D2395D700451B41 /* SGFPValueType.swift in Sources */,

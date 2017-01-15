@@ -91,6 +91,7 @@ The protocol allows the delegate to get information about when a stone gets set.
  */
 protocol GobanProtocol: class {
     func gobanView(_ gobanView: GobanView, didSetStone stone: StoneModel, atGobanPoint gobanPoint: GobanPoint, isUserInitiated:Bool)
+    func gobanView(_ gobanView: GobanView, didSetMarkup markup: MarkupModel, atGobanPoint gobanPoint: GobanPoint)
 }
 
 /** `GobanView` is used to create highly custmizable Goban representations.
@@ -265,6 +266,20 @@ class GobanView: UIView {
         return stoneModel
     }
     
+    fileprivate func drawMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint) -> MarkupModel {
+        let markupSize = sizeForStoneWithGobanSize(gobanSize, inFrame: gridFrame)
+        let markupCenter = centerForStoneAtGobanPoint(gobanPoint, gobanSize: gobanSize, inFrame: gridFrame)
+        let markupFrame = CGRect(x: markupCenter.x - markupSize / 2.0, y: markupCenter.y - markupSize / 2.0, width: markupSize, height: markupSize)
+        
+        let markupLayer = layerForMarkupWithFrame(markupFrame, color: markup.markupColor, markupType: markup.markupType)
+        
+        let markupModel = MarkupModel(markupColor: markup.markupColor, markupType: markup.markupType, layer: markupLayer, gobanPoint: gobanPoint)
+        
+        layer.addSublayer(markupLayer)
+        
+        return markupModel
+    }
+    
     func reload() {
         drawGoban()
     }
@@ -299,6 +314,16 @@ class GobanView: UIView {
         stoneLayer.strokeColor = UIColor.clear.cgColor
         
         return stoneLayer
+    }
+    
+    fileprivate func layerForMarkupWithFrame(_ frame: CGRect, color: UIColor, markupType: MarkupType) -> CAShapeLayer {
+        let markupLayer = CAShapeLayer()
+        markupLayer.frame = frame
+        markupLayer.path = pathForMarkupInRect(markupLayer.bounds, markupType: markupType).cgPath
+        markupLayer.fillColor = color.cgColor
+        markupLayer.strokeColor = UIColor.clear.cgColor
+        
+        return markupLayer
     }
     
     // MARK: Paths
@@ -339,6 +364,24 @@ class GobanView: UIView {
         return stonePath
     }
     
+    fileprivate func pathForMarkupInRect(_ rect: CGRect, markupType: MarkupType) -> UIBezierPath {
+        let widthRatio: CGFloat = 5.0
+        let bezierPath = UIBezierPath()
+        bezierPath.move(to: CGPoint(x: rect.size.width - rect.size.width / widthRatio, y: 0.0))
+        bezierPath.addLine(to: CGPoint(x: rect.size.width, y: rect.size.height / widthRatio))
+        bezierPath.addLine(to: CGPoint(x: rect.size.width / widthRatio, y: rect.size.height))
+        bezierPath.addLine(to: CGPoint(x: 0.0, y: rect.size.height - rect.size.height / widthRatio))
+        bezierPath.close()
+        
+        bezierPath.move(to: CGPoint(x: rect.size.width / widthRatio, y: 0.0))
+        bezierPath.addLine(to: CGPoint(x: rect.size.width, y: rect.size.height - rect.size.height / 10.0))
+        bezierPath.addLine(to: CGPoint(x: rect.size.width - rect.size.width / widthRatio, y: rect.size.height))
+        bezierPath.addLine(to: CGPoint(x: 0.0, y: rect.size.height / widthRatio))
+        bezierPath.close()
+        
+        return bezierPath
+    }
+    
     // MARK: Stones
     
     func setStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint, isUserInitiated:Bool, completion:((_ stoneModel: StoneModel?) -> ())?) {
@@ -355,6 +398,19 @@ class GobanView: UIView {
         delegate?.gobanView(self, didSetStone: stoneModel, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated)
     }
     
+    func setMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint, completion:((_ markupModel: MarkupModel?) -> ())?) {
+        guard gobanPoint.x >= 1 && gobanPoint.x <= gobanSize.width
+            && gobanPoint.y >= 1 && gobanPoint.y <= gobanSize.height
+            else {
+                print("setStoneAtPoint -- Point outside of Goban")
+                completion?(nil)
+                return
+        }
+        
+        let markupModel = drawMarkup(markup, atGobanPoint: gobanPoint)
+        completion?(markupModel)
+        delegate?.gobanView(self, didSetMarkup: markupModel, atGobanPoint: gobanPoint)
+    }
     // MARK: Gesture Recognizers
     
     func didLongPressGoban(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {

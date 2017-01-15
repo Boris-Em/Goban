@@ -56,6 +56,10 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         })
     }
     
+    fileprivate func addMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint) {
+        gobanView.setMarkup(markup, atGobanPoint: gobanPoint, completion: nil)
+    }
+        
     func removeStone(_ stone: StoneModel, removeFromHistory: Bool, animated: Bool) {
         if animated {
             let animation = fadeOutAnimationForStone(stone, withCompletion: { [weak self] (stone) -> Void in
@@ -332,6 +336,8 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
                 handleSetupProperty(property)
             } else if let _ = SGFMoveProperties(rawValue: property.identifier) {
                 handleMoveProperty(property)
+            } else if let _ = SGFMarkupProperties(rawValue: property.identifier) {
+                handleMarkupProperty(property)
             }
         }
     }
@@ -415,6 +421,28 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         case .KO:
             break
         case .MN:
+            break
+        }
+    }
+    
+    fileprivate func handleMarkupProperty(_ property: SGFP.Property) {
+        switch SGFMarkupProperties(rawValue: property.identifier)! {
+        case .MA:
+            property.values.forEach({ (value) in
+                if let (col, row) = value.toPoint(), let gobanPoint = GobanPoint(SGFString: "\(col)\(row)") {
+                    let markup = Markup(markupColor: UIColor.white, markupType: MarkupType.Cross)
+                    addMarkup(markup, atGobanPoint: gobanPoint)
+                } else if let compressPoints = value.toCompresedPoints() {
+                    if let points = GobanPoint.pointsFromCompressPoints(compressPoints) {
+                        for point in points {
+                            let markup = Markup(markupColor: UIColor.white, markupType: MarkupType.Cross)
+                            addMarkup(markup, atGobanPoint: point)
+                        }
+                    }
+                }
+            })
+            break
+        default:
             break
         }
     }
