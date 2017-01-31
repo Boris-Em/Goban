@@ -411,6 +411,7 @@ class GobanView: UIView {
         completion?(markupModel)
         delegate?.gobanView(self, didSetMarkup: markupModel, atGobanPoint: gobanPoint)
     }
+    
     // MARK: Gesture Recognizers
     
     func didLongPressGoban(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
