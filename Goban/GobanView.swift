@@ -91,7 +91,7 @@ The protocol allows the delegate to get information about when a stone gets set.
  */
 protocol GobanProtocol: class {
     func gobanView(_ gobanView: GobanView, didSetStone stone: StoneModel, atGobanPoint gobanPoint: GobanPoint, isUserInitiated:Bool)
-    func gobanView(_ gobanView: GobanView, didSetMarkup markup: MarkupModel, atGobanPoint gobanPoint: GobanPoint)
+    func gobanView(_ gobanView: GobanView, didSetMarkup markup: MarkupModel, atGobanPoint gobanPoint: GobanPoint, isUserInitiated:Bool)
 }
 
 /** `GobanView` is used to create highly custmizable Goban representations.
@@ -398,7 +398,7 @@ class GobanView: UIView {
         delegate?.gobanView(self, didSetStone: stoneModel, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated)
     }
     
-    func setMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint, completion:((_ markupModel: MarkupModel?) -> ())?) {
+    func setMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint, isUserInitiated:Bool, completion:((_ markupModel: MarkupModel?) -> ())?) {
         guard gobanPoint.x >= 1 && gobanPoint.x <= gobanSize.width
             && gobanPoint.y >= 1 && gobanPoint.y <= gobanSize.height
             else {
@@ -409,7 +409,7 @@ class GobanView: UIView {
         
         let markupModel = drawMarkup(markup, atGobanPoint: gobanPoint)
         completion?(markupModel)
-        delegate?.gobanView(self, didSetMarkup: markupModel, atGobanPoint: gobanPoint)
+        delegate?.gobanView(self, didSetMarkup: markupModel, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated)
     }
     
     // MARK: Gesture Recognizers

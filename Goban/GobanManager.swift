@@ -56,8 +56,8 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         })
     }
     
-    func addMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint) {
-        gobanView.setMarkup(markup, atGobanPoint: gobanPoint, completion: nil)
+    func addMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint, isUserInitiated: Bool) {
+        gobanView.setMarkup(markup, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated, completion: nil)
     }
         
     func removeStone(_ stone: StoneModel, removeFromHistory: Bool, animated: Bool) {
@@ -431,12 +431,12 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             property.values.forEach({ (value) in
                 if let (col, row) = value.toPoint(), let gobanPoint = GobanPoint(SGFString: "\(col)\(row)") {
                     let markup = Markup(markupColor: UIColor.white, markupType: MarkupType.Cross)
-                    addMarkup(markup, atGobanPoint: gobanPoint)
+                    addMarkup(markup, atGobanPoint: gobanPoint, isUserInitiated: false)
                 } else if let compressPoints = value.toCompresedPoints() {
                     if let points = GobanPoint.pointsFromCompressPoints(compressPoints) {
                         for point in points {
                             let markup = Markup(markupColor: UIColor.white, markupType: MarkupType.Cross)
-                            addMarkup(markup, atGobanPoint: point)
+                            addMarkup(markup, atGobanPoint: point, isUserInitiated: false)
                         }
                     }
                 }
