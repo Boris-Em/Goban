@@ -56,7 +56,7 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         })
     }
     
-    fileprivate func addMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint) {
+    func addMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint) {
         gobanView.setMarkup(markup, atGobanPoint: gobanPoint, completion: nil)
     }
         
