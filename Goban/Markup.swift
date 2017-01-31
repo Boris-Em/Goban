@@ -29,6 +29,26 @@ func ==(lhs: MarkupModel, rhs: MarkupModel) -> Bool {
         lhs.markupType == rhs.markupType
 }
 
+func ==(lhs: MarkupModel, rhs: SGFP.Node) -> Bool {
+    switch lhs.markupType {
+    case .Cross:
+        guard let property = rhs.propertyWithName(SGFMarkupProperties.MA.rawValue) else {
+            return false
+        }
+        
+        guard let propertyValue = property.values.first?.toPoint() else {
+            return false
+        }
+        
+        if let gobanPoint = GobanPoint(col: propertyValue.col, row: propertyValue.row) {
+            return gobanPoint == lhs.gobanPoint
+        }
+        break
+    }
+    
+    return false
+}
+
 internal struct MarkupModel: MarkupProtocol, Hashable {
     var markupColor = UIColor.white
     var markupType = MarkupType.Cross
