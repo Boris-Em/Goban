@@ -23,27 +23,27 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
     
     // MARK: Stone Management
     
-    func addNewStoneAtGobanPoint(_ gobanPoint: GobanPoint, isUserInitiated: Bool) {
+    func addNewStoneAtGobanPoint(_ gobanPoint: GobanPoint, isUserInitiated: Bool, animated: Bool) {
         guard stoneAtGobanPoint(gobanPoint) == nil else {
             removeTemporaryStoneAnimated(false)
             return
         }
         
-        addStone(newStone(disabled: false), atGobanPoint: gobanPoint, isTemporary: false, isUserInitiated: isUserInitiated)
+        addStone(newStone(disabled: false), atGobanPoint: gobanPoint, isTemporary: false, isUserInitiated: isUserInitiated, animated: animated)
     }
     
-    func addTemporaryStoneAtGobanPoint(_ gobanPoint: GobanPoint, isUserInitiated: Bool) {
+    func addTemporaryStoneAtGobanPoint(_ gobanPoint: GobanPoint, isUserInitiated: Bool, animated: Bool) {
         guard stoneAtGobanPoint(gobanPoint) == nil &&
             temporaryStone?.gobanPoint != gobanPoint else {
                 return
         }
         
         removeTemporaryStoneAnimated(false)
-        addStone(newStone(disabled: true), atGobanPoint: gobanPoint, isTemporary: true, isUserInitiated:isUserInitiated)
+        addStone(newStone(disabled: true), atGobanPoint: gobanPoint, isTemporary: true, isUserInitiated:isUserInitiated, animated: animated)
     }
     
-    fileprivate func addStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint, isTemporary: Bool, isUserInitiated: Bool) {
-        gobanView.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated, completion: { [weak self] stoneModel in
+    fileprivate func addStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint, isTemporary: Bool, isUserInitiated: Bool, animated: Bool) {
+        gobanView.setStone(stone, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated, animated: animated, completion: { [weak self] stoneModel in
             if let stoneModel = stoneModel {
                 if isTemporary == false {
                     self?.stoneHistory.append(stoneModel)
@@ -144,7 +144,7 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
     // MARK: GobanTouchProtocol
     
     func didTouchGobanWithClosestGobanPoint(_ gobanView: GobanView, atGobanPoint gobanPoint: GobanPoint) {
-        addTemporaryStoneAtGobanPoint(gobanPoint, isUserInitiated: true)
+        addTemporaryStoneAtGobanPoint(gobanPoint, isUserInitiated: true, animated: false)
     }
     
     func didEndTouchGobanWithClosestGobanPoint(_ goban: GobanView, atGobanPoint gobanPoint: GobanPoint?) {
@@ -153,7 +153,7 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             return
         }
         
-        addNewStoneAtGobanPoint(gobanPoint, isUserInitiated: true)
+        addNewStoneAtGobanPoint(gobanPoint, isUserInitiated: true, animated: false)
     }
     
     // MARK: Helper Methods
@@ -312,9 +312,9 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         }
     }
     
-    func handleNextNode() {
+    func handleNextNode(animated: Bool) {
         if let node = nextNode(tracked: true) {
-            handleNode(node)
+            handleNode(node, animated: animated)
         }
     }
         
@@ -330,30 +330,30 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         }
     }
     
-    func handleNode(_ node: SGFP.Node) {
+    func handleNode(_ node: SGFP.Node, animated: Bool) {
         node.properties.forEach { (property) in
             if let _ = SGFSetupProperties(rawValue: property.identifier) {
-                handleSetupProperty(property)
+                handleSetupProperty(property, animated: animated)
             } else if let _ = SGFMoveProperties(rawValue: property.identifier) {
-                handleMoveProperty(property)
+                handleMoveProperty(property, animated: animated)
             } else if let _ = SGFMarkupProperties(rawValue: property.identifier) {
                 handleMarkupProperty(property)
             }
         }
     }
     
-    fileprivate func handleSetupProperty(_ property: SGFP.Property) {
+    fileprivate func handleSetupProperty(_ property: SGFP.Property, animated: Bool) {
         switch SGFSetupProperties(rawValue: property.identifier)! {
         case .AB:
             property.values.forEach({ (value) in
                 if let (col, row) = value.toPoint(), let gobanPoint = GobanPoint(SGFString: "\(col)\(row)") {
                     let stone = Stone(stoneColor: .black, disabled: false)
-                    addStone(stone, atGobanPoint: gobanPoint, isTemporary: false, isUserInitiated: false)
+                    addStone(stone, atGobanPoint: gobanPoint, isTemporary: false, isUserInitiated: false, animated: animated)
                 } else if let compressPoints = value.toCompresedPoints() {
                     if let points = GobanPoint.pointsFromCompressPoints(compressPoints) {
                         let stone = Stone(stoneColor: .black, disabled: false)
                         for point in points {
-                            addStone(stone, atGobanPoint: point, isTemporary: false, isUserInitiated: false)
+                            addStone(stone, atGobanPoint: point, isTemporary: false, isUserInitiated: false, animated: animated)
                         }
                     }
                 }
@@ -376,12 +376,12 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             property.values.forEach({ (value) in
                 if let (col, row) = value.toPoint(), let gobanPoint = GobanPoint(SGFString: "\(col)\(row)") {
                     let stone = Stone(stoneColor: .white, disabled: false)
-                    addStone(stone, atGobanPoint: gobanPoint, isTemporary: false, isUserInitiated: false)
+                    addStone(stone, atGobanPoint: gobanPoint, isTemporary: false, isUserInitiated: false, animated: animated)
                 } else if let compressPoints = value.toCompresedPoints() {
                     if let points = GobanPoint.pointsFromCompressPoints(compressPoints) {
                         let stone = Stone(stoneColor: .white, disabled: false)
                         for point in points {
-                            addStone(stone, atGobanPoint: point, isTemporary: false, isUserInitiated: false)
+                            addStone(stone, atGobanPoint: point, isTemporary: false, isUserInitiated: false, animated: animated)
                         }
                     }
                 }
@@ -398,7 +398,7 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         }
     }
     
-    fileprivate func handleMoveProperty(_ property: SGFP.Property) {
+    fileprivate func handleMoveProperty(_ property: SGFP.Property, animated: Bool) {
         switch SGFMoveProperties(rawValue: property.identifier)! {
         case .B:
             if property.values.count != 1 {
@@ -406,7 +406,7 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             }
             if let (col,row) = property.values.first?.toPoint(), let gobanPoint = GobanPoint(SGFString: "\(col)\(row)") {
                 let stone = Stone(stoneColor: .black, disabled: false)
-                addStone(stone, atGobanPoint: gobanPoint, isTemporary: false, isUserInitiated: false)
+                addStone(stone, atGobanPoint: gobanPoint, isTemporary: false, isUserInitiated: false, animated: animated)
             }
             break
         case .W:
@@ -415,7 +415,7 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             }
             if let (col,row) = property.values.first?.toPoint(), let gobanPoint = GobanPoint(SGFString: "\(col)\(row)") {
                 let stone = Stone(stoneColor: .white, disabled: false)
-                addStone(stone, atGobanPoint: gobanPoint, isTemporary: false, isUserInitiated: false)
+                addStone(stone, atGobanPoint: gobanPoint, isTemporary: false, isUserInitiated: false, animated: animated)
             }
             break
         case .KO:

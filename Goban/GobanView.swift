@@ -147,6 +147,10 @@ class GobanView: UIView {
      */
     let blackStoneColor = UIColor.black
     
+    /** The duration in seconds of the animation when a stone gets set. Defaults to 0.35.
+    */
+    public var animationDuration = 0.35
+    
     /** The empty space between the grid and the actual goban limits as a percentage of the goban size. Defaults to 0.07.
      */
     var padding: CGFloat = 0.07 {
@@ -252,12 +256,19 @@ class GobanView: UIView {
         layer.borderColor = lineColor.cgColor
     }
     
-    fileprivate func drawStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint) -> StoneModel {
+    fileprivate func drawStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint, animated: Bool) -> StoneModel {
         let stoneSize = sizeForStoneWithGobanSize(gobanSize, inFrame: gridFrame)
         let stoneCenter = centerForStoneAtGobanPoint(gobanPoint, gobanSize: gobanSize, inFrame: gridFrame)
         let stoneFrame = CGRect(x: stoneCenter.x - stoneSize / 2.0, y: stoneCenter.y - stoneSize / 2.0, width: stoneSize, height: stoneSize)
         
         let stoneLayer = layerForStoneWithFrame(stoneFrame, color: colorForStone(stone))
+        if animated {
+            let animation = CABasicAnimation(keyPath: "opacity")
+            animation.fromValue = 0.0
+            animation.toValue = 1.0
+            animation.duration = animationDuration
+            stoneLayer.add(animation ,forKey: "opacity")
+        }
         
         let stoneModel = StoneModel(stoneColor: stone.stoneColor, disabled: stone.disabled, layer: stoneLayer, gobanPoint: gobanPoint)
         
@@ -384,7 +395,7 @@ class GobanView: UIView {
     
     // MARK: Stones
     
-    func setStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint, isUserInitiated:Bool, completion:((_ stoneModel: StoneModel?) -> ())?) {
+    func setStone(_ stone: StoneProtocol, atGobanPoint gobanPoint: GobanPoint, isUserInitiated:Bool, animated: Bool, completion:((_ stoneModel: StoneModel?) -> ())?) {
         guard gobanPoint.x >= 1 && gobanPoint.x <= gobanSize.width
             && gobanPoint.y >= 1 && gobanPoint.y <= gobanSize.height
             else {
@@ -393,7 +404,7 @@ class GobanView: UIView {
                 return
         }
         
-        let stoneModel = drawStone(stone, atGobanPoint: gobanPoint)
+        let stoneModel = drawStone(stone, atGobanPoint: gobanPoint, animated: animated)
         completion?(stoneModel)
         delegate?.gobanView(self, didSetStone: stoneModel, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated)
     }
