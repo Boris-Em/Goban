@@ -20,7 +20,7 @@ Those two components can be used independently of each other. For example, it is
 *img*
 
 `GobanView` is a highly customizable `UIView` subclass representing a go board. Please note that it's not responsible for handling the touch inputs, only detecting and passing them through a delegate.  
-A `GobanView` instance "dumb" and must be managed in order to handle the game's logic and progression.
+A `GobanView` instance is "dumb" and must be managed in order to handle the game's logic and progression.
 
 ### GobanManager
 
