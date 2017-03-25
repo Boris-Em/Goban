@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func didTapNextButton(_ sender: AnyObject) {
-        gobanManager?.handleNextNode()
+        gobanManager?.handleNextNode(animated: true)
     }
 
     override func didReceiveMemoryWarning() {
