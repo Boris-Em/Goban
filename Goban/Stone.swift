@@ -19,6 +19,18 @@ enum GobanStoneColor {
         default: return nil
         }
     }
+    
+    var reverse: GobanStoneColor {
+        get {
+            return self == .white ? .black : .white
+        }
+    }
+    
+    var uiColor: UIColor {
+        get {
+            return self == .white ? UIColor.white : UIColor.black
+        }
+    }
 }
 
 protocol StoneProtocol {
