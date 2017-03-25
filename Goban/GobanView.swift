@@ -501,7 +501,7 @@ class GobanView: UIView {
     }
     
     fileprivate func sizeForMarkupWithGobanSize(_ gobanSize: GobanSize, inFrame frame: CGRect) -> CGFloat {
-        return sizeForStoneWithGobanSize(gobanSize, inFrame: frame) / 2.0
+        return sizeForStoneWithGobanSize(gobanSize, inFrame: frame) / 3.0
     }
     
     fileprivate func sizeForStarPointWithGobanSize(_ gobanSize: GobanSize, inFrame frame: CGRect) -> CGFloat {
