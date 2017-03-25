@@ -278,7 +278,7 @@ class GobanView: UIView {
     }
     
     fileprivate func drawMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint) -> MarkupModel {
-        let markupSize = sizeForStoneWithGobanSize(gobanSize, inFrame: gridFrame)
+        let markupSize = sizeForMarkupWithGobanSize(gobanSize, inFrame: gridFrame)
         let markupCenter = centerForStoneAtGobanPoint(gobanPoint, gobanSize: gobanSize, inFrame: gridFrame)
         let markupFrame = CGRect(x: markupCenter.x - markupSize / 2.0, y: markupCenter.y - markupSize / 2.0, width: markupSize, height: markupSize)
         
@@ -376,21 +376,27 @@ class GobanView: UIView {
     }
     
     fileprivate func pathForMarkupInRect(_ rect: CGRect, markupType: MarkupType) -> UIBezierPath {
-        let widthRatio: CGFloat = 5.0
-        let bezierPath = UIBezierPath()
-        bezierPath.move(to: CGPoint(x: rect.size.width - rect.size.width / widthRatio, y: 0.0))
-        bezierPath.addLine(to: CGPoint(x: rect.size.width, y: rect.size.height / widthRatio))
-        bezierPath.addLine(to: CGPoint(x: rect.size.width / widthRatio, y: rect.size.height))
-        bezierPath.addLine(to: CGPoint(x: 0.0, y: rect.size.height - rect.size.height / widthRatio))
-        bezierPath.close()
-        
-        bezierPath.move(to: CGPoint(x: rect.size.width / widthRatio, y: 0.0))
-        bezierPath.addLine(to: CGPoint(x: rect.size.width, y: rect.size.height - rect.size.height / 10.0))
-        bezierPath.addLine(to: CGPoint(x: rect.size.width - rect.size.width / widthRatio, y: rect.size.height))
-        bezierPath.addLine(to: CGPoint(x: 0.0, y: rect.size.height / widthRatio))
-        bezierPath.close()
-        
-        return bezierPath
+        switch markupType {
+        case .Cross:
+            let widthRatio: CGFloat = 5.0
+            let bezierPath = UIBezierPath()
+            bezierPath.move(to: CGPoint(x: rect.size.width - rect.size.width / widthRatio, y: 0.0))
+            bezierPath.addLine(to: CGPoint(x: rect.size.width, y: rect.size.height / widthRatio))
+            bezierPath.addLine(to: CGPoint(x: rect.size.width / widthRatio, y: rect.size.height))
+            bezierPath.addLine(to: CGPoint(x: 0.0, y: rect.size.height - rect.size.height / widthRatio))
+            bezierPath.close()
+            
+            bezierPath.move(to: CGPoint(x: rect.size.width / widthRatio, y: 0.0))
+            bezierPath.addLine(to: CGPoint(x: rect.size.width, y: rect.size.height - rect.size.height / 10.0))
+            bezierPath.addLine(to: CGPoint(x: rect.size.width - rect.size.width / widthRatio, y: rect.size.height))
+            bezierPath.addLine(to: CGPoint(x: 0.0, y: rect.size.height / widthRatio))
+            bezierPath.close()
+            
+            return bezierPath
+        case .Dot:
+            return UIBezierPath(ovalIn: rect)
+            
+        }
     }
     
     // MARK: Stones
@@ -491,6 +497,10 @@ class GobanView: UIView {
         let stoneSize = smallestGobanFrameSize / CGFloat(smallestGobanSize)
         
         return stoneSize
+    }
+    
+    fileprivate func sizeForMarkupWithGobanSize(_ gobanSize: GobanSize, inFrame frame: CGRect) -> CGFloat {
+        return sizeForStoneWithGobanSize(gobanSize, inFrame: frame) / 2.0
     }
     
     fileprivate func sizeForStarPointWithGobanSize(_ gobanSize: GobanSize, inFrame frame: CGRect) -> CGFloat {

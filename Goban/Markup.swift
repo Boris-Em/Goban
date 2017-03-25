@@ -10,6 +10,7 @@ import UIKit
 
 enum MarkupType {
     case Cross
+    case Dot
 }
 
 protocol MarkupProtocol {
@@ -30,20 +31,16 @@ func ==(lhs: MarkupModel, rhs: MarkupModel) -> Bool {
 }
 
 func ==(lhs: MarkupModel, rhs: SGFP.Node) -> Bool {
-    switch lhs.markupType {
-    case .Cross:
-        guard let property = rhs.propertyWithName(SGFMarkupProperties.MA.rawValue) else {
-            return false
-        }
-        
-        guard let propertyValue = property.values.first?.toPoint() else {
-            return false
-        }
-        
-        if let gobanPoint = GobanPoint(col: propertyValue.col, row: propertyValue.row) {
-            return gobanPoint == lhs.gobanPoint
-        }
-        break
+    guard let property = rhs.propertyWithName(SGFMarkupProperties.MA.rawValue) else {
+        return false
+    }
+    
+    guard let propertyValue = property.values.first?.toPoint() else {
+        return false
+    }
+    
+    if let gobanPoint = GobanPoint(col: propertyValue.col, row: propertyValue.row) {
+        return gobanPoint == lhs.gobanPoint
     }
     
     return false
