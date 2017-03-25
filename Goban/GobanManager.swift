@@ -17,6 +17,10 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         super.init()
     }
     
+    var shouldMarkupLastStone = false
+    
+    fileprivate var lastMarkupedStone: MarkupModel?
+    
     fileprivate(set) var stoneHistory = [StoneModel]()
     
     fileprivate var temporaryStone: StoneModel?
@@ -49,6 +53,13 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
                     self?.stoneHistory.append(stoneModel)
                     self?.removeTemporaryStoneAnimated(false)
                     self?._nextStoneColor = nil
+                    
+                    if self?.shouldMarkupLastStone == true {
+                        self?.lastMarkupedStone?.layer.removeFromSuperlayer()
+                        let markup = Markup(markupColor: stoneModel.stoneColor.reverse.uiColor, markupType: .Dot)
+                        let markupModel = self?.addMarkup(markup, atGobanPoint: gobanPoint, isUserInitiated: false)
+                        self?.lastMarkupedStone = markupModel
+                    }
                 } else {
                     self?.temporaryStone = stoneModel
                 }
@@ -56,8 +67,12 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
         })
     }
     
-    func addMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint, isUserInitiated: Bool) {
-        gobanView.setMarkup(markup, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated, completion: nil)
+    func markupLastStone() {
+        
+    }
+    
+    func addMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint, isUserInitiated: Bool) -> MarkupModel? {
+        return gobanView.setMarkup(markup, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated, completion: nil)
     }
         
     func removeStone(_ stone: StoneModel, removeFromHistory: Bool, animated: Bool) {
@@ -431,12 +446,12 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
             property.values.forEach({ (value) in
                 if let (col, row) = value.toPoint(), let gobanPoint = GobanPoint(SGFString: "\(col)\(row)") {
                     let markup = Markup(markupColor: UIColor.white, markupType: MarkupType.Cross)
-                    addMarkup(markup, atGobanPoint: gobanPoint, isUserInitiated: false)
+                    _ = addMarkup(markup, atGobanPoint: gobanPoint, isUserInitiated: false)
                 } else if let compressPoints = value.toCompresedPoints() {
                     if let points = GobanPoint.pointsFromCompressPoints(compressPoints) {
                         for point in points {
                             let markup = Markup(markupColor: UIColor.white, markupType: MarkupType.Cross)
-                            addMarkup(markup, atGobanPoint: point, isUserInitiated: false)
+                            _ = addMarkup(markup, atGobanPoint: point, isUserInitiated: false)
                         }
                     }
                 }

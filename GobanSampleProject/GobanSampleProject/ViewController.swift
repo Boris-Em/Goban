@@ -25,6 +25,7 @@ class ViewController: UIViewController {
         
         let path = Bundle.main.url(forResource: "AB-AE-Tests", withExtension:"sgf")
         gobanManager?.loadSGFFileAtURL(path!)
+        gobanManager?.shouldMarkupLastStone = true
     }
     
     @IBAction func didTapClearGobanButton(_ sender: AnyObject) {

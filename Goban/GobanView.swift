@@ -415,18 +415,19 @@ class GobanView: UIView {
         delegate?.gobanView(self, didSetStone: stoneModel, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated)
     }
     
-    func setMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint, isUserInitiated:Bool, completion:((_ markupModel: MarkupModel?) -> ())?) {
+    func setMarkup(_ markup: MarkupProtocol, atGobanPoint gobanPoint: GobanPoint, isUserInitiated:Bool, completion:((_ markupModel: MarkupModel?) -> ())?) -> MarkupModel? {
         guard gobanPoint.x >= 1 && gobanPoint.x <= gobanSize.width
             && gobanPoint.y >= 1 && gobanPoint.y <= gobanSize.height
             else {
                 print("setStoneAtPoint -- Point outside of Goban")
                 completion?(nil)
-                return
+                return nil
         }
         
         let markupModel = drawMarkup(markup, atGobanPoint: gobanPoint)
         completion?(markupModel)
         delegate?.gobanView(self, didSetMarkup: markupModel, atGobanPoint: gobanPoint, isUserInitiated: isUserInitiated)
+        return markupModel
     }
     
     // MARK: Gesture Recognizers
