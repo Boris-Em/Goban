@@ -25,6 +25,8 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
     
     fileprivate var temporaryStone: StoneModel?
     
+    var hapticFeedback = true
+    
     // MARK: Stone Management
     
     func addNewStoneAtGobanPoint(_ gobanPoint: GobanPoint, isUserInitiated: Bool, animated: Bool) {
@@ -59,6 +61,11 @@ class GobanManager: NSObject, GobanTouchProtocol, CAAnimationDelegate {
                         let markup = Markup(markupColor: stoneModel.stoneColor.reverse.uiColor, markupType: .Dot)
                         let markupModel = self?.addMarkup(markup, atGobanPoint: gobanPoint, isUserInitiated: false)
                         self?.lastMarkupedStone = markupModel
+                    }
+                    
+                    if #available(iOS 10.0, *), self?.hapticFeedback == true {
+                        let hapticFeedbackGenerator = UIImpactFeedbackGenerator(style: UIImpactFeedbackStyle.light)
+                        hapticFeedbackGenerator.impactOccurred()
                     }
                 } else {
                     self?.temporaryStone = stoneModel
