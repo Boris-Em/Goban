@@ -84,7 +84,7 @@ struct SGFPValueTypeParser {
     fileprivate static func realFromWholeDigits(_ wholeDigits: String, fractionDigits: [Character]?) -> SGFP.ValueType {
         let wholeChars = String(wholeDigits)
         let fractionChars = fractionDigits != nil ? String(fractionDigits!) : ""
-        let realString = wholeChars! + "." + fractionChars
+        let realString = wholeChars + "." + fractionChars
         let real = Float(realString)!
         return SGFP.ValueType.real(value: real)
     }

@@ -432,7 +432,7 @@ class GobanView: UIView {
     
     // MARK: Gesture Recognizers
     
-    func didLongPressGoban(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
+    @objc func didLongPressGoban(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if self.gobanTouchDelegate != nil {
             switch longPressGestureRecognizer.state {
             case .began:

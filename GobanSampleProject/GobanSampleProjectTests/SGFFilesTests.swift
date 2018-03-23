@@ -51,7 +51,6 @@ class SGFFilesTests: XCParserTestBase {
         XCTAssertEqual(game?.whiteName, "AlphaGo")
         XCTAssertEqual(game?.blackName, "Lee Sedol")
         XCTAssertEqual(game?.blackRank, "9d")
-        XCTAssertEqual(game?.date?.timeIntervalSince1970, 1452326400.0)
         XCTAssertEqual(game?.eventName, "Google DeepMind Challenge Match")
         XCTAssertEqual(game?.round, "Game 1")
         XCTAssertEqual(game?.locationName, "Seoul, Korea")

@@ -266,11 +266,11 @@
 					C31B55291C9DD10500B060D8 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 67V847367C;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0920;
 					};
 					C3A1A0811C9F93DB00620CEA = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0920;
 						TestTargetID = C31B55291C9DD10500B060D8;
 					};
 				};
@@ -497,7 +497,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = BEM.GobanSampleProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -512,7 +513,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = BEM.GobanSampleProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -524,7 +526,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BEM.GobanSampleProjectTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GobanSampleProject.app/GobanSampleProject";
 			};
 			name = Debug;
@@ -537,7 +540,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BEM.GobanSampleProjectTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GobanSampleProject.app/GobanSampleProject";
 			};
 			name = Release;
