@@ -219,7 +219,7 @@ func parseCharacters(_ input: [Character]) -> CharacterParser<[Character]> {
 
 // parse a sequence of characters matching string (and return string)
 func parseString(_ string: String) -> CharacterParser<String> {
-    return const(string) </> parseCharacters(Array(string.characters))
+    return const(string) </> parseCharacters(Array(string))
 }
 
 // parser that always fails

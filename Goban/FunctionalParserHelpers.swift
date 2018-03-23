@@ -124,7 +124,7 @@ extension ArraySlice {
 
 extension String {
     var slice: ArraySlice<Character> {
-        return Array(self.characters)[0 ..< self.characters.count]
+        return Array(self)[0 ..< self.count]
     }
 }
 

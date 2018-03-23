@@ -38,19 +38,20 @@ struct GobanPoint: Hashable {
     }
     
     init?(SGFString: String) {
-        guard SGFString.characters.count == 2 else {
+        guard SGFString.count == 2 else {
             return nil
         }
-        
-        self.init(col: SGFString.characters.first!, row: SGFString.characters.last!)
+
+        self.init(col: SGFString.first!, row: SGFString.last!)
     }
     
     // MARK: Helpers
     
     static func indexForCharacter(_ character: Character) -> Int? {
         let alphabet = "abcdefghijklmnopqrstuvwxyz"
-        if let indexForCharacterInString = alphabet.characters.index(of: character) {
-            return alphabet.characters.distance(from: alphabet.startIndex, to: indexForCharacterInString) + 1
+        
+        if let indexForCharacterInString = alphabet.index(of: character) {
+            return alphabet.distance(from: alphabet.startIndex, to: indexForCharacterInString) + 1
         }
         
         return nil
