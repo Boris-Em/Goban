@@ -7,7 +7,7 @@ While currently working, the project is not yet stable, and up until the v1.0 is
 
 ## Architecture
 
-The project is architectured around two distincts, independent components:
+The project is architectured around two distinct, independent components:
 - **GobanView**: the UI representation of the go board.
 - **GobanManager**: the logic around a game of Go, including handling SGF files.
 
